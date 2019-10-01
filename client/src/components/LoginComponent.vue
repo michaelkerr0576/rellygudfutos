@@ -4,7 +4,7 @@
       <b-row class="justify-content-md-center">
         <b-col cols="12" md="8" lg="5">
           <h3 class="text-center">Admin</h3>
-          <b-form @submit.prevent="login">
+          <b-form autocomplete="off" @submit.prevent="login">
             <b-form-group>
               <b-input-group>
                 <template v-slot:prepend>

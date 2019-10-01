@@ -26,7 +26,6 @@ mongoose.connect(mongoURI, {
 // Middleware
 app.use(morgan("dev")); // logs API requests
 app.use(express.static(path.join(__dirname, "/public"))); // Makes folders publicly available
-app.use("/uploads", express.static("uploads")); //keeps /uploads in routes
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

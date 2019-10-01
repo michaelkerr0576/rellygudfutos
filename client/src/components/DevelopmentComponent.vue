@@ -12,11 +12,21 @@
             </b-col>
             <b-col cols="auto">
               <b-button-group size="md">
-                <b-button href="https://www.linkedin.com/in/michael-kerr-941a95124/" variant="warning" v-b-tooltip.hover title="View Source Code">
+                <b-button
+                  href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                  variant="warning"
+                  v-b-tooltip.hover
+                  title="View Source Code"
+                >
                   <span class="fab fa-github"></span>
                   <!-- <span class="fab fa-github-square"></span> -->
                 </b-button>
-                <b-button href="https://www.linkedin.com/in/michael-kerr-941a95124/" variant="primary" v-b-tooltip.hover title="View LinkedIn">
+                <b-button
+                  href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                  variant="primary"
+                  v-b-tooltip.hover
+                  title="View LinkedIn"
+                >
                   <span class="fab fa-linkedin-in"></span>
                   <!-- <span class="fab fa-linkedin"></span> -->
                 </b-button>
@@ -124,6 +134,27 @@
                         class="py-1"
                       ></b-img>
                       <p class="text-center font-weight-light mt-3">MongoDB</p>
+                    </b-col>
+                  </b-row>
+                </b-media>
+
+                <b-media class="mt-3">
+                  <template v-slot:aside>
+                    <b-img blank blank-color="#ccc" width="3.5" height="75" alt="placeholder"></b-img>
+                  </template>
+                  <h5 class="font-weight-normal">Deployment:</h5>
+                  <b-row class="justify-content-md-center mt-3">
+                    <b-col cols="auto">
+                      <b-img center :src="assets.github_image" width="85" height="auto"></b-img>
+                      <p class="text-center font-weight-light">GitHub</p>
+                    </b-col>
+                    <b-col cols="auto">
+                      <b-img center :src="assets.heroku_image" width="88" height="auto"></b-img>
+                      <p class="text-center font-weight-light">Heroku</p>
+                    </b-col>
+                    <b-col cols="auto">
+                      <b-img center :src="assets.AWS_S3_image" width="89" height="auto"></b-img>
+                      <p class="text-center font-weight-light">Amazon Web Services S3</p>
                     </b-col>
                   </b-row>
                 </b-media>
@@ -329,11 +360,23 @@
                     <p class="text-center font-weight-light">Isotope vertical</p>
                   </b-col>
                   <b-col cols="12" md="auto">
-                    <b-img thumbnail center fluid :src="assets.isotope_sorting_image" alt="isotope_sorting"></b-img>
+                    <b-img
+                      thumbnail
+                      center
+                      fluid
+                      :src="assets.isotope_sorting_image"
+                      alt="isotope_sorting"
+                    ></b-img>
                     <p class="text-center font-weight-light">Isotope sorting</p>
                   </b-col>
                   <b-col cols="12" md="auto">
-                    <b-img thumbnail center fluid :src="assets.isotope_filtering_image" alt="isotope_filtering"></b-img>
+                    <b-img
+                      thumbnail
+                      center
+                      fluid
+                      :src="assets.isotope_filtering_image"
+                      alt="isotope_filtering"
+                    ></b-img>
                     <p class="text-center font-weight-light">Isotope filtering</p>
                   </b-col>
                   <b-col cols="12" md="auto">
@@ -341,7 +384,13 @@
                     <p class="text-center font-weight-light">Admin form</p>
                   </b-col>
                   <b-col cols="12" md="auto">
-                    <b-img thumbnail center fluid :src="assets.admin_form_editphoto_image" alt="admin_form_editphoto"></b-img>
+                    <b-img
+                      thumbnail
+                      center
+                      fluid
+                      :src="assets.admin_form_editphoto_image"
+                      alt="admin_form_editphoto"
+                    ></b-img>
                     <p class="text-center font-weight-light">Admin edit photo form</p>
                   </b-col>
                 </b-row>
@@ -349,7 +398,65 @@
             </b-media>
           </b-card>
 
-          <b-card id="frontend-card" bg-variant="default" border-variant="light" class="mt-5">
+          <b-card id="deployment-card" bg-variant="default" border-variant="light" class="mt-5">
+            <b-media no-body>
+              <b-media-aside vertical-align="top">
+                <b-img blank blank-color="#ccc" width="3.5" height="85"></b-img>
+              </b-media-aside>
+
+              <b-media-body class="ml-3">
+                <b-row>
+                  <b-col cols="12">
+                    <h4>Deployment:</h4>
+                    <p
+                      class="font-weight-normal py-1 px-3"
+                    >Heroku is a perfect choice for any developer working on personal projects or small applications, if your expected monthly website traffic is minimal then Heroku is a no brainer. Other more complex competitors like Amazon Web Services (AWS) should only be considered if your traffic is high enough to merit it. Heroku is a cloud platform that helps you deploy and host your applications. It takes care of the “easy” configurations and integrates seamlessly with GitHub for automated deployment.</p>
+                    <p
+                      class="font-weight-normal py-1 px-3"
+                    >If I make a change to the frontend and want to deploy the changes to Heroku I would do the following: 1) Run a production build to place the static assets in the server folder, these are JavaScript files, style sheets, images that don’t change and are presented to the user. 2) Commit the changes to GitHub. 3) Sync GitHub and Heroku and deploy automatically or manually. AWS S3 was used a dedicated file storage to hold photo uploads, this was done because Heroku’s file system is ephemeral – which means that any changes to the file system only lasts until its shut down or restarted. Each time the app is booted up with a clean copy of the file system from the most recent deploy, clearing any recent file uploads.</p>
+                  </b-col>
+                </b-row>
+                <b-row class="justify-content-md-center mt-4">
+                  <b-col cols="12" md="auto">
+                    <b-img thumbnail center fluid :src="assets.heroku_pricing_image" alt="heroku_pricing"></b-img>
+                    <p
+                      class="text-center font-weight-light"
+                    >Heroku pricing</p>
+                  </b-col>
+                  <b-col cols="12" md="auto">
+                    <b-img thumbnail center fluid :src="assets.AWS_bucket_image" alt="AWS_bucket"></b-img>
+                    <p
+                      class="text-center font-weight-light"
+                    >Amazong Web Services S3 Bucket containing photos</p>
+                  </b-col>
+                  <b-col cols="12" md="auto">
+                    <b-img
+                      thumbnail
+                      center
+                      fluid
+                      :src="assets.github_respository_image"
+                      alt="github_respository"
+                    ></b-img>
+                    <p
+                      class="text-center font-weight-light"
+                    >GitHub respository ready to be deployed to Heroku</p>
+                  </b-col>
+                  <b-col cols="12" md="auto">
+                    <b-img
+                      thumbnail
+                      center
+                      fluid
+                      :src="assets.heroku_deployment_image"
+                      alt="heroku_deployment"
+                    ></b-img>
+                    <p class="text-center font-weight-light">Heroku deployment through GitHub</p>
+                  </b-col>
+                </b-row>
+              </b-media-body>
+            </b-media>
+          </b-card>
+
+          <b-card id="conclusion-card" bg-variant="default" border-variant="light" class="mt-5">
             <b-media no-body>
               <b-media-aside vertical-align="top">
                 <b-img blank blank-color="#ccc" width="3.5" height="85"></b-img>
@@ -368,11 +475,21 @@
                   <b-col>
                     <div class="text-center">
                       <b-button-group size="lg">
-                        <b-button href="https://www.linkedin.com/in/michael-kerr-941a95124/" variant="warning" v-b-tooltip.hover title="View Source Code">
+                        <b-button
+                          href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                          variant="warning"
+                          v-b-tooltip.hover
+                          title="View Source Code"
+                        >
                           <span class="fab fa-github"></span>
                           <!-- <span class="fab fa-github-square"></span> -->
                         </b-button>
-                        <b-button href="https://www.linkedin.com/in/michael-kerr-941a95124/" variant="primary" v-b-tooltip.hover title="View LinkedIn">
+                        <b-button
+                          href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                          variant="primary"
+                          v-b-tooltip.hover
+                          title="View LinkedIn"
+                        >
                           <span class="fab fa-linkedin-in"></span>
                           <!-- <span class="fab fa-linkedin"></span> -->
                         </b-button>
@@ -403,6 +520,9 @@ import express_image from "../assets/express.png";
 import npm_image from "../assets/npm.svg";
 import mongoose_image from "../assets/mongoose.png";
 import mongo_image from "../assets/mongodb.png";
+import github_image from "../assets/github.png";
+import heroku_image from "../assets/heroku.png";
+import AWS_S3_image from "../assets/AWS_S3.png";
 //development images
 import photo_grid_image from "../assets/photo_grid.jpg";
 import mongoDB_atlas_image from "../assets/mongoDB_atlas.jpg";
@@ -419,13 +539,15 @@ import isotope_sorting_image from "../assets/isotope_sorting.jpg";
 import isotope_filtering_image from "../assets/isotope_filtering.jpg";
 import admin_form_image from "../assets/admin_form.jpg";
 import admin_form_editphoto_image from "../assets/admin_form_editphoto.jpg";
-const url = instance.defaults.baseURL;
+import AWS_bucket_image from "../assets/AWS_bucket.jpg";
+import github_respository_image from "../assets/github_respository.jpg";
+import heroku_pricing_image from "../assets/heroku_pricing.jpg";
+import heroku_deployment_image from "../assets/heroku_deployment.jpg";
 
 export default {
   name: "DevelopmentComponent",
   data() {
     return {
-      url: url,
       assets: {
         html5_image: html5_image,
         css3_image: css3_image,
@@ -437,6 +559,9 @@ export default {
         npm_image: npm_image,
         mongoose_image: mongoose_image,
         mongo_image: mongo_image,
+        github_image: github_image,
+        heroku_image: heroku_image,
+        AWS_S3_image: AWS_S3_image,
         photo_grid_image: photo_grid_image,
         mongoDB_atlas_image: mongoDB_atlas_image,
         mongoose_model_photo_image: mongoose_model_photo_image,
@@ -451,7 +576,11 @@ export default {
         isotope_sorting_image: isotope_sorting_image,
         isotope_filtering_image: isotope_filtering_image,
         admin_form_image: admin_form_image,
-        admin_form_editphoto_image: admin_form_editphoto_image
+        admin_form_editphoto_image: admin_form_editphoto_image,
+        AWS_bucket_image: AWS_bucket_image,
+        github_respository_image: github_respository_image,
+        heroku_pricing_image: heroku_pricing_image,
+        heroku_deployment_image: heroku_deployment_image
       }
     };
   }

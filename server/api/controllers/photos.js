@@ -1,4 +1,6 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
+const AWS = require("aws-sdk");
 
 //Importing Model
 const Tags = require("../models/tag");
@@ -42,78 +44,97 @@ exports.photos_get_all = async (req, res, next) => {
     });
 };
 
-exports.photos_upload_photo = async (req, res, next) => {
+exports.photos_upload_photo = (req, res, next) => {
   console.log(req.file);
-  await Tags.findById(req.body.tags)
-    .then(tags => {
-      if (!tags) {
-        return res.status(404).json({
-          message: "Tag not found"
-        });
-      }
-      if (req.body.size === "null") {
-        return res.status(404).json({
-          message: "Size not found"
-        });
-      }
-      const photo = new Photo({
-        _id: new mongoose.Types.ObjectId(),
-        title: req.body.title,
-        size: req.body.size,
-        tagsCount: req.body.tags.length,
-        tags: req.body.tags,
-        uploadDate: Date.now(),
-        uploadPhoto: req.file.path
-      });
-      Tags.bulkWrite([
-        {
-          updateMany: {
-            filter: { _id: photo.tags },
-            update: {
-              $push: { photos: photo._id }
-            }
+  const s3FileURL = process.env.AWS_UPLOADED_FILE_URL_LINK;
+  let s3bucket = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+  });
+  var params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: req.file.originalname,
+    Body: req.file.buffer,
+    ContentType: req.file.mimetype,
+    ACL: "public-read"
+  };
+  s3bucket.putObject(params, function(err, data) {
+    if (err) {
+      res.status(500).json({ error: true, Message: err });
+    } else {
+      Tags.findById(req.body.tags)
+        .then(tags => {
+          if (!tags) {
+            return res.status(404).json({
+              message: "Tag not found"
+            });
           }
-        }
-      ])
-        .then(result => {
-          // populates tag information from table, restricts to just tag field
-          photo.populate("tags", "tag", async function(err) {
-            const result = await photo.save();
-            console.log(result);
-            res.status(201).json({
-              message: "Photo created",
-              createdPhoto: {
-                _id: result._id,
-                title: result.title,
-                size: result.size,
-                tagsCount: result.tags.length,
-                tags: result.tags,
-                uploadDate: result.uploadDate,
-                uploadPhoto: result.uploadPhoto,
-                request: {
-                  type: "GET",
-                  description: "GET posted photo details",
-                  url: "http://localhost:5000/photos/" + result.id
+          if (req.body.size === "null") {
+            return res.status(404).json({
+              message: "Size not found"
+            });
+          }
+          const photo = new Photo({
+            _id: new mongoose.Types.ObjectId(),
+            title: req.body.title,
+            size: req.body.size,
+            tagsCount: req.body.tags.length,
+            tags: req.body.tags,
+            uploadDate: Date.now(),
+            uploadPhoto: s3FileURL + req.file.originalname
+          });
+          Tags.bulkWrite([
+            {
+              updateMany: {
+                filter: { _id: photo.tags },
+                update: {
+                  $push: { photos: photo._id }
                 }
               }
+            }
+          ])
+            .then(result => {
+              // populates tag information from table, restricts to just tag field
+              photo.populate("tags", "tag", async function(err) {
+                const result = await photo.save();
+                console.log(result);
+                res.status(201).json({
+                  message: "Photo created",
+                  createdPhoto: {
+                    _id: result._id,
+                    title: result.title,
+                    size: result.size,
+                    tagsCount: result.tags.length,
+                    tags: result.tags,
+                    uploadDate: result.uploadDate,
+                    uploadPhoto: result.uploadPhoto,
+                    request: {
+                      type: "GET",
+                      description: "GET posted photo details",
+                      url: "http://localhost:5000/photos/" + result.id
+                    }
+                  }
+                });
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({
+                message: "Tags not found",
+                error: err
+              });
             });
-          });
         })
         .catch(err => {
           console.log(err);
           res.status(500).json({
-            message: "Tags not found",
+            message: "Missing mandatory fields",
             error: err
           });
         });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        message: "Missing mandatory fields",
-        error: err
-      });
-    });
+    }
+  });
 };
 
 exports.photos_get_photo = async (req, res, next) => {

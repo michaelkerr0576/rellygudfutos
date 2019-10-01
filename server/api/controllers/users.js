@@ -6,45 +6,45 @@ require('dotenv').config()
 //Importing Model
 const User = require("../models/user");
 
-exports.users_create = async (req, res, next) => {
-  await User.find({ email: req.body.email })
-    .exec()
-    .then(user => {
-      if (user.length >= 1) {
-        //0 creates new user, 1 already exists
-        return res.status(409).json({
-          message: "Email already exists"
-        });
-      } else {
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          //10 adds string salting so hash cant be looked up in dictionary tables
-          if (err) {
-            return res.status(500).json({
-              error: err //could not safely store password
-            });
-          } else {
-            const user = new User({
-              _id: new mongoose.Types.ObjectId(),
-              email: req.body.email,
-              password: hash
-            });
-            user
-              .save()
-              .then(result => {
-                console.log(result);
-                res.status(201).json({
-                  message: "User Created"
-                });
-              })
-              .catch(err => {
-                console.log(err);
-                res.status(500).json({ error: err });
-              });
-          }
-        });
-      }
-    });
-};
+// exports.users_create = async (req, res, next) => {
+//   await User.find({ email: req.body.email })
+//     .exec()
+//     .then(user => {
+//       if (user.length >= 1) {
+//         //0 creates new user, 1 already exists
+//         return res.status(409).json({
+//           message: "Email already exists"
+//         });
+//       } else {
+//         bcrypt.hash(req.body.password, 10, (err, hash) => {
+//           //10 adds string salting so hash cant be looked up in dictionary tables
+//           if (err) {
+//             return res.status(500).json({
+//               error: err //could not safely store password
+//             });
+//           } else {
+//             const user = new User({
+//               _id: new mongoose.Types.ObjectId(),
+//               email: req.body.email,
+//               password: hash
+//             });
+//             user
+//               .save()
+//               .then(result => {
+//                 console.log(result);
+//                 res.status(201).json({
+//                   message: "User Created"
+//                 });
+//               })
+//               .catch(err => {
+//                 console.log(err);
+//                 res.status(500).json({ error: err });
+//               });
+//           }
+//         });
+//       }
+//     });
+// };
 
 exports.users_login_user = async (req, res, next) => {
   await User.find({ email: req.body.email })
@@ -88,16 +88,16 @@ exports.users_login_user = async (req, res, next) => {
     });
 };
 
-exports.user_delete_user = async (req, res, next) => {
-  await User.remove({ _id: req.params.userId })
-    .exec()
-    .then(result => {
-      res.status(200).json({
-        message: "User deleted"
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({ error: err });
-    });
-};
+// exports.user_delete_user = async (req, res, next) => {
+//   await User.remove({ _id: req.params.userId })
+//     .exec()
+//     .then(result => {
+//       res.status(200).json({
+//         message: "User deleted"
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json({ error: err });
+//     });
+// };

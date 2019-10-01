@@ -259,7 +259,7 @@
                 >
                   <div>
                     <b-img
-                      :src="url + photo.uploadPhoto"
+                      :src="photo.uploadPhoto"
                       fluid
                       rounded
                       :alt="photo.title"
@@ -282,7 +282,7 @@
                       <b-container fluid>
                         <b-row>
                           <b-img
-                            :src="url + photo.uploadPhoto"
+                            :src="photo.uploadPhoto"
                             fluid
                             rounded
                             center
@@ -375,7 +375,6 @@ import imagesLoaded from "vue-images-loaded";
 import fullscreen from "vue-fullscreen/src/component.vue";
 import PhotoAdmCRUDComponent from "./PhotoAdmCRUDComponent.vue";
 import PhotoAdmEditComponent from "./PhotoAdmEditComponent.vue";
-const url = instance.defaults.baseURL;
 
 export default {
   name: "PhotoComponent",
@@ -391,7 +390,6 @@ export default {
   },
   data() {
     return {
-      url: url,
       photos: [],
       tags: [],
       page: 1,
