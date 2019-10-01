@@ -1,0 +1,494 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex bbdaadc..e20dc7f 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -1,2 +1,2 @@[m
+[31m-/client[m
+[32m+[m[32m# /client[m
+ node_modules[m
+\ No newline at end of file[m
+[1mdiff --git a/server/api/controllers/photos.js b/server/api/controllers/photos.js[m
+[1mindex 0c3750c..742f995 100644[m
+[1m--- a/server/api/controllers/photos.js[m
+[1m+++ b/server/api/controllers/photos.js[m
+[36m@@ -4,11 +4,10 @@[m [mconst mongoose = require("mongoose");[m
+ const Tags = require("../models/tag");[m
+ const Photo = require("../models/photo");[m
+ [m
+[31m-exports.photos_get_all = (req, res, next) => {[m
+[31m-  Photo.find()[m
+[32m+[m[32mexports.photos_get_all = async (req, res, next) => {[m
+[32m+[m[32m  await Photo.find()[m
+     .select("-__v") // will exclude __v from fetch[m
+     .populate("tags", "tag") // populates tag information from table, restricts to just tag field[m
+[31m-    .exec()[m
+     .then(files => {[m
+       const response = {[m
+         count: files.length,[m
+[36m@@ -43,15 +42,20 @@[m [mexports.photos_get_all = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.photos_upload_photo = (req, res, next) => {[m
+[32m+[m[32mexports.photos_upload_photo = async (req, res, next) => {[m
+   console.log(req.file);[m
+[31m-  Tags.findById(req.body.tags)[m
+[32m+[m[32m  await Tags.findById(req.body.tags)[m
+     .then(tags => {[m
+       if (!tags) {[m
+         return res.status(404).json({[m
+           message: "Tag not found"[m
+         });[m
+       }[m
+[32m+[m[32m      if (req.body.size === "null") {[m
+[32m+[m[32m        return res.status(404).json({[m
+[32m+[m[32m          message: "Size not found"[m
+[32m+[m[32m        });[m
+[32m+[m[32m      }[m
+       const photo = new Photo({[m
+         _id: new mongoose.Types.ObjectId(),[m
+         title: req.body.title,[m
+[36m@@ -61,56 +65,62 @@[m [mexports.photos_upload_photo = (req, res, next) => {[m
+         uploadDate: Date.now(),[m
+         uploadPhoto: req.file.path[m
+       });[m
+[31m-      try {[m
+[31m-        Tags.bulkWrite([[m
+[31m-          {[m
+[31m-            updateMany: {[m
+[31m-              filter: { _id: photo.tags },[m
+[31m-              update: {[m
+[31m-                $push: { photos: photo._id }[m
+[31m-              }[m
+[31m-            }[m
+[31m-          }[m
+[31m-        ]);[m
+[31m-      } catch (e) {[m
+[31m-        print(e);[m
+[31m-      }[m
+[31m-      return photo.save().then(result => {[m
+[31m-        console.log(result);[m
+[31m-        res.status(201).json({[m
+[31m-          message: "Photo created",[m
+[31m-          createdPhoto: {[m
+[31m-            _id: result._id,[m
+[31m-            title: result.title,[m
+[31m-            size: result.size,[m
+[31m-            tagsCount: result.tags.length,[m
+[31m-            tags: result.tags,[m
+[31m-            uploadDate: result.uploadDate,[m
+[31m-            uploadPhoto: result.path,[m
+[31m-            request: {[m
+[31m-              type: "GET",[m
+[31m-              description: "GET posted photo details",[m
+[31m-              url: "http://localhost:5000/photos/" + result.id[m
+[32m+[m[32m      Tags.bulkWrite([[m
+[32m+[m[32m        {[m
+[32m+[m[32m          updateMany: {[m
+[32m+[m[32m            filter: { _id: photo.tags },[m
+[32m+[m[32m            update: {[m
+[32m+[m[32m              $push: { photos: photo._id }[m
+             }[m
+           }[m
+[32m+[m[32m        }[m
+[32m+[m[32m      ])[m
+[32m+[m[32m        .then(result => {[m
+[32m+[m[32m          // populates tag information from table, restricts to just tag field[m
+[32m+[m[32m          photo.populate("tags", "tag", async function(err) {[m
+[32m+[m[32m            const result = await photo.save();[m
+[32m+[m[32m            console.log(result);[m
+[32m+[m[32m            res.status(201).json({[m
+[32m+[m[32m              message: "Photo created",[m
+[32m+[m[32m              createdPhoto: {[m
+[32m+[m[32m                _id: result._id,[m
+[32m+[m[32m                title: result.title,[m
+[32m+[m[32m                size: result.size,[m
+[32m+[m[32m                tagsCount: result.tags.length,[m
+[32m+[m[32m                tags: result.tags,[m
+[32m+[m[32m                uploadDate: result.uploadDate,[m
+[32m+[m[32m                uploadPhoto: result.uploadPhoto,[m
+[32m+[m[32m                request: {[m
+[32m+[m[32m                  type: "GET",[m
+[32m+[m[32m                  description: "GET posted photo details",[m
+[32m+[m[32m                  url: "http://localhost:5000/photos/" + result.id[m
+[32m+[m[32m                }[m
+[32m+[m[32m              }[m
+[32m+[m[32m            });[m
+[32m+[m[32m          });[m
+[32m+[m[32m        })[m
+[32m+[m[32m        .catch(err => {[m
+[32m+[m[32m          console.log(err);[m
+[32m+[m[32m          res.status(500).json({[m
+[32m+[m[32m            message: "Tags not found",[m
+[32m+[m[32m            error: err[m
+[32m+[m[32m          });[m
+         });[m
+[31m-      });[m
+     })[m
+     .catch(err => {[m
+       console.log(err);[m
+       res.status(500).json({[m
+[31m-        message: "Tag not found",[m
+[32m+[m[32m        message: "Missing mandatory fields",[m
+         error: err[m
+       });[m
+     });[m
+ };[m
+ [m
+[31m-exports.photos_get_photo = (req, res, next) => {[m
+[32m+[m[32mexports.photos_get_photo = async (req, res, next) => {[m
+   const id = req.params.photoId;[m
+[31m-  Photo.findById(id)[m
+[32m+[m[32m  await Photo.findById(id)[m
+     .select("-__v") // will exclude __v from fetch[m
+     .populate("tags", "tag") // populates tag information from table, restricts to just tag field[m
+[31m-    .exec()[m
+     .then(file => {[m
+       console.log(file);[m
+       if (file) {[m
+[36m@@ -122,7 +132,7 @@[m [mexports.photos_get_photo = (req, res, next) => {[m
+             tagsCount: file.tags.length,[m
+             tags: file.tags,[m
+             uploadDate: file.uploadDate,[m
+[31m-            uploadPhoto: file.path[m
+[32m+[m[32m            uploadPhoto: file.uploadPhoto[m
+           },[m
+           request: {[m
+             type: "GET",[m
+[36m@@ -140,35 +150,118 @@[m [mexports.photos_get_photo = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.photos_update_photo = (req, res, next) => {[m
+[31m-  const id = req.params.photoId;[m
+[32m+[m[32mexports.photos_update_photo = async (req, res, next) => {[m
+[32m+[m[32m  const photoid = req.params.photoId;[m
+   // handles different types of patch requests[m
+[31m-  const updateOps = {};[m
+[32m+[m[32m  const photoUpdateOps = {};[m
+[32m+[m[32m  const tagupdateOps = {};[m
+   for (const ops of req.body) {[m
+[31m-    updateOps[ops.prop] = ops.value;[m
+[32m+[m[32m    photoUpdateOps[ops.prop] = ops.value;[m
+[32m+[m[32m    if (ops.prop === "tags") {[m
+[32m+[m[32m      tagupdateOps[ops.prop] = ops.value;[m
+[32m+[m[32m      console.log(tagupdateOps);[m
+[32m+[m[32m    }[m
+   }[m
+[31m-  Photo.update({ _id: id }, { $set: updateOps })[m
+[32m+[m[32m  await Photo.update({ _id: photoid }, { $set: photoUpdateOps })[m
+     .exec()[m
+     .then(result => {[m
+       console.log(result);[m
+[31m-      res.status(200).json({[m
+[31m-        message: "Photo updated",[m
+[31m-        request: {[m
+[31m-          type: "GET",[m
+[31m-          description: "GET updated photo details",[m
+[31m-          url: "http://localhost:5000/photos/" + id[m
+[32m+[m[32m      //delete old photo tags[m
+[32m+[m[32m      Tags.bulkWrite([[m
+[32m+[m[32m        {[m
+[32m+[m[32m          updateMany: {[m
+[32m+[m[32m            filter: { photos: { _id: photoid } },[m
+[32m+[m[32m            update: {[m
+[32m+[m[32m              $pull: { photos: photoid }[m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+         }[m
+[31m-      });[m
+[32m+[m[32m      ])[m
+[32m+[m[32m        .then(result => {[m
+[32m+[m[32m          //add new photo tags[m
+[32m+[m[32m          Tags.bulkWrite([[m
+[32m+[m[32m            {[m
+[32m+[m[32m              updateMany: {[m
+[32m+[m[32m                filter: { _id: tagupdateOps.tags },[m
+[32m+[m[32m                update: {[m
+[32m+[m[32m                  $push: { photos: photoid }[m
+[32m+[m[32m                }[m
+[32m+[m[32m              }[m
+[32m+[m[32m            }[m
+[32m+[m[32m          ])[m
+[32m+[m[32m            .then(result => {[m
+[32m+[m[32m              //const id = req.params.photoId;[m
+[32m+[m[32m              Photo.findById(photoid)[m
+[32m+[m[32m                .select("-__v") // will exclude __v from fetch[m
+[32m+[m[32m                .populate("tags", "tag") // populates tag information from table, restricts to just tag field[m
+[32m+[m[32m                .then(file => {[m
+[32m+[m[32m                  console.log(file);[m
+[32m+[m[32m                  if (file) {[m
+[32m+[m[32m                    res.status(200).json({[m
+[32m+[m[32m                      message: "Photo updated",[m
+[32m+[m[32m                      updatedPhoto: {[m
+[32m+[m[32m                        _id: file._id,[m
+[32m+[m[32m                        title: file.title,[m
+[32m+[m[32m                        size: file.size,[m
+[32m+[m[32m                        tagsCount: file.tags.length,[m
+[32m+[m[32m                        tags: file.tags,[m
+[32m+[m[32m                        uploadDate: file.uploadDate,[m
+[32m+[m[32m                        uploadPhoto: file.uploadPhoto[m
+[32m+[m[32m                      },[m
+[32m+[m[32m                      request: {[m
+[32m+[m[32m                        type: "GET",[m
+[32m+[m[32m                        description: "GET all photo photos",[m
+[32m+[m[32m                        url: "http://localhost:5000/photos/"[m
+[32m+[m[32m                      }[m
+[32m+[m[32m                    });[m
+[32m+[m[32m                  } else {[m
+[32m+[m[32m                    res.status(404).json({ message: "Photo not found" });[m
+[32m+[m[32m                  }[m
+[32m+[m[32m                })[m
+[32m+[m[32m                .catch(err => {[m
+[32m+[m[32m                  console.log(err);[m
+[32m+[m[32m                  res.status(500).json({[m
+[32m+[m[32m                    message: "Updated photo not found",[m
+[32m+[m[32m                    error: err[m
+[32m+[m[32m                  });[m
+[32m+[m[32m                });[m
+[32m+[m[32m              // res.status(200).json({[m
+[32m+[m[32m              //   message: "Photo updated",[m
+[32m+[m[32m              //   request: {[m
+[32m+[m[32m              //     type: "GET",[m
+[32m+[m[32m              //     description: "GET updated photo details",[m
+[32m+[m[32m              //     url: "http://localhost:5000/photos/" + photoid[m
+[32m+[m[32m              //   }[m
+[32m+[m[32m              // });[m
+[32m+[m[32m            })[m
+[32m+[m[32m            .catch(err => {[m
+[32m+[m[32m              console.log(err);[m
+[32m+[m[32m              res.status(500).json({[m
+[32m+[m[32m                message: "New tags did not update",[m
+[32m+[m[32m                error: err[m
+[32m+[m[32m              });[m
+[32m+[m[32m            });[m
+[32m+[m[32m        })[m
+[32m+[m[32m        .catch(err => {[m
+[32m+[m[32m          console.log(err);[m
+[32m+[m[32m          res.status(500).json({[m
+[32m+[m[32m            message: "Old tags were not removed successfully",[m
+[32m+[m[32m            error: err[m
+[32m+[m[32m          });[m
+[32m+[m[32m        });[m
+     })[m
+     .catch(err => {[m
+       console.log(err);[m
+[31m-      res.status(500).json({ error: err });[m
+[32m+[m[32m      res.status(500).json({[m
+[32m+[m[32m        message: "Photo update unsuccessful",[m
+[32m+[m[32m        error: err[m
+[32m+[m[32m      });[m
+     });[m
+ };[m
+ [m
+[31m-exports.photos_delete_photo = (req, res, next) => {[m
+[32m+[m[32mexports.photos_delete_photo = async (req, res, next) => {[m
+   const id = req.params.photoId;[m
+[31m-  Photo.remove({ _id: id })[m
+[32m+[m[32m  await Photo.remove({ _id: id })[m
+     .exec()[m
+     .then(result => {[m
+       res.status(200).json({[m
+[1mdiff --git a/server/api/controllers/tags.js b/server/api/controllers/tags.js[m
+[1mindex 2c0e1af..081f9c8 100644[m
+[1m--- a/server/api/controllers/tags.js[m
+[1m+++ b/server/api/controllers/tags.js[m
+[36m@@ -3,15 +3,15 @@[m [mconst mongoose = require("mongoose");[m
+ //Importing Model[m
+ const Tags = require("../models/tag");[m
+ [m
+[31m-exports.tags_get_all = (req, res, next) => {[m
+[31m-  Tags.find()[m
+[32m+[m[32mexports.tags_get_all = async (req, res, next) => {[m
+[32m+[m[32m  await Tags.find()[m
+     .select("-__v") // will exclude __v from fetch[m
+     .populate("photos", "title") // populates photo information from table, restricts to just title field[m
+     .exec()[m
+     .then(files => {[m
+       const response = {[m
+         count: files.length,[m
+[31m-        tags: files.map(file => {[m
+[32m+[m[32m        Tags: files.map(file => {[m
+           return {[m
+             _id: file._id,[m
+             tag: file.tag,[m
+[36m@@ -39,13 +39,13 @@[m [mexports.tags_get_all = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.tags_add_tag = (req, res, next) => {[m
+[32m+[m[32mexports.tags_add_tag = async (req, res, next) => {[m
+   const tags = new Tags({[m
+     _id: new mongoose.Types.ObjectId(),[m
+     tag: req.body.tag,[m
+     photos: req.body.photos[m
+   });[m
+[31m-  tags[m
+[32m+[m[32m  await tags[m
+     .save()[m
+     .then(result => {[m
+       console.log(result);[m
+[36m@@ -70,9 +70,9 @@[m [mexports.tags_add_tag = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.tags_get_tag = (req, res, next) => {[m
+[32m+[m[32mexports.tags_get_tag = async (req, res, next) => {[m
+   const id = req.params.tagId;[m
+[31m-  Tags.findById(id)[m
+[32m+[m[32m  await Tags.findById(id)[m
+     .select("-__v") // will exclude __v from fetch[m
+     .populate("photos", "-__v -tags") // populates photo information from table, excludes __v and tags[m
+     .exec()[m
+[36m@@ -99,14 +99,14 @@[m [mexports.tags_get_tag = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.tags_update_tag = (req, res, next) => {[m
+[32m+[m[32mexports.tags_update_tag = async (req, res, next) => {[m
+   const id = req.params.tagId;[m
+   // handles different types of patch requests[m
+   const updateOps = {};[m
+   for (const ops of req.body) {[m
+     updateOps[ops.prop] = ops.value;[m
+   }[m
+[31m-  Tags.update({ _id: id }, { $set: updateOps })[m
+[32m+[m[32m  await Tags.update({ _id: id }, { $set: updateOps })[m
+     .exec()[m
+     .then(result => {[m
+       console.log(result);[m
+[36m@@ -125,9 +125,9 @@[m [mexports.tags_update_tag = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.tags_delete_tag = (req, res, next) => {[m
+[32m+[m[32mexports.tags_delete_tag = async (req, res, next) => {[m
+   const id = req.params.tagId;[m
+[31m-  Tags.remove({ _id: id })[m
+[32m+[m[32m  await Tags.remove({ _id: id })[m
+     .exec()[m
+     .then(result => {[m
+       res.status(200).json({[m
+[1mdiff --git a/server/api/controllers/users.js b/server/api/controllers/users.js[m
+[1mindex fe1346f..bdc8621 100644[m
+[1m--- a/server/api/controllers/users.js[m
+[1m+++ b/server/api/controllers/users.js[m
+[36m@@ -5,8 +5,8 @@[m [mconst jwt = require("jsonwebtoken");[m
+ //Importing Model[m
+ const User = require("../models/user");[m
+ [m
+[31m-exports.users_create = (req, res, next) => {[m
+[31m-  User.find({ email: req.body.email })[m
+[32m+[m[32mexports.users_create = async (req, res, next) => {[m
+[32m+[m[32m  await User.find({ email: req.body.email })[m
+     .exec()[m
+     .then(user => {[m
+       if (user.length >= 1) {[m
+[36m@@ -45,8 +45,8 @@[m [mexports.users_create = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.users_login_user = (req, res, next) => {[m
+[31m-  User.find({ email: req.body.email })[m
+[32m+[m[32mexports.users_login_user = async (req, res, next) => {[m
+[32m+[m[32m  await User.find({ email: req.body.email })[m
+     .exec()[m
+     .then(user => {[m
+       if (user.length < 1) {[m
+[36m@@ -87,8 +87,8 @@[m [mexports.users_login_user = (req, res, next) => {[m
+     });[m
+ };[m
+ [m
+[31m-exports.user_delete_user = (req, res, next) => {[m
+[31m-  User.remove({ _id: req.params.userId })[m
+[32m+[m[32mexports.user_delete_user = async (req, res, next) => {[m
+[32m+[m[32m  await User.remove({ _id: req.params.userId })[m
+     .exec()[m
+     .then(result => {[m
+       res.status(200).json({[m
+[1mdiff --git a/server/api/middleware/check-auth.js b/server/api/middleware/check-auth.js[m
+[1mindex 810f31d..4e85f98 100644[m
+[1m--- a/server/api/middleware/check-auth.js[m
+[1m+++ b/server/api/middleware/check-auth.js[m
+[36m@@ -2,18 +2,15 @@[m [mconst jwt = require("jsonwebtoken");[m
+ [m
+ //protect routes by verifying user token[m
+ //TODO fix bug where authenticated user can delete other user data[m
+[31m-module.exports = (req, res, next) => {[m
+[31m-  console.log("authorization is turned off");[m
+[31m-  next();[m
+[31m-  [m
+[31m-  // try {[m
+[31m-  //   const token = req.headers.authorization.split(" ")[1]; //split string bearer and remove[m
+[31m-  //   const decoded = jwt.verify(token, process.env.JWT_KEY);[m
+[31m-  //   req.userData = decoded;[m
+[31m-  //   next();[m
+[31m-  // } catch (error) {[m
+[31m-  //   return res.status(401).json({[m
+[31m-  //     message: "Auth failed"[m
+[31m-  //   });[m
+[31m-  // }[m
+[32m+[m[32mmodule.exports = async (req, res, next) => {[m
+[32m+[m[32m  try {[m
+[32m+[m[32m    const token = req.headers.authorization.split(" ")[1]; //split string bearer and remove[m
+[32m+[m[32m    const decoded = jwt.verify(token, process.env.JWT_KEY);[m
+[32m+[m[32m    req.userData = decoded;[m
+[32m+[m[32m    next();[m
+[32m+[m[32m  } catch (error) {[m
+[32m+[m[32m    return res.status(401).json({[m
+[32m+[m[32m      message: "Auth failed"[m
+[32m+[m[32m    });[m
+[32m+[m[32m  }[m
+ };[m
+[1mdiff --git a/server/api/routes/users.js b/server/api/routes/users.js[m
+[1mindex cbfb033..3d7b242 100644[m
+[1m--- a/server/api/routes/users.js[m
+[1m+++ b/server/api/routes/users.js[m
+[36m@@ -5,6 +5,7 @@[m [mconst checkAuth = require("../middleware/check-auth");[m
+ //Importing Controller[m
+ const UsersControllers = require("../controllers/users");[m
+ [m
+[32m+[m[32m//Only admin can create other uses[m
+ router.post("/create", UsersControllers.users_create);[m
+ [m
+ router.post("/login", UsersControllers.users_login_user);[m
+[1mdiff --git a/uploads/1564085661224_IMG_0622.jpg b/uploads/1564085661224_IMG_0622.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex 25091b2..0000000[m
+Binary files a/uploads/1564085661224_IMG_0622.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564085696273_IMG_1118.jpg b/uploads/1564085696273_IMG_1118.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex 8f99ae5..0000000[m
+Binary files a/uploads/1564085696273_IMG_1118.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564085733568_IMG_0770.jpg b/uploads/1564085733568_IMG_0770.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex e83b1cb..0000000[m
+Binary files a/uploads/1564085733568_IMG_0770.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564087940459_IMG_0770.jpg b/uploads/1564087940459_IMG_0770.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex e83b1cb..0000000[m
+Binary files a/uploads/1564087940459_IMG_0770.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564088051275_IMG_0622.jpg b/uploads/1564088051275_IMG_0622.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex 25091b2..0000000[m
+Binary files a/uploads/1564088051275_IMG_0622.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564088379661_IMG_0622.jpg b/uploads/1564088379661_IMG_0622.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex 25091b2..0000000[m
+Binary files a/uploads/1564088379661_IMG_0622.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564088409530_IMG_0622.jpg b/uploads/1564088409530_IMG_0622.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex 25091b2..0000000[m
+Binary files a/uploads/1564088409530_IMG_0622.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564171931294_IMG_0795-Edit.jpg b/uploads/1564171931294_IMG_0795-Edit.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex dcad1e5..0000000[m
+Binary files a/uploads/1564171931294_IMG_0795-Edit.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564172392919_IMG_0795-Edit.jpg b/uploads/1564172392919_IMG_0795-Edit.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex dcad1e5..0000000[m
+Binary files a/uploads/1564172392919_IMG_0795-Edit.jpg and /dev/null differ
+[1mdiff --git a/uploads/1564173092572_IMG_0795-Edit.jpg b/uploads/1564173092572_IMG_0795-Edit.jpg[m
+[1mdeleted file mode 100644[m
+[1mindex dcad1e5..0000000[m
+Binary files a/uploads/1564173092572_IMG_0795-Edit.jpg and /dev/null differ
