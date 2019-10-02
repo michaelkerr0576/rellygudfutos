@@ -50,13 +50,13 @@ app.use("/user", userRoutes);
 
 // Redirect frotend URLs that are refreshed back home
 app.get("/home", function(req, res) {
-  res.redirect(process.env.URL_DEVELOPMENT);
+  res.redirect(process.env.URL);
 });
 app.get("/development", function(req, res) {
-  res.redirect(process.env.URL_DEVELOPMENT);
+  res.redirect(process.env.URL);
 });
 app.get("/login", function(req, res) {
-  res.redirect(process.env.URL_DEVELOPMENT);
+  res.redirect(process.env.URL);
 });
 // Error handling if there is no avialable API request
 app.use((req, res, next) => {

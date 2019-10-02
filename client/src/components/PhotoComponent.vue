@@ -266,7 +266,7 @@
                       @click="fullscreen ? fullscreen=false : $bvModal.show(photo._id);"
                     ></b-img>
                     <PhotoAdmEditComponent
-                       v-if="isLoggedIn"
+                      v-if="isLoggedIn"
                       :photos="mutablePhotos"
                       :photo="photo"
                       :tags="mutableTags"
@@ -559,8 +559,9 @@ export default {
       this.window.height = window.innerHeight;
     },
     toggleFullscreen() {
-      //this.currentLayout = "packery";
-      this.fullscreen = !this.fullscreen;
+      this.$nextTick(function() {
+        this.fullscreen = !this.fullscreen;
+      }, this);
     },
     getOptions: function() {
       const _this = this;

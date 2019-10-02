@@ -21,11 +21,12 @@ exports.photos_get_all = async (req, res, next) => {
             tagsCount: file.tags.length,
             tags: file.tags,
             uploadDate: file.uploadDate,
+            originalName: file.originalName,
             uploadPhoto: file.uploadPhoto,
             request: {
               type: "GET",
               description: "GET photo details",
-              url: "http://localhost:5000/photos/" + file.id
+              url: process.env.URL + "/photos/" + file.id
             }
           };
         })
@@ -82,6 +83,7 @@ exports.photos_upload_photo = (req, res, next) => {
             tagsCount: req.body.tags.length,
             tags: req.body.tags,
             uploadDate: Date.now(),
+            originalName: req.file.originalname,
             uploadPhoto: s3FileURL + req.file.originalname
           });
           Tags.bulkWrite([
@@ -108,11 +110,12 @@ exports.photos_upload_photo = (req, res, next) => {
                     tagsCount: result.tags.length,
                     tags: result.tags,
                     uploadDate: result.uploadDate,
+                    originalName: result.originalName,
                     uploadPhoto: result.uploadPhoto,
                     request: {
                       type: "GET",
                       description: "GET posted photo details",
-                      url: "http://localhost:5000/photos/" + result.id
+                      url: process.env.URL + "/photos/" + result.id
                     }
                   }
                 });
@@ -153,12 +156,13 @@ exports.photos_get_photo = async (req, res, next) => {
             tagsCount: file.tags.length,
             tags: file.tags,
             uploadDate: file.uploadDate,
+            originalName: file.originalName,
             uploadPhoto: file.uploadPhoto
           },
           request: {
             type: "GET",
             description: "GET all photo photos",
-            url: "http://localhost:5000/photos/"
+            url: process.env.URL + "/photos/"
           }
         });
       } else {
@@ -227,12 +231,13 @@ exports.photos_update_photo = async (req, res, next) => {
                         tagsCount: file.tags.length,
                         tags: file.tags,
                         uploadDate: file.uploadDate,
+                        originalName: file.originalName,
                         uploadPhoto: file.uploadPhoto
                       },
                       request: {
                         type: "GET",
                         description: "GET all photo photos",
-                        url: "http://localhost:5000/photos/"
+                        url: process.env.URL + "/photos/"
                       }
                     });
                   } else {
@@ -251,7 +256,7 @@ exports.photos_update_photo = async (req, res, next) => {
               //   request: {
               //     type: "GET",
               //     description: "GET updated photo details",
-              //     url: "http://localhost:5000/photos/" + photoid
+              //     url: process.env.URL + "/photos/" + photoid
               //   }
               // });
             })
@@ -282,18 +287,51 @@ exports.photos_update_photo = async (req, res, next) => {
 
 exports.photos_delete_photo = async (req, res, next) => {
   const id = req.params.photoId;
-  await Photo.remove({ _id: id })
-    .exec()
-    .then(result => {
-      res.status(200).json({
-        message: "Photo deleted",
-        request: {
-          type: "GET",
-          description: "GET all photos",
-          url: "http://localhost:5000/photos",
-          body: { files_id: "ID" }
-        }
-      });
+  console.log(req.params);
+  await Photo.findById(id)
+    .select("-__v") // will exclude __v from fetch
+    .populate("tags", "tag") // populates tag information from table, restricts to just tag field
+    .then(file => {
+      console.log(file);
+      if (file) {
+        console.log("success");
+        let s3bucket = new AWS.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+          region: process.env.AWS_REGION
+        });
+        var params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: file.originalName
+        };
+        s3bucket.deleteObject(params, function(err, data) {
+          if (err) {
+            console.log(err);
+            res.status(500).json({ error: err });
+          } else {
+            console.log(data); // successful response
+            Photo.remove({ _id: id })
+              .exec()
+              .then(result => {
+                res.status(200).json({
+                  message: "Photo deleted",
+                  request: {
+                    type: "GET",
+                    description: "GET all photos",
+                    url: process.env.URL + "/photos",
+                    body: { files_id: "ID" }
+                  }
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({ message: "Photo was not deleted" });
+              });
+          }
+        });
+      } else {
+        res.status(404).json({ message: "Photo not found" });
+      }
     })
     .catch(err => {
       console.log(err);

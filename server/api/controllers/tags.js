@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
 //Importing Model
@@ -20,7 +21,7 @@ exports.tags_get_all = async (req, res, next) => {
             request: {
               type: "GET",
               description: "GET tag",
-              url: "http://localhost:5000/tags/" + file.id
+              url: process.env.URL + "/tags/" + file.id
             }
           };
         })
@@ -59,7 +60,7 @@ exports.tags_add_tag = async (req, res, next) => {
           request: {
             type: "GET",
             description: "GET posted tag",
-            url: "http://localhost:5000/tags/" + result.id
+            url: process.env.URL + "/tags/" + result.id
           }
         }
       });
@@ -86,7 +87,7 @@ exports.tags_get_tag = async (req, res, next) => {
           request: {
             type: "GET",
             description: "GET all tags",
-            url: "http://localhost:5000/tags"
+            url: process.env.URL + "/tags"
           }
         });
       } else {
@@ -115,7 +116,7 @@ exports.tags_update_tag = async (req, res, next) => {
         request: {
           type: "GET",
           description: "GET updated tag",
-          url: "http://localhost:5000/tags/" + id
+          url: process.env.URL + "/tags/" + id
         }
       });
     })
@@ -135,7 +136,7 @@ exports.tags_delete_tag = async (req, res, next) => {
         request: {
           type: "GET",
           description: "GET all tags",
-          url: "http://localhost:5000/tags"
+          url: process.env.URL + "/tags"
         }
       });
     })

@@ -13,6 +13,7 @@ const photoSchema = mongoose.Schema({
       //validate: v => v == null || v.length > 0  // workaround for required: true
     }
   ],
+  originalName: { type: String, required: true },
   uploadPhoto: { type: String, required: true }
 });
 

@@ -13,7 +13,7 @@
             <b-col cols="auto">
               <b-button-group size="md">
                 <b-button
-                  href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                  href="https://github.com/michaelkerr0576/rellygudfutos"
                   variant="warning"
                   v-b-tooltip.hover
                   title="View Source Code"
@@ -476,7 +476,7 @@
                     <div class="text-center">
                       <b-button-group size="lg">
                         <b-button
-                          href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                          href="https://github.com/michaelkerr0576/rellygudfutos"
                           variant="warning"
                           v-b-tooltip.hover
                           title="View Source Code"
