@@ -739,7 +739,7 @@ h2 {
 .img-fluid {
   cursor: pointer;
   position: relative;
-  max-height: calc(100vh - 200px);
+  /* max-height: calc(100vh - 200px); */
 }
 .img-fluid .hover {
   display: none;
