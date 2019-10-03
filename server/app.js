@@ -48,20 +48,20 @@ app.use("/photos", photoRoutes);
 app.use("/tags", tagRoutes);
 app.use("/user", userRoutes);
 
-// set up a route to redirect http to https
-app.get('*', function(req, res) {  
-  res.redirect('https://' + req.headers.host + req.url);
-})
-// Redirect frotend URLs that are refreshed back home
-app.get("/home", function(req, res) {
-  res.redirect(process.env.URL);
+// set up a route to redirect http to https and redirect frontend urls home
+app.get("*", function(req, res) {
+  res.redirect("https://" + req.headers.host);
 });
-app.get("/development", function(req, res) {
-  res.redirect(process.env.URL);
-});
-app.get("/login", function(req, res) {
-  res.redirect(process.env.URL);
-});
+// // Redirect frotend URLs that are refreshed back home
+// app.get("/home", function(req, res) {
+//   res.redirect(process.env.URL);
+// });
+// app.get("/development", function(req, res) {
+//   res.redirect(process.env.URL);
+// });
+// app.get("/login", function(req, res) {
+//   res.redirect(process.env.URL);
+// });
 // Error handling if there is no avialable API request
 app.use((req, res, next) => {
   const error = new Error("Not Found");
