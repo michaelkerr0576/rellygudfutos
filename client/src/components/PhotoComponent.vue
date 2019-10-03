@@ -508,6 +508,9 @@ export default {
             this.page += 1;
             this.photos.push(...data.Photos);
             $state.loaded();
+            this.$nextTick(function() {
+              this.$refs.cpt.sort("newest");
+            }, this);
           } else {
             $state.complete();
           }
@@ -739,7 +742,7 @@ h2 {
 .img-fluid {
   cursor: pointer;
   position: relative;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 150px);
 }
 .img-fluid .hover {
   display: none;

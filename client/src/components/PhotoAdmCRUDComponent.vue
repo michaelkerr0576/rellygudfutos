@@ -43,7 +43,7 @@
                       >requires at least 3 characters pls</b-form-invalid-feedback>
                       <b-form-valid-feedback :state="photoTitleState">merci mahalo</b-form-valid-feedback>
                       <b-form-text id="input-live-help">
-                        <i>Title naming:</i>&nbsp;[country]_[county/province]_[city/place]_[tag*]_[meta*]
+                        <i>Title naming:</i>&nbsp;[country] - [county/province] - [city/place] - [tag*] - [title]
                       </b-form-text>
 
                       <br />

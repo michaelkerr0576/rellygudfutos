@@ -13,7 +13,7 @@
           <b-form-invalid-feedback :state="editTitleState">
             <b-card
               class="invalidfeedback"
-            >requires at least 3 characters pls: [country]_[county/province]_[city/place]_[tag*]_[meta*]</b-card>
+            >requires at least 3 characters pls: [country] - [county/province] - [city/place] - [tag*] - [title]</b-card>
           </b-form-invalid-feedback>
         </b-input-group>
 
