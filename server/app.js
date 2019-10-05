@@ -48,9 +48,15 @@ app.use("/photos", photoRoutes);
 app.use("/tags", tagRoutes);
 app.use("/user", userRoutes);
 
-// set up a route to redirect http to https and redirect home if unknown request
-app.get("*", function(req, res) {
-  res.redirect("https://" + req.headers.host /*+ req.url*/ );
+// set up a route to redirect http to https
+app.use(function(request, response){
+  if(!request.secure){
+    response.redirect("https://" + request.headers.host + request.url);
+  }
+});
+// rewrite virtual urls to vue app to enable refreshing of internal pages
+app.get('*', function (req, res, next) {
+  res.sendFile(path.resolve('server/public/index.html'));
 });
 // Error handling if there is no avialable API request
 app.use((req, res, next) => {

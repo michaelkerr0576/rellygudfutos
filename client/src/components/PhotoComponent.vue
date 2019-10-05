@@ -263,6 +263,7 @@
                       fluid
                       rounded
                       :alt="photo.title"
+                      :style="verticalActive ? 'margin-bottom: 20px;' : 'false'"
                       @click="fullscreen ? fullscreen=false : $bvModal.show(photo._id);"
                     ></b-img>
                     <PhotoAdmEditComponent
@@ -742,7 +743,7 @@ h2 {
 .img-fluid {
   cursor: pointer;
   position: relative;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 180px);
 }
 .img-fluid .hover {
   display: none;
