@@ -53,10 +53,10 @@ app.use("/user", userRoutes);
 //   if (!request.secure) {
 //     response.redirect("https://" + request.headers.host /*+ request.url*/);
 //   } else {
-    // rewrite virtual urls to vue app to enable refreshing of internal pages
-    app.get("*", function(req, res, next) {
-      res.sendFile(path.resolve("server/public/index.html"));
-    });
+// rewrite virtual urls to vue app to enable refreshing of internal pages
+app.get("*", function(req, res, next) {
+  res.sendFile(path.resolve("server/public/index.html"));
+});
 //   }
 // });
 // Error handling if there is no avialable API request
