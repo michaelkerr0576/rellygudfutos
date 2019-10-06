@@ -189,7 +189,7 @@
                 class="button"
                 v-b-tooltip.hover
                 title="Gallery View"
-                @click="changeLayout('packery'); removeFilterValue();"
+                @click="changeLayout('packery'); removeFilterValue(); getSortValue('Newest');"
               >
                 <span class="fas fa-th"></span>
               </b-nav-item>
@@ -199,7 +199,7 @@
                 class="button"
                 v-b-tooltip.hover
                 title="List View"
-                @click="changeLayout('vertical'); removeFilterValue();"
+                @click="changeLayout('vertical'); removeFilterValue(); getSortValue('Newest');"
               >
                 <span class="fas fa-bars"></span>
               </b-nav-item>
