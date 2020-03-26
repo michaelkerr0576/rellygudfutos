@@ -140,11 +140,11 @@
         <b-card>
           <b-form-checkbox-group
             size="sm"
-            required
             id="editphototags"
             v-model="edittags"
           >
             <b-form-checkbox
+              required
               v-for="tag in tags"
               :key="tag._id"
               :value="tag._id"
