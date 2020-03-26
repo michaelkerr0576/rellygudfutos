@@ -15,7 +15,7 @@
                 <b-col cols="12" sm="12" md="7" lg="8" xl="8">
                   <div class="mt-2">
                     <h6 class="text-dark">
-                      <samp>{{ photo.camera }} DESKTOP</samp>
+                      <samp>{{ photo.camera }}</samp>
                     </h6>
                     <h6 class="text-dark">
                       <samp>{{ photo.lens }}</samp>
@@ -152,7 +152,7 @@
                 <b-col cols="7" sm="6" md="7" lg="8" xl="8">
                   <div class="mt-2">
                     <h6 class="text-dark">
-                      <samp>{{ photo.camera }} MOBILE</samp>
+                      <samp>{{ photo.camera }}</samp>
                     </h6>
                     <h6 class="text-dark">
                       <samp>{{ photo.lens }}</samp>
