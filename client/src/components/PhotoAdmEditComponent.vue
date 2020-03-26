@@ -300,6 +300,18 @@ export default {
             value: this.photo.title
           },
           {
+            prop: "caption",
+            value: this.photo.caption
+          },
+          {
+            prop: "lcoation",
+            value: this.photo.location
+          },
+          {
+            prop: "store",
+            value: this.photo.store
+          },
+          {
             prop: "size",
             value: this.editsize
           },
