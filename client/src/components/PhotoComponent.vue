@@ -1,7 +1,12 @@
 <template>
   <div id="main">
-    <PhotoAdmCRUDComponent v-if="isLoggedIn" :photos="mutablePhotos" :tags="mutableTags" />
+    <PhotoAdmCRUDComponent
+      v-if="isLoggedIn"
+      :photos="mutablePhotos"
+      :tags="mutableTags"
+    />
     <b-container fluid>
+      <!-- ----------- SEARCH ----------- -->
       <b-row>
         <b-col cols="12" sm="6" md="6" lg="6" xl="5">
           <div id="filter">
@@ -9,8 +14,8 @@
               <b-form-input
                 type="text"
                 v-model="filterText"
-                placeholder="Filter futo by title.."
-                :class="[filterOption==='filterByText' ? 'is-checked' : '']"
+                placeholder="Search for futo.."
+                :class="[filterOption === 'filterByText' ? 'is-checked' : '']"
                 @click="$refs.cpt.filter('filterByText')"
               ></b-form-input>
               <b-input-group-append is-text>
@@ -20,158 +25,217 @@
           </div>
         </b-col>
       </b-row>
+
       <b-row>
         <b-col cols="12" sm="2" md="2" lg="2" xl="2">
+          <!-- ----------- TAGS ----------- -->
           <div id="tags" v-if="window.width >= 576">
-            <h3>Filter</h3>
+            <!-- <h3>Filter</h3> -->
+            <br />
             <hr />
             <b-row>
+              <!-- Tag - Show All -->
               <b-button
                 block
                 variant="light"
-                :class="[filterOption==='removeFilter' ? 'is-checked' : '']"
-                @click="$refs.cpt.filter('removeFilter'); removeFilterValue();"
+                :class="[filterOption === 'removeFilter' ? 'is-checked' : '']"
+                @click="
+                  $refs.cpt.filter('removeFilter');
+                  removeFilterValue();
+                "
               >
                 Show All
                 <b-badge pill variant="dark">{{ photos.length }}</b-badge>
               </b-button>
             </b-row>
+
+            <!-- Tags - Photo Tags -->
             <b-row v-for="tag in mutableTags" :key="tag._id">
               <b-button
                 block
                 variant="light"
-                :class="[filterOption==='filterByTag' ? 'is-checked' : '']"
-                @click="getFilterValue(tag.tag); $refs.cpt.filter('filterByTag')"
+                :class="[filterOption === 'filterByTag' ? 'is-checked' : '']"
+                @click="
+                  getFilterValue(tag.tag);
+                  $refs.cpt.filter('filterByTag');
+                "
               >
-                {{ tag.tag | capitalize}}
+                {{ tag.tag | capitalize }}
                 <b-badge pill variant="dark">{{ tag.photosCount }}</b-badge>
               </b-button>
             </b-row>
           </div>
 
+          <!-- ----------- SORTING ----------- -->
           <div id="sort" v-if="window.width >= 576">
-            <h3>Sort</h3>
+            <!-- <h3>Sort</h3> -->
+            <br />
             <hr />
+            <!-- Sort - Newest -->
             <b-row>
               <b-button
                 block
                 variant="light"
-                :class="[sortOption==='newest' ? 'is-checked' : '']"
-                @click="getSortValue('Newest'); $refs.cpt.sort('newest')"
+                :class="[sortOption === 'newest' ? 'is-checked' : '']"
+                @click="
+                  getSortValue('Newest');
+                  $refs.cpt.sort('newest');
+                "
               >
                 Sort by newest
                 <span class="fas fa-sort"></span>
               </b-button>
             </b-row>
+            <!-- Sort - Oldest -->
             <b-row>
               <b-button
                 block
                 variant="light"
-                :class="[sortOption==='oldest' ? 'is-checked' : '']"
-                @click="getSortValue('Oldest'); $refs.cpt.sort('oldest')"
+                :class="[sortOption === 'oldest' ? 'is-checked' : '']"
+                @click="
+                  getSortValue('Oldest');
+                  $refs.cpt.sort('oldest');
+                "
               >
                 Sort by oldest
                 <span class="fas fa-sort"></span>
               </b-button>
             </b-row>
+            <!-- Sort - titleAZ -->
             <b-row>
               <b-button
                 block
                 variant="light"
-                :class="[sortOption==='titleAZ' ? 'is-checked' : '']"
-                @click="getSortValue('Title (A-Z)'); $refs.cpt.sort('titleAZ')"
+                :class="[sortOption === 'titleAZ' ? 'is-checked' : '']"
+                @click="
+                  getSortValue('Title (A-Z)');
+                  $refs.cpt.sort('titleAZ');
+                "
               >
                 Sort by title (a-z)
                 <span class="fas fa-sort"></span>
               </b-button>
             </b-row>
+            <!-- Sort - titleZA -->
             <b-row>
               <b-button
                 block
                 variant="light"
-                :class="[sortOption==='titleZA' ? 'is-checked' : '']"
-                @click="getSortValue('Title (Z-A)'); $refs.cpt.sort('titleZA')"
+                :class="[sortOption === 'titleZA' ? 'is-checked' : '']"
+                @click="
+                  getSortValue('Title (Z-A)');
+                  $refs.cpt.sort('titleZA');
+                "
               >
                 Sort by title (z-a)
                 <span class="fas fa-sort"></span>
               </b-button>
             </b-row>
-            <!-- <b-row>
+            <!-- Sort - Shuffle -->
+            <b-row>
               <b-button
                 block
                 variant="light"
-                :class="[sortOption==='id' ? 'is-checked' : '']"
-                @click="getSortValue('ID'); $refs.cpt.sort('id')"
+                @click="
+                  getSortValue('Shuffle');
+                  $refs.cpt.shuffle();
+                "
               >
-                Sort by id
-                <span class="fas fa-sort"></span>
-              </b-button>
-            </b-row>-->
-            <b-row>
-              <b-button block variant="light" @click="getSortValue('Shuffle'); $refs.cpt.shuffle()">
                 Shuffle
                 <span class="fas fa-random"></span>
               </b-button>
             </b-row>
           </div>
 
+          <!-- ----------- TAGS & SORTING for MOBILE----------- -->
           <div id="mobile-sorttags" v-if="window.width < 576">
             <b-button-toolbar>
+              <!-- Tag Group -->
               <b-dropdown size="sm" text="Filter" variant="outline-secondary">
+                <!-- Tag - Show All -->
                 <b-dropdown-item
-                  :class="[filterOption==='removeFilter' ? 'is-checked' : '']"
-                  @click="$refs.cpt.filter('removeFilter'); removeFilterValue();"
+                  :class="[filterOption === 'removeFilter' ? 'is-checked' : '']"
+                  @click="
+                    $refs.cpt.filter('removeFilter');
+                    removeFilterValue();
+                  "
                 >
                   Show All
                   <b-badge pill variant="dark">{{ photos.length }}</b-badge>
                 </b-dropdown-item>
+                <!-- Tags - Photo Tags -->
                 <b-dropdown-item
                   v-for="tag in mutableTags"
                   :key="tag._id"
-                  :class="[filterOption==='filterByTag' ? 'is-checked' : '']"
-                  @click="getFilterValue(tag.tag); $refs.cpt.filter('filterByTag')"
+                  :class="[filterOption === 'filterByTag' ? 'is-checked' : '']"
+                  @click="
+                    getFilterValue(tag.tag);
+                    $refs.cpt.filter('filterByTag');
+                  "
                 >
-                  {{ tag.tag | capitalize}}
+                  {{ tag.tag | capitalize }}
                   <b-badge pill variant="dark">{{ tag.photosCount }}</b-badge>
                 </b-dropdown-item>
               </b-dropdown>
-              <b-dropdown size="sm" right text="Sort" variant="outline-secondary">
+
+              <!-- Sort Group-->
+              <b-dropdown
+                size="sm"
+                right
+                text="Sort"
+                variant="outline-secondary"
+              >
+                <!-- Sort - Newest -->
                 <b-dropdown-item
-                  :class="[sortOption==='newest' ? 'is-checked' : '']"
-                  @click="getSortValue('Newest'); $refs.cpt.sort('newest')"
+                  :class="[sortOption === 'newest' ? 'is-checked' : '']"
+                  @click="
+                    getSortValue('Newest');
+                    $refs.cpt.sort('newest');
+                  "
                 >
                   Sort by newest
                   <span class="fas fa-sort"></span>
                 </b-dropdown-item>
+                <!-- Sort - Oldest -->
                 <b-dropdown-item
-                  :class="[sortOption==='oldest' ? 'is-checked' : '']"
-                  @click="getSortValue('Oldest'); $refs.cpt.sort('oldest')"
+                  :class="[sortOption === 'oldest' ? 'is-checked' : '']"
+                  @click="
+                    getSortValue('Oldest');
+                    $refs.cpt.sort('oldest');
+                  "
                 >
                   Sort by oldest
                   <span class="fas fa-sort"></span>
                 </b-dropdown-item>
+                <!-- Sort - titleAZ -->
                 <b-dropdown-item
-                  :class="[sortOption==='titleAZ' ? 'is-checked' : '']"
-                  @click="getSortValue('Title (A-Z)'); $refs.cpt.sort('titleAZ')"
+                  :class="[sortOption === 'titleAZ' ? 'is-checked' : '']"
+                  @click="
+                    getSortValue('Title (A-Z)');
+                    $refs.cpt.sort('titleAZ');
+                  "
                 >
                   Sort by title (a-z)
                   <span class="fas fa-sort"></span>
                 </b-dropdown-item>
+                <!-- Sort - titleZA -->
                 <b-dropdown-item
-                  :class="[sortOption==='titleZA' ? 'is-checked' : '']"
-                  @click="getSortValue('Title (Z-A)'); $refs.cpt.sort('titleZA')"
+                  :class="[sortOption === 'titleZA' ? 'is-checked' : '']"
+                  @click="
+                    getSortValue('Title (Z-A)');
+                    $refs.cpt.sort('titleZA');
+                  "
                 >
                   Sort by title (z-a)
                   <span class="fas fa-sort"></span>
                 </b-dropdown-item>
-                <!-- <b-dropdown-item
-                  :class="[sortOption==='id' ? 'is-checked' : '']"
-                  @click="getSortValue('ID'); $refs.cpt.sort('id')"
+                <!-- Sort - Shuffle -->
+                <b-dropdown-item
+                  @click="
+                    getSortValue('Shuffle');
+                    $refs.cpt.shuffle();
+                  "
                 >
-                  Sort by id
-                  <span class="fas fa-sort"></span>
-                </b-dropdown-item>-->
-                <b-dropdown-item @click="getSortValue('Shuffle'); $refs.cpt.shuffle()">
                   Shuffle
                   <span class="fas fa-random"></span>
                 </b-dropdown-item>
@@ -180,45 +244,47 @@
           </div>
         </b-col>
 
+        <!-- ----------- PHOTO GRID & LAYOUT BUTTONS & TAG/SORT PILLS & LOADER----------- -->
         <b-col cols="12" sm="10" md="10" lg="10" xl="8" offset-xl="1">
+          <!-- Photo Layout Buttons -->
           <div id="layout">
+            <!-- Photo Grid Views -->
             <b-nav tabs align="center">
+              <!-- Photo Grid Button -->
               <b-nav-item
                 :active="packeryActive"
-                :class="[layout===currentLayout? 'is-checked' : '']"
+                :class="[layout === currentLayout ? 'is-checked' : '']"
                 class="button"
                 v-b-tooltip.hover
                 title="Gallery View"
-                @click="changeLayout('packery'); removeFilterValue(); getSortValue('Newest');"
+                @click="changeLayout('packery')"
               >
                 <span class="fas fa-th"></span>
               </b-nav-item>
+              <!-- Photo List Button -->
               <b-nav-item
                 :active="verticalActive"
-                :class="[layout===currentLayout? 'is-checked' : '']"
+                :class="[layout === currentLayout ? 'is-checked' : '']"
                 class="button"
                 v-b-tooltip.hover
                 title="List View"
-                @click="changeLayout('vertical'); removeFilterValue(); getSortValue('Newest');"
+                @click="changeLayout('vertical')"
               >
                 <span class="fas fa-bars"></span>
               </b-nav-item>
-              <b-nav-item
-                class="button"
-                v-b-tooltip.hover
-                title="Fullscreen View"
-                @click="toggleFullscreen()"
-              >
-                <span class="fas fa-expand"></span>
-              </b-nav-item>
-              <!-- <b-nav-item disabled>Width: {{ window.width }}</b-nav-item>
-              <b-nav-item disabled>Height: {{ window.height }}</b-nav-item>-->
             </b-nav>
           </div>
 
           <div id="grid">
+            <!-- Photo Tag/Sort Pills -->
             <b-button-group size="sm">
-              <b-button disabled pill size="sm" variant="dark" :v-model="sortValue">
+              <b-button
+                disabled
+                pill
+                size="sm"
+                variant="dark"
+                :v-model="sortValue"
+              >
                 {{ sortValue }}
                 <b-badge pill variant="light">
                   <span class="fas fa-sort-down"></span>
@@ -231,8 +297,11 @@
                 variant="dark"
                 :v-model="filterValue"
                 v-if="filterValue.length > 0"
-                :class="[filterOption==='removeFilter' ? 'is-checked' : '']"
-                @click="$refs.cpt.filter('removeFilter'); removeFilterValue();"
+                :class="[filterOption === 'removeFilter' ? 'is-checked' : '']"
+                @click="
+                  $refs.cpt.filter('removeFilter');
+                  removeFilterValue();
+                "
                 v-b-tooltip.hover
                 title="Remove filter"
               >
@@ -243,101 +312,70 @@
               </b-button>
             </b-button-group>
 
-            <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen" class="text-center">
-              <isotope
-                id="root_isotope"
-                ref="cpt"
-                :options="getOptions()"
-                v-images-loaded:on.progress="layout"
-                :list="photos"
+            <!-- Photo Grid View -->
+            <isotope
+              id="root_isotope"
+              ref="cpt"
+              :options="getOptions()"
+              v-images-loaded:on.progress="layout"
+              :list="photos"
+            >
+              <div
+                class="pt-3"
+                v-for="(photo, index) in mutablePhotos"
+                :key="photo._id"
+                :id="'photo' + index"
+                @click="selected = photo"
+                :style="[photoStyle, calculateSize(photo.size)]"
               >
-                <div
-                  v-for="photo in mutablePhotos"
-                  :key="photo._id"
-                  @click="selected=photo"
-                  :style="[photoStyle, calculateSize(photo.size)]"
-                >
-                  <div>
-                    <b-img
-                      :src="photo.uploadPhoto"
-                      fluid
-                      rounded
-                      :alt="photo.title"
-                      :style="verticalActive ? 'margin-bottom: 20px;' : 'false'"
-                      @click="fullscreen ? fullscreen=false : $bvModal.show(photo._id);"
-                    ></b-img>
+                <div>
+                  <b-img
+                    :src="photo.uploadPhoto"
+                    fluid
+                    rounded
+                    center
+                    :alt="photo.title"
+                    @click="
+                      packeryActive
+                        ? changeLayout('vertical')
+                        : changeLayout('packery');
+                      scrollTo('#photo' + index, 600);
+                    "
+                  ></b-img>
+
+                  <!-- Photo Details View -->
+                  <PhotoViewComponent
+                    v-if="verticalActive"
+                    :photos="mutablePhotos"
+                    :photo="photo"
+                    :tags="mutableTags"
+                  />
+                  <!-- Photo Grid Admin Edit View -->
+                  <b-container v-if="verticalActive">
                     <PhotoAdmEditComponent
                       v-if="isLoggedIn"
                       :photos="mutablePhotos"
                       :photo="photo"
                       :tags="mutableTags"
                     />
-                    <b-modal
-                      centered
-                      size="xl"
-                      :id="photo._id"
-                      hide-header
-                      :footer-bg-variant="footerBgVariant"
-                      :footer-text-variant="footerTextVariant"
-                    >
-                      <b-container fluid>
-                        <b-row>
-                          <b-img
-                            :src="photo.uploadPhoto"
-                            fluid
-                            rounded
-                            center
-                            :alt="photo.title"
-                            @click="$bvModal.hide(photo._id)"
-                          ></b-img>
-                        </b-row>
-                      </b-container>
-                      <div id="modal-footer" slot="modal-footer" class="w-100">
-                        <b-container fluid>
-                          <b-row>
-                            <b-col cols="12">
-                              <h6 class="text-white">
-                                <strong>{{photo.title}}</strong>
-                              </h6>
-                            </b-col>
-                          </b-row>
-                          <b-row>
-                            <b-col align-self="start" cols="12" md="auto">
-                              <div class="text-white">
-                                <span class="font-weight-noraml">Tag(s):&nbsp;</span>
-                                <span
-                                  class="font-weight-normal"
-                                  v-for="tag in photo.tags"
-                                  :key="tag._id"
-                                >{{tag.tag | capitalize}},&nbsp;</span>
-                              </div>
-                            </b-col>
-                            <b-col align-self="start" cols="12" md="auto">
-                              <div
-                                class="font-weight-light text-white-50"
-                              >Posted {{photo.uploadDate | moment("from", "now") }}; {{photo.uploadDate | moment("dddd, MMMM Do YYYY") }}</div>
-                            </b-col>
-                            <b-col align-self="end" cols="12">
-                              <b-button
-                                id="modal-button"
-                                variant="outline-light"
-                                size="sm"
-                                @click="$bvModal.hide(photo._id)"
-                              >Close</b-button>
-                            </b-col>
-                          </b-row>
-                        </b-container>
-                      </div>
-                    </b-modal>
+                  </b-container>
+                  <div v-else>
+                    <PhotoAdmEditComponent
+                      v-if="isLoggedIn"
+                      :photos="mutablePhotos"
+                      :photo="photo"
+                      :tags="mutableTags"
+                    />
                   </div>
                 </div>
-              </isotope>
-            </fullscreen>
+              </div>
+            </isotope>
 
-            <div id="infiniteloader" class="mt-3">
+            <!-- Photo Loader -->
+            <div id="infiniteloader" class="my-4">
               <b-row>
                 <b-col cols="12" align-self="end">
-                  <p class="errors" v-if="errors.length > 0">{{errors}}</p>
+                  <p class="errors" v-if="errors.length > 0">{{ errors }}</p>
                   <infinite-loading
                     ref="infiniteLoading"
                     @infinite="infiniteHandler"
@@ -348,7 +386,15 @@
                         No more futos
                         <i class="fas fa-frown"></i>
                       </div>
-                      <b-button variant="link" @click="scrollToTop()">
+
+                      <b-button
+                        v-scroll-to="{
+                          element: '#app',
+                          offset: -200,
+                          duration: 2000
+                        }"
+                        variant="link"
+                      >
                         Back to Top&nbsp;
                         <i class="fas fa-smile"></i>
                       </b-button>
@@ -358,7 +404,8 @@
               </b-row>
             </div>
 
-            <p class="errors" v-if="errors.length > 0">{{errors}}</p>
+            <!-- Photo Errors -->
+            <p class="errors" v-if="errors.length > 0">{{ errors }}</p>
           </div>
         </b-col>
       </b-row>
@@ -373,18 +420,18 @@ import InfiniteLoading from "vue-infinite-loading";
 import isotope from "vueisotope";
 require("isotope-packery");
 import imagesLoaded from "vue-images-loaded";
-import fullscreen from "vue-fullscreen/src/component.vue";
 import PhotoAdmCRUDComponent from "./PhotoAdmCRUDComponent.vue";
 import PhotoAdmEditComponent from "./PhotoAdmEditComponent.vue";
+import PhotoViewComponent from "./PhotoViewComponent.vue";
 
 export default {
   name: "PhotoComponent",
   components: {
     InfiniteLoading,
     isotope,
-    fullscreen,
     PhotoAdmCRUDComponent,
-    PhotoAdmEditComponent
+    PhotoAdmEditComponent,
+    PhotoViewComponent
   },
   directives: {
     imagesLoaded
@@ -392,6 +439,14 @@ export default {
   data() {
     return {
       photos: [],
+      mainProps: {
+        center: true,
+        fluidGrow: true,
+        blank: true,
+        blankColor: "#bbb",
+        width: 400,
+        height: 400
+      },
       tags: [],
       page: 1,
       errors: [],
@@ -403,9 +458,6 @@ export default {
       filterOption: null,
       filterText: "",
       filterValue: "",
-      fullscreen: false,
-      footerBgVariant: "dark",
-      footerTextVariant: "light",
       photoStyle: {
         width: "33.333%",
         height: "auto",
@@ -536,8 +588,35 @@ export default {
           console.log(err.config);
         });
     },
-    scrollToTop() {
-      window.scrollTo(0, 0);
+    lazyHandler (component) {
+        console.log('this component is showing')
+      },
+    scrollTo(element, duration) {
+      //custom ScrollTo options
+      const options = {
+        easing: "ease-in",
+        offset: -50,
+        force: true,
+        cancelable: true,
+        onStart: function(element) {
+          // scrolling started
+        },
+        onDone: function(element) {
+          // scrolling is done
+        },
+        onCancel: function() {
+          // scrolling has been interrupted
+        },
+        x: false,
+        y: true
+      };
+      //timeout to chain events in order
+      setTimeout(
+        function() {
+          this.$scrollTo(element, duration, options);
+        }.bind(this),
+        600
+      );
     },
     getFilterValue: function(value) {
       return (this.filterValue = value);
@@ -550,22 +629,25 @@ export default {
     },
     changeLayout: function(value) {
       this.currentLayout = value;
-      this.packeryActive = !this.packeryActive;
-      this.verticalActive = !this.verticalActive;
+      //change layout buttons
+      if (value === "vertical") {
+        this.verticalActive = true;
+        this.packeryActive = false;
+      } else if (value === "packery") {
+        this.verticalActive = false;
+        this.packeryActive = true;
+      }
+      //this.packeryActive = !this.packeryActive;
+      //this.verticalActive = !this.verticalActive;
       this.$refs.cpt.layout(this.currentLayout);
+      //re sort so the photos dont overlap after resizes
       this.$nextTick(function() {
-        this.$refs.cpt.unfilter();
-        this.$refs.cpt.sort("newest");
+        this.$refs.cpt.sort(this.sortValue);
       }, this);
     },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    },
-    toggleFullscreen() {
-      this.$nextTick(function() {
-        this.fullscreen = !this.fullscreen;
-      }, this);
     },
     getOptions: function() {
       const _this = this;
@@ -595,10 +677,10 @@ export default {
             return itemElem.title.toLowerCase();
           },
           newest: function(itemElem) {
-            return itemElem.uploadDate;
+            return itemElem.captureDate;
           },
           oldest: function(itemElem) {
-            return itemElem.uploadDate;
+            return itemElem.captureDate;
           }
         },
         getFilterData: {
@@ -606,9 +688,23 @@ export default {
             return true;
           },
           filterByText: function(itemElem) {
-            return itemElem.title
-              .toLowerCase()
-              .includes(_this.filterText.toLowerCase());
+            const tagsNum = itemElem.tags.length;
+            var tags = " ";
+            for (var i = 0; i < tagsNum; i++) {
+              tags = tags + itemElem.tags[i].tag + " ";
+            }
+            return (
+              itemElem.title
+                .toLowerCase()
+                .includes(_this.filterText.toLowerCase()) ||
+              itemElem.caption
+                .toLowerCase()
+                .includes(_this.filterText.toLowerCase()) ||
+              itemElem.location
+                .toLowerCase()
+                .includes(_this.filterText.toLowerCase()) ||
+              tags.toLowerCase().includes(_this.filterText.toLowerCase())
+            );
           },
           filterByTag: function(itemElem) {
             const arrPhotoLength = _this.mutablePhotos.length;
@@ -647,20 +743,21 @@ export default {
         }
       } else {
         //More than 960ox width
-        if (this.currentLayout === "vertical" && photoSize === "small") {
-          //small in vertical layout are 50% width
-          return this.mdSize;
-        } else if (
-          this.currentLayout === "vertical" &&
-          photoSize === "medium"
-        ) {
-          //madium images in vertical layout are 66% width
-          return this.lgSize;
-        } else if (
-          this.currentLayout === "vertical" &&
-          (photoSize === "large" || photoSize === "xlarge")
-        ) {
-          //large and xlarge images in vertical layout are 100% width
+        // if (this.currentLayout === "vertical" && photoSize === "small") {
+        //   //small in vertical layout are 50% width
+        //   return this.mdSize;
+        // } else if (
+        //   this.currentLayout === "vertical" &&
+        //   photoSize === "medium"
+        // ) {
+        //   //madium images in vertical layout are 66% width
+        //   return this.lgSize;
+        // } else if (
+        //   this.currentLayout === "vertical" &&
+        //   (photoSize === "large" || photoSize === "xlarge")
+        // ) {
+        if (this.currentLayout === "vertical") {
+          //all images in vertical layout are 100% width
           return this.xlSize;
         } else if (photoSize === "small") {
           return this.smSize;
@@ -681,16 +778,7 @@ export default {
 </script>
 
 <!-- Global styling -->
-<style>
-.modal-body,
-.modal-footer {
-  background-color: #585858;
-}
-.modal-dialog {
-  width: auto;
-  z-index: 100000;
-}
-</style>
+<style></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
@@ -743,7 +831,7 @@ h2 {
 .img-fluid {
   cursor: pointer;
   position: relative;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 150px);
 }
 .img-fluid .hover {
   display: none;
@@ -773,11 +861,6 @@ h2 {
   margin-bottom: 25px;
   width: 50%;
 }
-#modal-button {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
 @media (max-width: 576px) {
   #filter {
     margin: 0px 10px;
@@ -788,12 +871,6 @@ h2 {
   }
   #layout {
     margin: 0px 15px;
-  }
-  #modal-button {
-    position: relative;
-    float: right;
-    bottom: 0;
-    right: 0;
   }
   .col-1,
   .col-2,
@@ -871,19 +948,4 @@ h2 {
     padding-left: 0px;
   }
 }
-/* 
-@media (min-width: 960px) {
-  .fullscreen-modal .modal-dialog {
-    max-width: 100%;
-    margin: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    display: flex;
-    position: fixed;
-    z-index: 100000;
-  }
-} */
 </style>

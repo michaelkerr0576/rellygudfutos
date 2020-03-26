@@ -1,10 +1,21 @@
 <template>
   <div id="header">
     <b-container fluid>
+      <!-- ----------- NAVIGATION BAR ----------- -->
       <b-row>
-        <b-col offset="3" cols="9" offset-sm="7" sm="5" offset-md="8" md="4" offset-lg="9" lg="3">
+        <b-col
+          offset="0"
+          cols="12"
+          offset-sm="1"
+          sm="11"
+          offset-md="6"
+          md="6"
+          offset-lg="7"
+          lg="5"
+        >
           <div id="menu">
             <b-nav tabs>
+              <!-- Home Button -->
               <b-nav-item
                 router-link-exact-active
                 to="/home"
@@ -14,6 +25,41 @@
               >
                 <span class="fas fa-home"></span>
               </b-nav-item>
+
+              <!-- Storefront Button -->
+              <b-nav-item
+                router-link-exact-active
+                href="https://michaelkerr.picfair.com/"
+                class="button"
+                v-b-tooltip.hover
+                title="Storefront"
+              >
+                <span class="fas fa-store"></span>
+              </b-nav-item>
+
+              <!-- LinkedLn Button -->
+              <b-nav-item
+                router-link-exact-active
+                href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                class="button"
+                v-b-tooltip.hover
+                title="LinkedIn"
+              >
+                <span class="fab fa-linkedin-in"></span>
+              </b-nav-item>
+
+              <!-- Instagram Button -->
+              <b-nav-item
+                router-link-exact-active
+                href="https://www.instagram.com/michaelkerr_futos/"
+                class="button"
+                v-b-tooltip.hover
+                title="Instagram"
+              >
+                <span class="fab fa-instagram"></span>
+              </b-nav-item>
+
+              <!-- Development Button -->
               <b-nav-item
                 router-link-exact-active
                 to="/development"
@@ -23,6 +69,8 @@
               >
                 <span class="fab fa-dev"></span>
               </b-nav-item>
+
+              <!-- Admin Button -->
               <b-nav-item
                 v-if="!isLoggedIn"
                 router-link-exact-active
@@ -46,10 +94,15 @@
           </div>
         </b-col>
       </b-row>
+
+      <!-- ----------- LOGO ----------- -->
       <b-row>
         <b-col cols="12">
           <div id="rellygudfutos">
-            <h1>rellygudfutos</h1>
+            <b-navbar-brand href="/home">
+              <h3>michaelkerr</h3>
+              <h1>rellygudfutos</h1>
+            </b-navbar-brand>
           </div>
         </b-col>
       </b-row>
@@ -96,6 +149,11 @@ h1 {
   font-family: "Cabin Sketch", cursive;
   font-weight: 500;
   line-height: 1.2;
+  color: black;
+}
+h3 {
+  font-family: "Shadows Into Light Two", cursive;
+  color: black;
 }
 @media (max-width: 576px) {
   #header {

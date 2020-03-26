@@ -2,9 +2,12 @@
   <div id="login" class="py-5">
     <b-container>
       <b-row class="justify-content-md-center">
+
+         <!-- ----------- ADMIN ----------- -->
         <b-col cols="12" md="8" lg="5">
           <h3 class="text-center">Admin</h3>
           <b-form autocomplete="off" @submit.prevent="login">
+            <!-- Email Field -->
             <b-form-group>
               <b-input-group>
                 <template v-slot:prepend>
@@ -22,6 +25,7 @@
               </b-input-group>
             </b-form-group>
 
+             <!-- Password Field -->
             <b-form-group>
               <b-input-group>
                 <template v-slot:prepend>

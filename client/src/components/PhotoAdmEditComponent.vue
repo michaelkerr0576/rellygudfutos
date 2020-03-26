@@ -1,44 +1,130 @@
 <template>
+  <!-- ----------- PHOTO EDIT FORM ----------- -->
   <div>
     <form autocomplete="off" @submit.prevent="updatePhoto && deletePhoto">
       <b-card bg-variant="light" border-variant="default" align="left">
+        <!-- Photo ID Field -->
         <b-input-group size="sm">
           <b-input-group-text slot="prepend">ID</b-input-group-text>
-          <b-form-input id="editphotoid" v-model="photo._id" disabled></b-form-input>
+          <b-form-input v-model="photo._id" disabled></b-form-input>
         </b-input-group>
 
+        <!-- Photo Title Field -->
         <b-input-group size="sm">
           <b-input-group-text slot="prepend">Title</b-input-group-text>
-          <b-form-input id="editphototitle" required v-model="photo.title" placeholder="Futo title"></b-form-input>
-          <b-form-invalid-feedback :state="editTitleState">
-            <b-card
-              class="invalidfeedback"
-            >requires at least 3 characters pls: [country] - [county/province] - [city/place] - [tag*] - [title]</b-card>
-          </b-form-invalid-feedback>
-        </b-input-group>
-
-        <b-input-group size="sm">
-          <b-input-group-text slot="prepend">Photo</b-input-group-text>
-          <b-form-input id="editphotouploadphoto" v-model="photo.uploadPhoto" disabled></b-form-input>
-        </b-input-group>
-
-        <b-input-group size="sm">
-          <b-input-group-text slot="prepend">Old Datetime</b-input-group-text>
-          <b-form-input id="editphotouploadphoto" v-model="photo.uploadDate" disabled></b-form-input>
-        </b-input-group>
-        <b-input-group size="sm">
-          <b-input-group-text slot="prepend">Datetime</b-input-group-text>
           <b-form-input
-            id="editphotouploaddate"
             required
-            v-model="editdate"
-            placeholder="new futo datetime"
+            v-model="photo.title"
+            placeholder="Photo Title - A short description"
           ></b-form-input>
-          <b-form-invalid-feedback :state="editDateState">
-            <b-card class="invalidfeedback">follow naming zample pls: YYYY-MM-DDThh:mm:ss.milZ pls</b-card>
+          <b-form-invalid-feedback :state="editTitleState">
+            <b-card class="invalidfeedback"
+              >requires at least 3 characters pls</b-card
+            >
           </b-form-invalid-feedback>
         </b-input-group>
 
+        <!-- Photo Caption Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Caption</b-input-group-text>
+          <b-form-textarea
+            required
+            v-model="photo.caption"
+            placeholder="Photo Caption - A fuller description of what is happening in the picture"
+            rows="3"
+          ></b-form-textarea>
+          <b-form-invalid-feedback :state="editCaptionState">
+            <b-card class="invalidfeedback"
+              >requires at least 3 characters pls</b-card
+            >
+          </b-form-invalid-feedback>
+        </b-input-group>
+
+        <!-- Photo Location Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Location</b-input-group-text>
+          <b-form-input
+            required
+            v-model="photo.location"
+            placeholder="Photo Location - Where the photo was taken"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="editLocationState">
+            <b-card class="invalidfeedback"
+              >requires at least 3 characters pls</b-card
+            >
+          </b-form-invalid-feedback>
+        </b-input-group>
+
+        <!-- Photo Store Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Store</b-input-group-text>
+          <b-form-input
+            required
+            v-model="photo.store"
+            placeholder="Photo Store Link - Enter link to store"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="editLocationState">
+            <b-card class="invalidfeedback"
+              >requires at least 3 characters pls</b-card
+            >
+          </b-form-invalid-feedback>
+        </b-input-group>
+
+        <!-- Photo Capture Date Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Capture Date</b-input-group-text>
+          <b-form-input v-model="photo.captureDate" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Camera Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Camera</b-input-group-text>
+          <b-form-input v-model="photo.camera" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Lens Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Lens</b-input-group-text>
+          <b-form-input v-model="photo.lens" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Aperature Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Aperature</b-input-group-text>
+          <b-form-input v-model="photo.aperature" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Focal Length Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Focal Length</b-input-group-text>
+          <b-form-input v-model="photo.focalLength" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Shutter Speed Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Shutter Speed</b-input-group-text>
+          <b-form-input v-model="photo.shutterSpeed" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo ISO Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">ISO</b-input-group-text>
+          <b-form-input v-model="photo.iso" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo OG Name Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">OG Name</b-input-group-text>
+          <b-form-input v-model="photo.originalName" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Upload Field -->
+        <b-input-group size="sm">
+          <b-input-group-text slot="prepend">Upload</b-input-group-text>
+          <b-form-input v-model="photo.uploadPhoto" disabled></b-form-input>
+        </b-input-group>
+
+        <!-- Photo Tags Field -->
         <b-input-group size="sm">
           <b-input-group-text slot="prepend">Old Tag(s):</b-input-group-text>
           <b-form-input disabled></b-form-input>
@@ -48,33 +134,60 @@
             :key="tag._id"
             :value="tag.id"
             disabled
-          >{{ tag.tag | capitalize}}</b-input-group-text>
+            >{{ tag.tag | capitalize }}</b-input-group-text
+          >
         </b-input-group>
         <b-card>
-          <b-form-checkbox-group size="sm" id="editphototags" v-model="edittags">
+          <b-form-checkbox-group
+            size="sm"
+            required
+            id="editphototags"
+            v-model="edittags"
+          >
             <b-form-checkbox
-              required
               v-for="tag in tags"
               :key="tag._id"
               :value="tag._id"
-            >{{ tag.tag | capitalize}}</b-form-checkbox>
-            <b-form-invalid-feedback :state="editTagState">select at least one tag pls</b-form-invalid-feedback>
+              >{{ tag.tag | capitalize }}</b-form-checkbox
+            >
+            <b-form-invalid-feedback :state="editTagState"
+              >select at least one tag pls</b-form-invalid-feedback
+            >
           </b-form-checkbox-group>
         </b-card>
 
+        <!-- Photo Size Field -->
         <b-input-group size="sm">
           <b-input-group-text slot="prepend">Old Size:</b-input-group-text>
           <b-form-input disabled></b-form-input>
-          <b-input-group-text slot="prepend" disabled>{{ photo.size }}</b-input-group-text>
+          <b-input-group-text slot="prepend" disabled>{{
+            photo.size
+          }}</b-input-group-text>
         </b-input-group>
         <b-card>
-          <b-form-radio-group required v-model="editsize" :options="sizes"></b-form-radio-group>
-          <b-form-invalid-feedback :state="editSizeState">select at least one size pls</b-form-invalid-feedback>
+          <b-form-radio-group
+            required
+            v-model="editsize"
+            :options="sizes"
+          ></b-form-radio-group>
+          <b-form-invalid-feedback :state="editSizeState"
+            >select at least one size pls</b-form-invalid-feedback
+          >
         </b-card>
 
-        <b-button type="submit" v-on:click="updatePhoto(photo._id)" block variant="warning">Update</b-button>
-        <b-button v-on:click="deletePhoto(photo._id)" block variant="danger">Delete</b-button>
+        <!-- Button Actions -->
+        <b-button
+          type="submit"
+          v-on:click="updatePhoto(photo._id)"
+          block
+          variant="warning"
+          >Update</b-button
+        >
+        <b-button v-on:click="deletePhoto(photo._id)" block variant="danger"
+          >Delete</b-button
+        >
 
+        <!-- Alerts -->
         <b-alert
           :show="dismissCountDown"
           dismissible
@@ -86,7 +199,12 @@
             <strong>Futo updated!</strong>
             <i>&nbsp;Bye alert in {{ dismissCountDown }} seconds..</i>
           </p>
-          <b-progress variant="success" :max="dismissSecs" :value="dismissCountDown" height="4px"></b-progress>
+          <b-progress
+            variant="success"
+            :max="dismissSecs"
+            :value="dismissCountDown"
+            height="4px"
+          ></b-progress>
         </b-alert>
 
         <b-alert
@@ -94,8 +212,9 @@
           dismissible
           fade
           :show="showErrorAlert"
-          @dismissed="showErrorAlert=false"
-        >{{errors}}</b-alert>
+          @dismissed="showErrorAlert = false"
+          >{{ errors }}</b-alert
+        >
       </b-card>
     </form>
   </div>
@@ -110,7 +229,6 @@ export default {
   props: ["photos", "photo", "tags"],
   data() {
     return {
-      editdate: "",
       edittags: [],
       editsize: null,
       sizes: [
@@ -129,14 +247,29 @@ export default {
     editTitleState() {
       return this.photo.title.length > 2 ? true : false;
     },
+    editCaptionState() {
+      return this.photo.caption.length > 2 ? true : false;
+    },
+    editLocationState() {
+      return this.photo.location.length > 2 ? true : false;
+    },
+    editStoreState() {
+      const pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return !!pattern.test(this.photo.store);
+    },
     editTagState() {
       return this.edittags.length > 0 ? true : false;
     },
     editSizeState() {
       return Boolean(this.editsize);
-    },
-    editDateState() {
-      return this.editdate.length > 2 ? true : false;
     }
   },
   watch: {
@@ -173,10 +306,6 @@ export default {
           {
             prop: "tags",
             value: this.edittags
-          },
-          {
-            prop: "uploadDate",
-            value: this.editdate
           }
         ];
         instance
@@ -227,11 +356,9 @@ export default {
               }, this);
               this.$nextTick(function() {
                 //set new tags to prop
-                this.photo.uploadDate = res.data.updatedPhoto.uploadDate;
                 this.photo.size = res.data.updatedPhoto.size;
                 this.photo.tags = res.data.updatedPhoto.tags;
                 //clear size and tags in form
-                this.editdate = "";
                 this.editsize = "";
                 this.edittags = [];
               }, this);

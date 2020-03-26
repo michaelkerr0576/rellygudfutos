@@ -2,6 +2,7 @@
   <div id="adm-CRUD" class="pt-4">
     <b-container fluid>
       <b-row class="justify-content-md-center">
+        <!-- ----------- PHOTO FORM ----------- -->
         <b-col cols="12" md="auto">
           <div id="adm-uploadphoto" class="mb-3">
             <b-card-group deck>
@@ -17,56 +18,112 @@
                 <b-card-text>
                   <div id="uploadPhotoForm">
                     <b-form autocomplete="off" @submit.prevent="uploadPhoto">
-                      <b-form-file
-                        id="photofile"
-                        required
-                        v-model="uploadPhotoForm.file"
-                        :state="photoFileState"
-                        placeholder="Chose a photo..."
-                        drop-placeholder="Drop photo here..."
-                        accept="image/jpeg, image/png"
-                      ></b-form-file>
-                      <b-form-invalid-feedback :state="photoFileState">select photo pls</b-form-invalid-feedback>
-                      <b-form-valid-feedback :state="photoFileState">grazie beaucoup</b-form-valid-feedback>
+                      <!-- Photo File Field -->
+                      <b-form-group>
+                        <b-form-file
+                          id="photofile"
+                          required
+                          v-model="uploadPhotoForm.file"
+                          :state="photoFileState"
+                          placeholder="Choose a Photo..."
+                          drop-placeholder="Drop Photo Here..."
+                          accept="image/jpeg, image/png"
+                        ></b-form-file>
+                        <b-form-invalid-feedback :state="photoFileState"
+                          >select photo pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="photoFileState"
+                          >grazie beaucoup</b-form-valid-feedback
+                        >
+                      </b-form-group>
 
-                      <br />
-                      <b-form-input
-                        id="phototitle"
-                        required
-                        v-model="uploadPhotoForm.title"
-                        :state="photoTitleState"
-                        description="<country>_<county/province>_<city/place>_<tag*>_<meta*>"
-                        placeholder="Photo title"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        :state="photoTitleState"
-                      >requires at least 3 characters pls</b-form-invalid-feedback>
-                      <b-form-valid-feedback :state="photoTitleState">merci mahalo</b-form-valid-feedback>
-                      <b-form-text id="input-live-help">
+                      <!-- Photo Title Field -->
+                      <b-form-group>
+                        <b-form-input
+                          id="phototitle"
+                          required
+                          v-model="uploadPhotoForm.title"
+                          :state="photoTitleState"
+                          placeholder="Photo Title - A short description"
+                        ></b-form-input>
+                        <b-form-invalid-feedback :state="photoTitleState"
+                          >requires at least 3 characters
+                          pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="photoTitleState"
+                          >merci mahalo</b-form-valid-feedback
+                        >
+                        <!-- <b-form-text id="input-live-help"></b-form-text>
                         <i>Title naming:</i>&nbsp;[country] - [county/province] - [city/place] - [tag*] - [title]
-                      </b-form-text>
+                      </b-form-text> -->
+                      </b-form-group>
 
-                      <br />
+                      <!-- Photo Caption Field -->
+                      <b-form-group>
+                        <b-form-textarea
+                          id="photocaption"
+                          required
+                          v-model="uploadPhotoForm.caption"
+                          :state="photoCaptionState"
+                          placeholder="Photo Caption - A fuller description of what is happening in the picture"
+                          rows="4"
+                        ></b-form-textarea>
+                        <b-form-invalid-feedback :state="photoCaptionState"
+                          >requires at least 3 characters
+                          pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="photoCaptionState"
+                          >so much thanks</b-form-valid-feedback
+                        >
+                      </b-form-group>
+
+                      <!-- Photo Location Field -->
+                      <b-form-group>
+                        <b-form-input
+                          id="photolocation"
+                          required
+                          v-model="uploadPhotoForm.location"
+                          :state="photoLocationState"
+                          placeholder="Photo Location - Where the photo was taken"
+                        ></b-form-input>
+                        <b-form-invalid-feedback :state="photoLocationState"
+                          >requires at least 3 characters
+                          pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="photoLocationState"
+                          >danke danke</b-form-valid-feedback
+                        >
+                      </b-form-group>
+
+                      <!-- Photo Tags Field -->
                       <b-form-group label="Photo tags 4 futo:">
-                        <b-form-checkbox-group id="phototags" :state="photoTagsState">
+                        <b-form-checkbox-group
+                          id="phototags"
+                          :state="photoTagsState"
+                        >
                           <b-form-checkbox
                             required
                             v-for="tag in tags"
                             :key="tag._id"
                             :value="tag._id"
                             v-model="uploadPhotoForm.tags"
-                          >{{ tag.tag | capitalize}}</b-form-checkbox>
+                            >{{ tag.tag | capitalize }}</b-form-checkbox
+                          >
                           <!-- <div>
                                     TagsSelected:
                                     <strong>{{ uploadPhotoForm.tags }}</strong>
                           </div>-->
-                          <b-form-invalid-feedback
-                            :state="photoTagsState"
-                          >select at least one tag pls</b-form-invalid-feedback>
-                          <b-form-valid-feedback :state="photoTagsState">gracias ciao bella</b-form-valid-feedback>
+                          <b-form-invalid-feedback :state="photoTagsState"
+                            >select at least one tag
+                            pls</b-form-invalid-feedback
+                          >
+                          <b-form-valid-feedback :state="photoTagsState"
+                            >gracias ciao bella</b-form-valid-feedback
+                          >
                         </b-form-checkbox-group>
                       </b-form-group>
 
+                      <!-- Photo Size Field -->
                       <b-form-group label="Photo size 4 futo:">
                         <b-form-radio-group
                           id="photosize"
@@ -75,12 +132,33 @@
                           :options="sizes"
                           :state="photoSizeState"
                         >
-                          <b-form-invalid-feedback
-                            :state="photoSizeState"
-                          >select at least one size pls</b-form-invalid-feedback>
-                          <b-form-valid-feedback :state="photoSizeState">tanks</b-form-valid-feedback>
+                          <b-form-invalid-feedback :state="photoSizeState"
+                            >select at least one size
+                            pls</b-form-invalid-feedback
+                          >
+                          <b-form-valid-feedback :state="photoSizeState"
+                            >tanks</b-form-valid-feedback
+                          >
                         </b-form-radio-group>
                       </b-form-group>
+
+                      <!-- Photo Store Field -->
+                      <b-form-group>
+                        <b-form-input
+                          id="photostore"
+                          required
+                          v-model="uploadPhotoForm.store"
+                          :state="photoStoreState"
+                          placeholder="Photo Store Link - Enter link to store"
+                        ></b-form-input>
+                        <b-form-invalid-feedback :state="photoStoreState"
+                          >must be a link pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="photoStoreState"
+                          >well done sir</b-form-valid-feedback
+                        >
+                      </b-form-group>
+                      <br />
 
                       <div class="text-center">
                         <b-button
@@ -89,7 +167,8 @@
                           variant="outline-secondary"
                           size="sm"
                           class="w-50"
-                        >Upload</b-button>
+                          >Upload</b-button
+                        >
                       </div>
                     </b-form>
                   </div>
@@ -99,6 +178,7 @@
           </div>
         </b-col>
 
+        <!-- ----------- TAGS FORMS ----------- -->
         <b-col cols="12" md="auto">
           <div id="adm-add-delete-tags">
             <b-card-group deck>
@@ -120,10 +200,14 @@
                           type="text"
                           required
                           :state="addTagState"
-                          placeholder="Enter tag"
+                          placeholder="Enter New Tag"
                         ></b-form-input>
-                        <b-form-invalid-feedback :state="addTagState">enter new tag pls</b-form-invalid-feedback>
-                        <b-form-valid-feedback :state="addTagState">well done</b-form-valid-feedback>
+                        <b-form-invalid-feedback :state="addTagState"
+                          >enter new tag pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="addTagState"
+                          >well done</b-form-valid-feedback
+                        >
                       </b-form-group>
 
                       <div class="text-center">
@@ -133,7 +217,8 @@
                           variant="outline-secondary"
                           size="sm"
                           class="w-50"
-                        >Add</b-button>
+                          >Add</b-button
+                        >
                       </div>
                     </b-form>
                   </div>
@@ -159,15 +244,20 @@
                           type="text"
                           required
                           :state="deleteTagState"
-                          placeholder="Enter tag to delete"
+                          placeholder="Enter Tag to Delete"
                         ></b-form-input>
                         <datalist id="input-deletetag-list">
-                          <option v-for="tag in tags" :key="tag._id">{{tag.tag | capitalize}}</option>
+                          <option v-for="tag in tags" :key="tag._id">{{
+                            tag.tag | capitalize
+                          }}</option>
                         </datalist>
-                        <b-form-invalid-feedback
-                          :state="deleteTagState"
-                        >select tag to delete from dropdown pls</b-form-invalid-feedback>
-                        <b-form-valid-feedback :state="deleteTagState">adeus</b-form-valid-feedback>
+                        <b-form-invalid-feedback :state="deleteTagState"
+                          >select tag to delete from dropdown
+                          pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="deleteTagState"
+                          >adeus</b-form-valid-feedback
+                        >
                       </b-form-group>
 
                       <div class="text-center">
@@ -178,7 +268,8 @@
                           variant="outline-secondary"
                           size="sm"
                           class="w-50"
-                        >Delete</b-button>
+                          >Delete</b-button
+                        >
                       </div>
                     </b-form>
                   </div>
@@ -208,15 +299,20 @@
                           type="text"
                           required
                           :state="updateOldTagState"
-                          placeholder="Select tag to update"
+                          placeholder="Select Tag to Update"
                         ></b-form-input>
                         <datalist id="input-updatetag-list">
-                          <option v-for="tag in tags" :key="tag._id">{{tag.tag | capitalize}}</option>
+                          <option v-for="tag in tags" :key="tag._id">{{
+                            tag.tag | capitalize
+                          }}</option>
                         </datalist>
-                        <b-form-invalid-feedback
-                          :state="updateOldTagState"
-                        >select tag to update from dropdown pls</b-form-invalid-feedback>
-                        <b-form-valid-feedback :state="updateOldTagState">bien</b-form-valid-feedback>
+                        <b-form-invalid-feedback :state="updateOldTagState"
+                          >select tag to update from dropdown
+                          pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="updateOldTagState"
+                          >bien</b-form-valid-feedback
+                        >
                       </b-form-group>
 
                       <b-form-group>
@@ -225,21 +321,31 @@
                           type="text"
                           required
                           :state="updateNewTagState"
-                          placeholder="Enter tag"
+                          placeholder="Enter Updated Tag"
                         ></b-form-input>
-                        <b-form-invalid-feedback :state="updateNewTagState">enter updated tag pls</b-form-invalid-feedback>
-                        <b-form-valid-feedback :state="updateNewTagState">Ça va bien</b-form-valid-feedback>
+                        <b-form-invalid-feedback :state="updateNewTagState"
+                          >enter updated tag pls</b-form-invalid-feedback
+                        >
+                        <b-form-valid-feedback :state="updateNewTagState"
+                          >Ça va bien</b-form-valid-feedback
+                        >
                       </b-form-group>
 
                       <div class="text-center">
                         <b-button
                           type="submit"
-                          v-on:click="updateTag(updateTagForm.oldTag, updateTagForm.newTag)"
+                          v-on:click="
+                            updateTag(
+                              updateTagForm.oldTag,
+                              updateTagForm.newTag
+                            )
+                          "
                           pill
                           variant="outline-secondary"
                           size="sm"
                           class="w-50"
-                        >Update</b-button>
+                          >Update</b-button
+                        >
                       </div>
                     </b-form>
                   </div>
@@ -249,6 +355,8 @@
           </div>
         </b-col>
       </b-row>
+
+      <!-- ----------- ALERTS ----------- -->
       <b-row class="justify-content-md-center">
         <b-col cols="12" md="auto">
           <b-alert
@@ -262,7 +370,12 @@
               <strong>Success!</strong>
               <i>&nbsp;Bye alert in {{ dismissCountDown }} seconds..</i>
             </p>
-            <b-progress variant="success" :max="dismissSecs" :value="dismissCountDown" height="4px"></b-progress>
+            <b-progress
+              variant="success"
+              :max="dismissSecs"
+              :value="dismissCountDown"
+              height="4px"
+            ></b-progress>
             <!-- <a href="#" class="alert-link">See me futo pls!</a> -->
           </b-alert>
 
@@ -271,8 +384,9 @@
             dismissible
             fade
             :show="showErrorAlert"
-            @dismissed="showErrorAlert=false"
-          >{{errors}}</b-alert>
+            @dismissed="showErrorAlert = false"
+            >{{ errors }}</b-alert
+          >
         </b-col>
       </b-row>
       <div id="break" class="mt-4">
@@ -294,8 +408,11 @@ export default {
       uploadPhotoForm: {
         file: null,
         title: "",
+        caption: "",
+        location: "",
         tags: [],
-        size: null
+        size: null,
+        store: ""
       },
       addTagForm: {
         tag: ""
@@ -326,11 +443,29 @@ export default {
     photoTitleState() {
       return this.uploadPhotoForm.title.length > 2 ? true : false;
     },
+    photoCaptionState() {
+      return this.uploadPhotoForm.caption.length > 2 ? true : false;
+    },
+    photoLocationState() {
+      return this.uploadPhotoForm.location.length > 2 ? true : false;
+    },
     photoTagsState() {
       return this.uploadPhotoForm.tags.length > 0 ? true : false;
     },
     photoSizeState() {
       return Boolean(this.uploadPhotoForm.size);
+    },
+    photoStoreState() {
+      const pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return !!pattern.test(this.uploadPhotoForm.store);
     },
     addTagState() {
       return this.addTagForm.tag.length > 1 ? true : false;
@@ -371,11 +506,14 @@ export default {
       let formData = new FormData();
       formData.append("uploadPhoto", this.uploadPhotoForm.file);
       formData.append("title", this.uploadPhotoForm.title);
+      formData.append("caption", this.uploadPhotoForm.caption);
+      formData.append("location", this.uploadPhotoForm.location);
       formData.append("size", this.uploadPhotoForm.size);
       for (var i = 0; i < this.uploadPhotoForm.tags.length; i++) {
         let phototag = this.uploadPhotoForm.tags[i];
         formData.append("tags[" + i + "]", phototag);
       }
+      formData.append("store", this.uploadPhotoForm.store);
       console.log(">> formData >> ", formData);
       // for (var pair of formData.entries()) {
       //   console.log(pair[0] + ", " + pair[1]);
@@ -409,8 +547,11 @@ export default {
             //clear form
             this.uploadPhotoForm.file = null;
             this.uploadPhotoForm.title = "";
+            this.uploadPhotoForm.caption = "";
+            this.uploadPhotoForm.location = "";
             this.uploadPhotoForm.tags = [];
             this.uploadPhotoForm.size = null;
+            this.uploadPhotoForm.store = "";
           }, this);
         })
         .catch(err => {

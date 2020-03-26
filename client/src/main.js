@@ -7,6 +7,8 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 import store from "./stores/store";
+import VueScrollTo from "vue-scrollto";
+Vue.use(VueScrollTo);
 
 //client
 import "bootstrap/dist/css/bootstrap.css";

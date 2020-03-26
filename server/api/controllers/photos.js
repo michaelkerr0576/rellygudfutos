@@ -1,6 +1,8 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const AWS = require("aws-sdk");
+const ExifImage = require("exif").ExifImage;
+const Fraction = require('fraction.js');
 
 //Importing Model
 const Tags = require("../models/tag");
@@ -17,10 +19,19 @@ exports.photos_get_all = async (req, res, next) => {
           return {
             _id: file._id,
             title: file.title,
-            size: file.size,
+            caption: file.caption,
+            location: file.location,
             tagsCount: file.tags.length,
             tags: file.tags,
-            uploadDate: file.uploadDate,
+            size: file.size,
+            store: file.store,
+            captureDate: file.captureDate,
+            camera: file.camera,
+            lens: file.lens,
+            aperature: file.aperature,
+            focalLength: file.focalLength,
+            shutterSpeed: file.shutterSpeed,
+            iso: file.iso,
             originalName: file.originalName,
             uploadPhoto: file.uploadPhoto,
             request: {
@@ -64,78 +75,230 @@ exports.photos_upload_photo = (req, res, next) => {
     if (err) {
       res.status(500).json({ error: true, Message: err });
     } else {
-      Tags.findById(req.body.tags)
-        .then(tags => {
-          if (!tags) {
-            return res.status(404).json({
-              message: "Tag not found"
-            });
-          }
-          if (req.body.size === "null") {
-            return res.status(404).json({
-              message: "Size not found"
-            });
-          }
-          const photo = new Photo({
-            _id: new mongoose.Types.ObjectId(),
-            title: req.body.title,
-            size: req.body.size,
-            tagsCount: req.body.tags.length,
-            tags: req.body.tags,
-            uploadDate: Date.now(),
-            originalName: req.file.originalname,
-            uploadPhoto: s3FileURL + req.file.originalname
-          });
-          Tags.bulkWrite([
-            {
-              updateMany: {
-                filter: { _id: photo.tags },
-                update: {
-                  $push: { photos: photo._id }
-                }
+      try {
+        new ExifImage({ image: req.file.buffer }, function(error, exifData) {
+          if (error) console.log("Error: " + error.message);
+          else {
+            //cleanging up metadata from image before inserting into MongoDB
+            //creating valid ISODate out of metadata string
+            const oldCaptureDate = exifData.exif.CreateDate;
+            const year = oldCaptureDate.substring(0, 4);
+            const month = oldCaptureDate.substring(5, 7);
+            const day = oldCaptureDate.substring(8, 10);
+            const time = oldCaptureDate.substring(11, 19);
+            const newCaptureDate = year + "-" + month + "-" + day + "T" + time;
+
+            //metadata not working for Yongnuo lens. correcting on server side
+            function isYongnuoLens(a){
+              if (exifData.exif.LensModel == "50mm") {
+                return a = "Yongnuo YN 50mm F1.8";
+              } else {
+                return a = exifData.exif.LensModel;
               }
             }
-          ])
-            .then(result => {
-              // populates tag information from table, restricts to just tag field
-              photo.populate("tags", "tag", async function(err) {
-                const result = await photo.save();
-                console.log(result);
-                res.status(201).json({
-                  message: "Photo created",
-                  createdPhoto: {
-                    _id: result._id,
-                    title: result.title,
-                    size: result.size,
-                    tagsCount: result.tags.length,
-                    tags: result.tags,
-                    uploadDate: result.uploadDate,
-                    originalName: result.originalName,
-                    uploadPhoto: result.uploadPhoto,
-                    request: {
-                      type: "GET",
-                      description: "GET posted photo details",
-                      url: process.env.URL + "/photos/" + result.id
+            const newLens = isYongnuoLens(exifData.exif.LensModel);
+
+            const newAperature = "f/" + exifData.exif.FNumber;
+            const newFocalLength = exifData.exif.FocalLength + "mm";
+
+            //converting shutter speed decimal to fraction
+            const shutterSpeedDecimal = new Fraction(exifData.exif.ExposureTime);
+            const newShutterSpeed = shutterSpeedDecimal.toFraction(true);
+
+            //logging metadata from image
+            //console.log(exifData);
+            console.log("captureDate: " + newCaptureDate);
+            console.log("camera: " + exifData.image.Model);
+            console.log("lens: " + newLens);
+            console.log("aperature: " + newAperature);
+            console.log("focalLength: " + newFocalLength);
+            console.log("shutterSpeed: " + newShutterSpeed);
+            console.log("iso: " + exifData.exif.ISO);
+
+            Tags.findById(req.body.tags)
+              .then(tags => {
+                if (!tags) {
+                  return res.status(404).json({
+                    message: "Tag not found"
+                  });
+                }
+                if (req.body.size === "null") {
+                  return res.status(404).json({
+                    message: "Size not found"
+                  });
+                }
+                const photo = new Photo({
+                  _id: new mongoose.Types.ObjectId(),
+                  title: req.body.title,
+                  caption: req.body.caption,
+                  location: req.body.location,
+                  tagsCount: req.body.tags.length,
+                  tags: req.body.tags,
+                  size: req.body.size,
+                  store: req.body.store,
+                  captureDate: newCaptureDate,
+                  camera: exifData.image.Model,
+                  lens: newLens,
+                  aperature: newAperature,
+                  focalLength: newFocalLength,
+                  shutterSpeed: newShutterSpeed,
+                  iso: exifData.exif.ISO,
+                  originalName: req.file.originalname,
+                  uploadPhoto: s3FileURL + req.file.originalname
+                });
+                Tags.bulkWrite([
+                  {
+                    updateMany: {
+                      filter: { _id: photo.tags },
+                      update: {
+                        $push: { photos: photo._id }
+                      }
                     }
                   }
+                ])
+                  .then(result => {
+                    // populates tag information from table, restricts to just tag field
+                    photo.populate("tags", "tag", async function(err) {
+                      const result = await photo.save();
+                      console.log(result);
+                      res.status(201).json({
+                        message: "Photo created",
+                        createdPhoto: {
+                          _id: result._id,
+                          title: result.title,
+                          caption: result.caption,
+                          location: result.location,
+                          tagsCount: result.tags.length,
+                          tags: result.tags,
+                          size: result.size,
+                          store: result.store,
+                          captureDate: result.captureDate,
+                          camera: result.camera,
+                          lens: result.lens,
+                          aperature: result.aperature,
+                          focalLength: result.focalLength,
+                          shutterSpeed: result.shutterSpeed,
+                          iso: result.iso,
+                          originalName: result.originalName,
+                          uploadPhoto: result.uploadPhoto,
+                          request: {
+                            type: "GET",
+                            description: "GET posted photo details",
+                            url: process.env.URL + "/photos/" + result.id
+                          }
+                        }
+                      });
+                    });
+                  })
+                  .catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                      message: "Tags not found",
+                      error: err
+                    });
+                  });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  message: "Missing mandatory fields",
+                  error: err
                 });
               });
-            })
-            .catch(err => {
-              console.log(err);
-              res.status(500).json({
-                message: "Tags not found",
-                error: err
-              });
-            });
-        })
-        .catch(err => {
-          console.log(err);
-          res.status(500).json({
-            message: "Missing mandatory fields",
-            error: err
-          });
+          }
         });
+      } catch (error) {
+        console.log("Error: " + error.message);
+      }
+
+      // Tags.findById(req.body.tags)
+      //   .then(tags => {
+      //     if (!tags) {
+      //       return res.status(404).json({
+      //         message: "Tag not found"
+      //       });
+      //     }
+      //     if (req.body.size === "null") {
+      //       return res.status(404).json({
+      //         message: "Size not found"
+      //       });
+      //     }
+      //     const photo = new Photo({
+      //       _id: new mongoose.Types.ObjectId(),
+      //       title: req.body.title,
+      //       caption: req.body.caption,
+      //       location: req.body.location,
+      //       tagsCount: req.body.tags.length,
+      //       tags: req.body.tags,
+      //       size: req.body.size,
+      //       captureDate: Date.now(),
+      //       camera: req.file.camera,
+      //       lens: req.file.lens,
+      //       aperature: req.file.aperature,
+      //       focalLength: req.file.focalLength,
+      //       shutterSpeed: req.file.shutterSpeed,
+      //       iso: req.file.iso,
+      //       originalName: req.file.originalName,
+      //       uploadPhoto: s3FileURL + req.file.originalname
+      //     });
+      //     Tags.bulkWrite([
+      //       {
+      //         updateMany: {
+      //           filter: { _id: photo.tags },
+      //           update: {
+      //             $push: { photos: photo._id }
+      //           }
+      //         }
+      //       }
+      //     ])
+      //       .then(result => {
+      //         // populates tag information from table, restricts to just tag field
+      //         photo.populate("tags", "tag", async function(err) {
+      //           const result = await photo.save();
+      //           console.log(result);
+      //           res.status(201).json({
+      //             message: "Photo created",
+      //             createdPhoto: {
+      //               _id: result._id,
+      //               title: result.title,
+      //               caption: result.caption,
+      //               location: result.location,
+      //               tagsCount: result.tags.length,
+      //               tags: result.tags,
+      //               size: result.size,
+      //               captureDate: result.captureDate,
+      //               camera: result.camera,
+      //               lens: result.lens,
+      //               aperature: result.aperature,
+      //               focalLength: result.focalLength,
+      //               shutterSpeed: result.shutterSpeed,
+      //               iso: result.iso,
+      //               originalName: result.originalName,
+      //               uploadPhoto: result.uploadPhoto,
+      //               request: {
+      //                 type: "GET",
+      //                 description: "GET posted photo details",
+      //                 url: process.env.URL + "/photos/" + result.id
+      //               }
+      //             }
+      //           });
+      //         });
+      //       })
+      //       .catch(err => {
+      //         console.log(err);
+      //         res.status(500).json({
+      //           message: "Tags not found",
+      //           error: err
+      //         });
+      //       });
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //     res.status(500).json({
+      //       message: "Missing mandatory fields",
+      //       error: err
+      //     });
+      //   });
     }
   });
 };
@@ -152,10 +315,19 @@ exports.photos_get_photo = async (req, res, next) => {
           Photo: {
             _id: file._id,
             title: file.title,
-            size: file.size,
+            caption: file.caption,
+            location: file.location,
             tagsCount: file.tags.length,
             tags: file.tags,
-            uploadDate: file.uploadDate,
+            size: file.size,
+            store: file.store,
+            captureDate: file.captureDate,
+            camera: file.camera,
+            lens: file.lens,
+            aperature: file.aperature,
+            focalLength: file.focalLength,
+            shutterSpeed: file.shutterSpeed,
+            iso: file.iso,
             originalName: file.originalName,
             uploadPhoto: file.uploadPhoto
           },
@@ -227,10 +399,19 @@ exports.photos_update_photo = async (req, res, next) => {
                       updatedPhoto: {
                         _id: file._id,
                         title: file.title,
-                        size: file.size,
+                        caption: file.caption,
+                        location: file.location,
                         tagsCount: file.tags.length,
                         tags: file.tags,
-                        uploadDate: file.uploadDate,
+                        size: file.size,
+                        store: file.store,
+                        captureDate: file.captureDate,
+                        camera: file.camera,
+                        lens: file.lens,
+                        aperature: file.aperature,
+                        focalLength: file.focalLength,
+                        shutterSpeed: file.shutterSpeed,
+                        iso: file.iso,
                         originalName: file.originalName,
                         uploadPhoto: file.uploadPhoto
                       },
