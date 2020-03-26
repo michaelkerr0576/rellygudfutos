@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
       <!-- ----------- SOCIAL MEDIA BUTTONS ----------- -->
-      <b-row class="justify-content-md-center pt-5">
+      <b-row class="justify-content-center pt-5">
         <b-col cols="auto">
           <br /><br />
           <b-button-group size="md">
@@ -53,7 +53,7 @@
           </b-button-group>
         </b-col>
       </b-row>
-      <b-row class="justify-content-md-center pt-2 pb-5">
+      <b-row class="justify-content-center pt-2 pb-5">
         <b-col cols="auto">
           <h4>michaelkerr</h4>
         </b-col>

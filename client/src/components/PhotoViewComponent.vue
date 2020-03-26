@@ -5,7 +5,7 @@
       <b-row>
         <!-- ----------- CAMERA SPECS for DESKTOP ----------- -->
         <b-col cols="5">
-          <div v-if="window.width >= 576">
+          <div v-if="window.width >= 768">
             <div class="float-right border-top border-right pt-3 pr-1">
               <!-- Camera and Lens -->
               <b-row>
@@ -15,7 +15,7 @@
                 <b-col cols="12" sm="12" md="7" lg="8" xl="8">
                   <div class="mt-2">
                     <h6 class="text-dark">
-                      <samp>{{ photo.camera }}</samp>
+                      <samp>{{ photo.camera }} DESKTOP</samp>
                     </h6>
                     <h6 class="text-dark">
                       <samp>{{ photo.lens }}</samp>
@@ -58,7 +58,7 @@
         </b-col>
 
         <!-- ----------- PHOTO DETAILS ----------- -->
-        <b-col cols="12" sm="7" md="7" lg="6" xl="6">
+        <b-col cols="12" sm="12" md="7" lg="6" xl="6">
           <div class="border-left custom-border-bottom pl-3">
             <!-- Photo Title -->
             <b-row class="pt-2">
@@ -118,9 +118,7 @@
               <b-col cols="12">
                 <div class="text-body">
                   <i class="fas fa-shopping-cart"></i>&nbsp;
-                  <a v-bind:href="photo.store">
-                    Buy Print or License Image</a
-                  >
+                  <a v-bind:href="photo.store"> Buy Print or License Image</a>
                 </div>
               </b-col>
             </b-row>
@@ -143,7 +141,7 @@
       <!-- <b-row class="d-flex flex-row-reverse"> -->
       <b-row class="d-flex flex-row-reverse">
         <!-- ----------- CAMERA SPECS for MOBILE ----------- -->
-        <div v-if="window.width < 576">
+        <div v-if="window.width < 768">
           <b-col cols="12">
             <div class="border-right border-bottom px-3 py-3">
               <!-- Camera and Lens -->
@@ -154,7 +152,7 @@
                 <b-col cols="7" sm="6" md="7" lg="8" xl="8">
                   <div class="mt-2">
                     <h6 class="text-dark">
-                      <samp>{{ photo.camera }}</samp>
+                      <samp>{{ photo.camera }} MOBILE</samp>
                     </h6>
                     <h6 class="text-dark">
                       <samp>{{ photo.lens }}</samp>
@@ -292,7 +290,7 @@ hr {
   width: 24px;
   height: 16px;
 }
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .custom-border-bottom {
     border-bottom: 1px solid #dee2e6;
   }

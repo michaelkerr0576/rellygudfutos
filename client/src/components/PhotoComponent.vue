@@ -615,7 +615,7 @@ export default {
         function() {
           this.$scrollTo(element, duration, options);
         }.bind(this),
-        600
+        800
       );
     },
     getFilterValue: function(value) {
