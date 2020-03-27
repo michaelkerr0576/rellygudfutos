@@ -83,9 +83,9 @@
             <b-row>
               <b-col cols="12">
                 <div class="text-body">
-                  <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;
+                  <i id="photo-location-icon" class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;
                   <a
-                    id="photo-location"
+                    id="photo-location-text"
                     v-bind:href="
                       'http://www.google.com/search?q=' + photo.location
                     "
@@ -249,8 +249,8 @@ export default {
 hr {
   margin-left: -48px;
 }
-#photo-location {
-  margin-left: 1px;
+#photo-location-icon {
+  margin-left: 2px;
 }
 #photo-tags {
   margin-left: 2px;

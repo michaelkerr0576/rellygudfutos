@@ -17,8 +17,16 @@
                 placeholder="Search for futo.."
                 :class="[filterOption === 'filterByText' ? 'is-checked' : '']"
                 @click="$refs.cpt.filter('filterByText')"
+                @keyup.enter="searchEnterKey"
               ></b-form-input>
-              <b-input-group-append is-text>
+              <b-input-group-append
+                id="search-button"
+                is-text
+                @click="
+                  $refs.cpt.filter('filterByText');
+                  scrollToNoDelay('#layout', 400);
+                "
+              >
                 <i class="fas fa-search"></i>
               </b-input-group-append>
             </b-input-group>
@@ -339,7 +347,7 @@
                       packeryActive
                         ? changeLayout('vertical')
                         : changeLayout('packery');
-                      scrollTo('#photo' + index, 600);
+                      scrollToDelay('#photo' + index, 400);
                     "
                   ></b-img>
 
@@ -588,10 +596,7 @@ export default {
           console.log(err.config);
         });
     },
-    lazyHandler (component) {
-        console.log('this component is showing')
-      },
-    scrollTo(element, duration) {
+    scrollToDelay(element, duration) {
       //custom ScrollTo options
       const options = {
         easing: "ease-in",
@@ -610,13 +615,40 @@ export default {
         x: false,
         y: true
       };
-      //timeout to chain events in order
-      setTimeout(
-        function() {
-          this.$scrollTo(element, duration, options);
-        }.bind(this),
-        800
-      );
+      //nexttick and timeout to wait until dom is loaded and chain events in correct order
+      this.$nextTick(function() {
+        setTimeout(
+          function() {
+            this.$scrollTo(element, duration, options);
+          }.bind(this),
+          1000
+        );
+      }, this);
+    },
+    scrollToNoDelay(element, duration) {
+      //custom ScrollTo options
+      const options = {
+        easing: "ease-in",
+        offset: -10,
+        force: true,
+        cancelable: true,
+        onStart: function(element) {
+          // scrolling started
+        },
+        onDone: function(element) {
+          // scrolling is done
+        },
+        onCancel: function() {
+          // scrolling has been interrupted
+        },
+        x: false,
+        y: true
+      };
+      this.$scrollTo(element, duration, options);
+    },
+    searchEnterKey() {
+      this.$refs.cpt.filter("filterByText");
+      this.scrollToNoDelay("#layout", 400);
     },
     getFilterValue: function(value) {
       return (this.filterValue = value);
@@ -842,6 +874,9 @@ h2 {
 }
 .img-fluid:hover .original {
   display: none;
+}
+#search-button {
+  cursor: pointer;
 }
 #filter {
   margin-top: 50px;
