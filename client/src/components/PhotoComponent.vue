@@ -380,37 +380,39 @@
             </isotope>
 
             <!-- Photo Loader -->
-            <div id="infiniteloader" class="my-4">
-              <b-row>
-                <b-col cols="12" align-self="end">
-                  <p class="errors" v-if="errors.length > 0">{{ errors }}</p>
-                  <infinite-loading
-                    ref="infiniteLoading"
-                    @infinite="infiniteHandler"
-                    spinner="spiral"
-                  >
-                    <span slot="no-more">
-                      <div>
-                        No more futos
-                        <i class="fas fa-frown"></i>
-                      </div>
+            <b-container>
+              <div id="infiniteloader" class="my-4">
+                <b-row>
+                  <b-col cols="12" align-self="end">
+                    <p class="errors" v-if="errors.length > 0">{{ errors }}</p>
+                    <infinite-loading
+                      ref="infiniteLoading"
+                      @infinite="infiniteHandler"
+                      spinner="spiral"
+                    >
+                      <span slot="no-more">
+                        <div>
+                          No more futos
+                          <i class="fas fa-frown"></i>
+                        </div>
 
-                      <b-button
-                        v-scroll-to="{
-                          element: '#app',
-                          offset: -200,
-                          duration: 2000
-                        }"
-                        variant="link"
-                      >
-                        Back to Top&nbsp;
-                        <i class="fas fa-smile"></i>
-                      </b-button>
-                    </span>
-                  </infinite-loading>
-                </b-col>
-              </b-row>
-            </div>
+                        <b-button
+                          v-scroll-to="{
+                            element: '#app',
+                            offset: -200,
+                            duration: 2000,
+                          }"
+                          variant="link"
+                        >
+                          Back to Top&nbsp;
+                          <i class="fas fa-smile"></i>
+                        </b-button>
+                      </span>
+                    </infinite-loading>
+                  </b-col>
+                </b-row>
+              </div>
+            </b-container>
 
             <!-- Photo Errors -->
             <p class="errors" v-if="errors.length > 0">{{ errors }}</p>
@@ -439,10 +441,10 @@ export default {
     isotope,
     PhotoAdmCRUDComponent,
     PhotoAdmEditComponent,
-    PhotoViewComponent
+    PhotoViewComponent,
   },
   directives: {
-    imagesLoaded
+    imagesLoaded,
   },
   data() {
     return {
@@ -453,7 +455,7 @@ export default {
         blank: true,
         blankColor: "#bbb",
         width: 400,
-        height: 400
+        height: 400,
       },
       tags: [],
       page: 1,
@@ -469,33 +471,33 @@ export default {
       photoStyle: {
         width: "33.333%",
         height: "auto",
-        padding: "1.75%"
+        padding: "1.75%",
       },
       smSize: {
-        width: "33.333%"
+        width: "33.333%",
       },
       mdSize: {
-        width: "50%"
+        width: "50%",
       },
       lgSize: {
-        width: "66.666%"
+        width: "66.666%",
       },
       xlSize: {
-        width: "100%"
+        width: "100%",
       },
       window: {
         width: 0,
-        height: 0
-      }
+        height: 0,
+      },
     };
   },
   computed: {
-    mutablePhotos: function() {
+    mutablePhotos: function () {
       console.log("get photos");
       console.log(this.photos);
       return this.photos;
     },
-    mutableTags: function() {
+    mutableTags: function () {
       console.log("get tags");
       function compare(a, b) {
         if (a.photosCount > b.photosCount) return -1;
@@ -505,9 +507,9 @@ export default {
       console.log(this.tags);
       return this.tags.sort(compare);
     },
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
   created() {
     this.axios
@@ -522,7 +524,7 @@ export default {
           // this.tags = tagsRes.data;
         })
       )
-      .catch(err => {
+      .catch((err) => {
         if (err.response) {
           // The request was made and the server responded with a status code
           console.log(err.response.data);
@@ -549,19 +551,19 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   filters: {
-    capitalize: function(value) {
+    capitalize: function (value) {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
-    }
+    },
   },
   methods: {
     infiniteHandler($state) {
       instance
         .get("photos", {
           params: {
-            page: this.page
-          }
+            page: this.page,
+          },
         })
         .then(({ data }) => {
           console.log(data);
@@ -569,14 +571,14 @@ export default {
             this.page += 1;
             this.photos.push(...data.Photos);
             $state.loaded();
-            this.$nextTick(function() {
+            this.$nextTick(function () {
               this.$refs.cpt.sort("newest");
             }, this);
           } else {
             $state.complete();
           }
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.response) {
             // The request was made and the server responded with a status code
             console.log(err.response.data);
@@ -603,22 +605,22 @@ export default {
         offset: -50,
         force: true,
         cancelable: true,
-        onStart: function(element) {
+        onStart: function (element) {
           // scrolling started
         },
-        onDone: function(element) {
+        onDone: function (element) {
           // scrolling is done
         },
-        onCancel: function() {
+        onCancel: function () {
           // scrolling has been interrupted
         },
         x: false,
-        y: true
+        y: true,
       };
       //nexttick and timeout to wait until dom is loaded and chain events in correct order
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         setTimeout(
-          function() {
+          function () {
             this.$scrollTo(element, duration, options);
           }.bind(this),
           1000
@@ -632,17 +634,17 @@ export default {
         offset: -10,
         force: true,
         cancelable: true,
-        onStart: function(element) {
+        onStart: function (element) {
           // scrolling started
         },
-        onDone: function(element) {
+        onDone: function (element) {
           // scrolling is done
         },
-        onCancel: function() {
+        onCancel: function () {
           // scrolling has been interrupted
         },
         x: false,
-        y: true
+        y: true,
       };
       this.$scrollTo(element, duration, options);
     },
@@ -650,16 +652,16 @@ export default {
       this.$refs.cpt.filter("filterByText");
       this.scrollToNoDelay("#layout", 400);
     },
-    getFilterValue: function(value) {
+    getFilterValue: function (value) {
       return (this.filterValue = value);
     },
-    removeFilterValue: function() {
+    removeFilterValue: function () {
       return (this.filterValue = "");
     },
-    getSortValue: function(value) {
+    getSortValue: function (value) {
       return (this.sortValue = value);
     },
-    changeLayout: function(value) {
+    changeLayout: function (value) {
       this.currentLayout = value;
       //change layout buttons
       if (value === "vertical") {
@@ -673,7 +675,7 @@ export default {
       //this.verticalActive = !this.verticalActive;
       this.$refs.cpt.layout(this.currentLayout);
       //re sort so the photos dont overlap after resizes
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.$refs.cpt.sort(this.sortValue);
       }, this);
     },
@@ -681,7 +683,7 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
     },
-    getOptions: function() {
+    getOptions: function () {
       const _this = this;
       return {
         itemselector: ".root_isotope",
@@ -690,7 +692,7 @@ export default {
           //gutter: 10
         },
         vertical: {
-          horizontalAlignment: 0.5
+          horizontalAlignment: 0.5,
         },
         sortBy: "id",
         sortAscending: {
@@ -698,28 +700,28 @@ export default {
           titleAZ: true,
           titleZA: false,
           newest: false,
-          oldest: true
+          oldest: true,
         },
         getSortData: {
           id: "_id",
-          titleAZ: function(itemElem) {
+          titleAZ: function (itemElem) {
             return itemElem.title.toLowerCase();
           },
-          titleZA: function(itemElem) {
+          titleZA: function (itemElem) {
             return itemElem.title.toLowerCase();
           },
-          newest: function(itemElem) {
+          newest: function (itemElem) {
             return itemElem.captureDate;
           },
-          oldest: function(itemElem) {
+          oldest: function (itemElem) {
             return itemElem.captureDate;
-          }
+          },
         },
         getFilterData: {
-          removeFilter: function() {
+          removeFilter: function () {
             return true;
           },
-          filterByText: function(itemElem) {
+          filterByText: function (itemElem) {
             const tagsNum = itemElem.tags.length;
             var tags = " ";
             for (var i = 0; i < tagsNum; i++) {
@@ -738,7 +740,7 @@ export default {
               tags.toLowerCase().includes(_this.filterText.toLowerCase())
             );
           },
-          filterByTag: function(itemElem) {
+          filterByTag: function (itemElem) {
             const arrPhotoLength = _this.mutablePhotos.length;
             const arrPhotoTagsLength = itemElem.tags.length;
             for (var i = 0; i < arrPhotoLength; i++) {
@@ -747,8 +749,8 @@ export default {
                   return itemElem.tags[j].tag;
               }
             }
-          }
-        }
+          },
+        },
       };
     },
     layout() {
@@ -804,8 +806,8 @@ export default {
         }
       }
       return size;
-    }
-  }
+    },
+  },
 };
 </script>
 

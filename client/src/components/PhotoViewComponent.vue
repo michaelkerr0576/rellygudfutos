@@ -138,7 +138,6 @@
         </b-col>
       </b-row>
 
-      <!-- <b-row class="d-flex flex-row-reverse"> -->
       <b-row class="d-flex flex-row-reverse">
         <!-- ----------- CAMERA SPECS for MOBILE ----------- -->
         <div v-if="window.width < 768">

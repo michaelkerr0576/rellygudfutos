@@ -43,7 +43,7 @@
 
             <!-- GitHub Button -->
             <b-button
-              href="https://github.com/michaelkerr0576/rellygudfutos"
+              href="https://github.com/michaelkerr0576/"
               variant="warning"
               v-b-tooltip.hover
               title="GitHub"

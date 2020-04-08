@@ -59,15 +59,15 @@
                 <span class="fab fa-instagram"></span>
               </b-nav-item>
 
-              <!-- Development Button -->
+              <!-- Portfolio Button -->
               <b-nav-item
                 router-link-exact-active
-                to="/development"
+                to="/portfolio"
                 class="button"
                 v-b-tooltip.hover
-                title="Development"
+                title="Portfolio"
               >
-                <span class="fab fa-dev"></span>
+                <span class="fas fa-briefcase"></span>
               </b-nav-item>
 
               <!-- Admin Button -->
