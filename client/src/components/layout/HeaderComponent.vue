@@ -40,7 +40,7 @@
               <!-- LinkedLn Button -->
               <b-nav-item
                 router-link-exact-active
-                href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+                href="https://www.linkedin.com/in/michaelkerr0576/"
                 class="button"
                 v-b-tooltip.hover
                 title="LinkedIn"

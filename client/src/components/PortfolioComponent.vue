@@ -91,11 +91,11 @@
               <!-- Profile Details RIGHT - Linkedln -->
               <div
                 style="cursor: pointer;"
-                onclick="window.location='https://www.linkedin.com/in/michael-kerr-941a95124/';"
+                onclick="window.location='https://www.linkedin.com/in/michaelkerr0576/';"
               >
                 <h6 class="text-light">
                   <i class="fab fa-linkedin"></i
-                  >&nbsp;&nbsp;linkedin.com/in/michael-kerr
+                  >&nbsp;&nbsp;linkedin.com/in/michaelkerr0576
                 </h6>
               </div>
 

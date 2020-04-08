@@ -23,7 +23,7 @@
 
             <!-- LinkedIn Button -->
             <b-button
-              href="https://www.linkedin.com/in/michael-kerr-941a95124/"
+              href="https://www.linkedin.com/in/michaelkerr0576/"
               variant="primary"
               v-b-tooltip.hover
               title="LinkedIn"
