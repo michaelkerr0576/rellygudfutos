@@ -9,7 +9,7 @@
           v-scroll-to="{
             element: '#profile',
             offset: 0,
-            duration: 400,
+            duration: 400
           }"
           >Profile</b-nav-item
         >
@@ -18,7 +18,7 @@
           v-scroll-to="{
             element: '#about-card',
             offset: -25,
-            duration: 800,
+            duration: 800
           }"
           >About</b-nav-item
         >
@@ -27,7 +27,7 @@
           v-scroll-to="{
             element: '#skills-card',
             offset: -25,
-            duration: 800,
+            duration: 800
           }"
           >Skills</b-nav-item
         >
@@ -36,7 +36,7 @@
           v-scroll-to="{
             element: '#projects',
             offset: 10,
-            duration: 1200,
+            duration: 1200
           }"
           >Projects</b-nav-item
         >
@@ -519,6 +519,7 @@
               <b-card-group deck>
                 <!-- ----------- rellygudfutos ----------- -->
                 <b-card
+                  class="img-hover-zoom"
                   :img-src="assets.rellygudfutos_image"
                   img-alt="rellygudfutos"
                   img-top
@@ -589,6 +590,7 @@
 
                 <!-- ----------- reactproject ----------- -->
                 <b-card
+                  class="img-hover-zoom"
                   :img-src="assets.reactproject_image"
                   img-alt="reactproject"
                   img-top
@@ -1371,10 +1373,10 @@ export default {
         AWS_bucket_image: AWS_bucket_image,
         github_respository_image: github_respository_image,
         heroku_pricing_image: heroku_pricing_image,
-        heroku_deployment_image: heroku_deployment_image,
-      },
+        heroku_deployment_image: heroku_deployment_image
+      }
     };
-  },
+  }
 };
 </script>
 
@@ -1411,19 +1413,22 @@ export default {
 #profile_details_mobile {
   padding-left: 2px;
 }
-
+/* [1] The container */
+.img-hover-zoom {
+  height: auto; /* [1.1] Set it as per your need */
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img {
+  transition: transform .5s ease;
+}
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img {
+  transform: scale(1.11) translateY(-5.1%);
+}
 .card-footer {
-  padding: 0;
+  padding: 0px;
 }
-.modal-footer {
-  padding: 50px;
-  border: 0px;
-}
-#modal-footer {
-  padding: 50px;
-  border: 0px;
-}
-
 .btn-dark {
   color: #fff;
   background-color: #484848;
