@@ -19,13 +19,17 @@ const mongoURI =
   process.env.MONGO_ATLAS_CLUSTER;
 
 // Create mongo connection
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true
-});
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB Connected..."))
+  .catch((err) => console.log(err));
 
 // Middleware
 app.use(morgan("dev")); // logs API requests
-app.use(express.static(path.join(__dirname, "/public"))); // Makes folders publicly available
+app.use(express.static(path.join(__dirname, "../public"))); // Makes folders publicly available
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,8 +53,9 @@ app.use("/tags", tagRoutes);
 app.use("/user", userRoutes);
 
 // rewrite virtual urls to vue app to enable refreshing of internal pages
-app.get("*", function(req, res, next) {
-  res.sendFile(path.resolve("server/public/index.html"));
+app.get("*", function (req, res, next) {
+  //res.sendFile(path.resolve("server/public/index.html"));
+  res.sendFile(path.resolve("public/index.html"));
 });
 // Error handling if there is no avialable API request
 app.use((req, res, next) => {
@@ -63,8 +68,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 

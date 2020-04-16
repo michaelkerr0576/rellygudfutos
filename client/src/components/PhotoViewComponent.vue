@@ -1,6 +1,6 @@
 <template>
   <!-- ----------- PHOTO VIEW ----------- -->
-  <div>
+  <div id="photodetail">
     <b-container class="pt-3 pb-5">
       <b-row>
         <!-- ----------- CAMERA SPECS for DESKTOP ----------- -->
@@ -245,6 +245,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#photodetail {
+  line-height: 1.5;
+}
 hr {
   margin-left: -48px;
 }

@@ -533,22 +533,33 @@
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
                     <strong>Overview: </strong>
-                    A user shall be able to login. A logged in user can create,
-                    update and delete photos and tags. A logged out user will
-                    only have read access. In the photo upload form, the user
-                    shall be able to upload a photo file with fields "title",
-                    "caption", "location", "tags" & "store" attached. Photo
-                    fields "camera", "lens", "aperature", "focal length",
-                    "shutter speed", "iso" and "capture datetime" shall be
-                    automatically updated from the photo metadata. The photo
-                    grid shall be sortable, filterable and searchable. The grid
-                    shall be available in a packery and list view. On image
-                    click, the grid shall switch to list view with photo details
-                    below the image. The UI shall be dynamic to support a wide
-                    range of devices (phone, tablet, desktop).
+                    The photography needed to be the main focus. The UI was
+                    built to be clear, consise and intuitive. Each feature takes
+                    up as little room as possible to allow the attention to be
+                    on the photography.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
-                    <strong>MEVN Stack: </strong>MongoDB, Express, Vue & Node.
+                    <strong>Requirments: </strong>
+                    A user shall be able to login as admin. A logged in user can
+                    create, update and delete photos and tags. A logged out user
+                    will only have read access. In the photo upload form, the
+                    admin shall be able to upload a photo file with fields
+                    "title", "caption", "location", "tags" & "store" attached.
+                    Photo fields "camera", "lens", "aperature", "focal length",
+                    "shutter speed", "iso" and "capture datetime" shall be
+                    automatically updated from the photo metadata. The photo
+                    grid shall be sortable by "capture datetime", "title" and
+                    "shuffle" The photo grid shall be filterable by the tags the
+                    admin has created. The photo grid shall be searchable by key
+                    words. The grid shall be available in a packery and list
+                    view. On image click, the grid shall switch to list view
+                    with photo details below the image. The UI shall be dynamic
+                    to support a wide range of devices (phone, tablet, desktop).
+                    Links to social media and storefront shall be available.
+                  </b-card-text>
+                  <b-card-text class="pt-2 border-top">
+                    <strong>MEVN Stack: </strong>
+                    MongoDB, Express, Vue & Node.
                   </b-card-text>
                   <b-card-text class="py-2 border-top">
                     Click "View More" for more details on the development
@@ -599,15 +610,39 @@
                 >
                   <!-- reactproject - text -->
                   <b-card-text class="pt-1">
-                    <strong>Objective: </strong>To build a full stack React.js
-                    application.
+                    <strong>Objective: </strong>To build a newspaper application
+                    focused on typography.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
                     <strong>Overview: </strong>
-                    Currently learning React.js to implement new project.
+                    95% of the web content is typography. A good web designer
+                    should first focus this discipline before moving on to other
+                    web design components. No colour or images were used to show
+                    the significance of typography in front end development.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
-                    <strong>MERN Stack: </strong>MongoDB, Express, React & Node.
+                    <strong>Requirments: </strong> A user shall be able to login
+                    as admin. A logged in user can post, update and delete
+                    articles. A logged out user will only have read access. In
+                    the article post form, the admin shall be able to post an
+                    article with fields "title", "subtitle", "body", "author"
+                    and "section. Article field "datetime" shall be
+                    automatically inserted from time of upload. Article field
+                    "section" shall be selected from a set list "News", "Sport",
+                    "Business", "Opinion", "Life & Style" and "Culture". A user
+                    shall be able to filter the section through buttons in the
+                    navbar. An Admin shall be able to create a custom order of
+                    the articles in the articles grid. A "Most Read" column
+                    shall display the top 5 most read articles. A "Latest News"
+                    column shall display the 5 latest articles. Each article
+                    shall be clickable to view in more detail. The article grid
+                    shall be searchable by key words. The UI shall be dynamic to
+                    support a wide range of devices (phone, tablet, desktop).
+                    Links to fake social media shall be available.
+                  </b-card-text>
+                  <b-card-text class="pt-2 border-top">
+                    <strong>MERN Stack: </strong>
+                    MongoDB, Express, React & Node.
                   </b-card-text>
                   <b-card-text class="py-2 border-top">
                     Click "View More" for more details on the development
@@ -1420,7 +1455,7 @@ export default {
 }
 /* [2] Transition property for smooth transformation of images */
 .img-hover-zoom img {
-  transition: transform .5s ease;
+  transition: transform 0.5s ease;
 }
 /* [3] Finally, transforming the image when container gets hovered */
 .img-hover-zoom:hover img {
