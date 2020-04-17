@@ -37,7 +37,7 @@ exports.photos_get_all = async (req, res, next) => {
             request: {
               type: "GET",
               description: "GET photo details",
-              url: process.env.URL + "/photos/" + photo.id,
+              url: process.env.VUE_APP_URL + "/photos/" + photo.id,
             },
           };
         }),
@@ -186,7 +186,7 @@ exports.photos_upload_photo = (req, res, next) => {
                           request: {
                             type: "GET",
                             description: "GET posted photo details",
-                            url: process.env.URL + "/photos/" + result.id,
+                            url: process.env.VUE_APP_URL + "/photos/" + result.id,
                           },
                         },
                       });
@@ -247,7 +247,7 @@ exports.photos_get_photo = async (req, res, next) => {
           request: {
             type: "GET",
             description: "GET all photo photos",
-            url: process.env.URL + "/photos/",
+            url: process.env.VUE_APP_URL + "/photos/",
           },
         });
       } else {
@@ -331,7 +331,7 @@ exports.photos_update_photo = async (req, res, next) => {
                       request: {
                         type: "GET",
                         description: "GET all photo photos",
-                        url: process.env.URL + "/photos/",
+                        url: process.env.VUE_APP_URL + "/photos/",
                       },
                     });
                   } else {
@@ -350,7 +350,7 @@ exports.photos_update_photo = async (req, res, next) => {
               //   request: {
               //     type: "GET",
               //     description: "GET updated photo details",
-              //     url: process.env.URL + "/photos/" + photoid
+              //     url: process.env.VUE_APP_URL + "/photos/" + photoid
               //   }
               // });
             })
@@ -412,7 +412,7 @@ exports.photos_delete_photo = async (req, res, next) => {
                   request: {
                     type: "GET",
                     description: "GET all photos",
-                    url: process.env.URL + "/photos",
+                    url: process.env.VUE_APP_URL + "/photos",
                     body: { photos_id: "ID" },
                   },
                 });

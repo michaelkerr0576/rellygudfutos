@@ -21,7 +21,7 @@ exports.tags_get_all = async (req, res, next) => {
             request: {
               type: "GET",
               description: "GET tag",
-              url: process.env.URL + "/tags/" + tag.id,
+              url: process.env.VUE_APP_URL + "/tags/" + tag.id,
             },
           };
         }),
@@ -60,7 +60,7 @@ exports.tags_add_tag = async (req, res, next) => {
           request: {
             type: "GET",
             description: "GET posted tag",
-            url: process.env.URL + "/tags/" + tag.id,
+            url: process.env.VUE_APP_URL + "/tags/" + tag.id,
           },
         },
       });
@@ -88,7 +88,7 @@ exports.tags_get_tag = async (req, res, next) => {
           request: {
             type: "GET",
             description: "GET all tags",
-            url: process.env.URL + "/tags",
+            url: process.env.VUE_APP_URL + "/tags",
           },
         });
       } else {
@@ -117,7 +117,7 @@ exports.tags_update_tag = async (req, res, next) => {
         request: {
           type: "GET",
           description: "GET updated tag",
-          url: process.env.URL + "/tags/" + id,
+          url: process.env.VUE_APP_URL + "/tags/" + id,
         },
       });
     })
@@ -137,7 +137,7 @@ exports.tags_delete_tag = async (req, res, next) => {
         request: {
           type: "GET",
           description: "GET all tags",
-          url: process.env.URL + "/tags",
+          url: process.env.VUE_APP_URL + "/tags",
         },
       });
     })
