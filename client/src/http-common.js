@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: process.env.VUE_APP_URL || process.env.URL,
+  baseURL: process.env.VUE_APP_URL,
   timeout: 30000,
   // headers: {
   //   Authorization: 'Bearer {token}'
