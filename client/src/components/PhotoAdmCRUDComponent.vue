@@ -601,7 +601,7 @@ export default {
           console.log(res);
           this.dismissCountDown = this.dismissSecs;
           this.$nextTick(function() {
-            this.tags.splice(this.tags.length + 1, 0, res.data.createdTags);
+            this.tags.splice(this.tags.length + 1, 0, res.data.createdTag);
             //clear form
             this.addTagForm.tag = "";
           }, this);
@@ -754,9 +754,9 @@ export default {
                     console.log(res);
                     this.dismissCountDown = this.dismissSecs; //success alert
                     for (var j = 0; j < arrPhotosLength; j++) {
-                      console.log(
-                        j + " - currentphoto: " + this.photos[j].title
-                      );
+                      // console.log(
+                      //   j + " - currentphoto: " + this.photos[j].title
+                      // );
                       const arrPhotoTagsLength = this.photos[j].tagsCount;
                       for (var k = 0; k < arrPhotoTagsLength; k++) {
                         if (this.photos[j].tags[k]._id === id) {

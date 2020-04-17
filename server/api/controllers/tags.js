@@ -1,32 +1,32 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-//Importing Model
-const Tags = require("../models/tag");
+// Importing Model
+const Tag = require("../models/Tag");
 
 exports.tags_get_all = async (req, res, next) => {
-  await Tags.find()
+  await Tag.find()
     .select("-__v") // will exclude __v from fetch
     .populate("photos", "title") // populates photo information from table, restricts to just title field
     .exec()
-    .then(files => {
+    .then((tags) => {
       const response = {
-        count: files.length,
-        Tags: files.map(file => {
+        count: tags.length,
+        Tags: tags.map((tag) => {
           return {
-            _id: file._id,
-            tag: file.tag,
-            photosCount: file.photos.length,
-            photos: file.photos,
+            _id: tag._id,
+            tag: tag.tag,
+            photosCount: tag.photos.length,
+            photos: tag.photos,
             request: {
               type: "GET",
               description: "GET tag",
-              url: process.env.URL + "/tags/" + file.id
-            }
+              url: process.env.URL + "/tags/" + tag.id,
+            },
           };
-        })
+        }),
       };
-      //if (files.length >= 0) {
+      //if (tags.length >= 0) {
       res.status(200).json(response);
       // } else {
       //     res.status(404).json({
@@ -34,38 +34,38 @@ exports.tags_get_all = async (req, res, next) => {
       //     })
       // }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
 };
 
 exports.tags_add_tag = async (req, res, next) => {
-  const tags = new Tags({
+  const newTag = new Tag({
     _id: new mongoose.Types.ObjectId(),
     tag: req.body.tag,
-    photos: req.body.photos
+    photos: req.body.photos,
   });
-  await tags
+  await newTag
     .save()
-    .then(result => {
-      console.log(result);
+    .then((tag) => {
+      console.log(tag);
       res.status(201).json({
         message: "Created tag",
-        createdTags: {
-          _id: result._id,
-          tag: result.tag,
-          photosCount: result.photos.length,
-          photos: result.photos,
+        createdTag: {
+          _id: tag._id,
+          tag: tag.tag,
+          photosCount: tag.photos.length,
+          photos: tag.photos,
           request: {
             type: "GET",
             description: "GET posted tag",
-            url: process.env.URL + "/tags/" + result.id
-          }
-        }
+            url: process.env.URL + "/tags/" + tag.id,
+          },
+        },
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
@@ -73,28 +73,29 @@ exports.tags_add_tag = async (req, res, next) => {
 
 exports.tags_get_tag = async (req, res, next) => {
   const id = req.params.tagId;
-  await Tags.findById(id)
+  console.log(req.params);
+  await Tag.findById(id)
     .select("-__v") // will exclude __v from fetch
     .populate("photos", "-__v -tags") // populates photo information from table, excludes __v and tags
     .exec()
-    .then(file => {
-      console.log(file);
-      if (file) {
+    .then((tag) => {
+      console.log(tag);
+      if (tag) {
         res.status(200).json({
-          tag: file.tag,
-          photosCount: file.photos.length,
-          photos: file.photos,
+          tag: tag.tag,
+          photosCount: tag.photos.length,
+          photos: tag.photos,
           request: {
             type: "GET",
             description: "GET all tags",
-            url: process.env.URL + "/tags"
-          }
+            url: process.env.URL + "/tags",
+          },
         });
       } else {
         res.status(404).json({ message: "No valid entry found" });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
@@ -107,20 +108,20 @@ exports.tags_update_tag = async (req, res, next) => {
   for (const ops of req.body) {
     updateOps[ops.prop] = ops.value;
   }
-  await Tags.update({ _id: id }, { $set: updateOps })
+  await Tag.update({ _id: id }, { $set: updateOps })
     .exec()
-    .then(result => {
-      console.log(result);
+    .then((tag) => {
+      console.log(tag);
       res.status(200).json({
         message: "Tag updated",
         request: {
           type: "GET",
           description: "GET updated tag",
-          url: process.env.URL + "/tags/" + id
-        }
+          url: process.env.URL + "/tags/" + id,
+        },
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
@@ -128,19 +129,19 @@ exports.tags_update_tag = async (req, res, next) => {
 
 exports.tags_delete_tag = async (req, res, next) => {
   const id = req.params.tagId;
-  await Tags.remove({ _id: id })
+  await Tag.remove({ _id: id })
     .exec()
-    .then(result => {
+    .then((tag) => {
       res.status(200).json({
         message: "Tag deleted",
         request: {
           type: "GET",
           description: "GET all tags",
-          url: process.env.URL + "/tags"
-        }
+          url: process.env.URL + "/tags",
+        },
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });

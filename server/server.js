@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const http = require("http");
 const app = require("./app");
 
@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "production") {
   // Static folder
   app.use(express.static(__dirname + "/public"));
   // Handle single page app
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 }
 
 const port = process.env.PORT || 5000;

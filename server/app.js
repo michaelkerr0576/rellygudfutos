@@ -8,9 +8,9 @@ require("dotenv").config();
 const app = express();
 
 // Routes to handle API requests
-const photoRoutes = require("./api/routes/photos");
-const tagRoutes = require("./api/routes/tags");
-const userRoutes = require("./api/routes/users");
+const photosRoutes = require("./api/routes/photos");
+const tagsRoutes = require("./api/routes/tags");
+const usersRoutes = require("./api/routes/users");
 
 // Mongo URI
 const mongoURI =
@@ -48,13 +48,13 @@ app.use((req, res, next) => {
 });
 
 // Use routes to handle API requests
-app.use("/photos", photoRoutes);
-app.use("/tags", tagRoutes);
-app.use("/user", userRoutes);
+app.use("/photos", photosRoutes);
+app.use("/tags", tagsRoutes);
+app.use("/user", usersRoutes);
 
 // rewrite virtual urls to vue app to enable refreshing of internal pages
 app.get("*", function (req, res, next) {
-  //res.sendFile(path.resolve("server/public/index.html"));
+  // res.sendFile(path.resolve("server/public/index.html"));
   res.sendFile(path.resolve("public/index.html"));
 });
 // Error handling if there is no avialable API request
