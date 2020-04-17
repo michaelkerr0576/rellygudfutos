@@ -9,8 +9,8 @@
 <script>
 /* eslint-disable */
 
-import HeaderComponent from "./components/layout/HeaderComponent.vue";
-import FooterComponent from "./components/layout/FooterComponent.vue";
+import HeaderComponent from "./components/layout/Header.vue";
+import FooterComponent from "./components/layout/Footer.vue";
 
 export default {
   name: "app",

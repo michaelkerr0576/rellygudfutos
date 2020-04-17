@@ -2,10 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-import PhotoComponent from "./components/PhotoComponent.vue";
-import LoginComponent from "./components/LoginComponent.vue";
-//import DevelopmentComponent from "./components/DevelopmentComponent.vue";
-import PortfolioComponent from "./components/PortfolioComponent.vue";
+import PhotoGrid_Component from "./components/PhotoGrid.vue";
+import Login_Component from "./components/Login.vue";
+import Portfolio_Component from "./components/Portfolio.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -14,21 +13,21 @@ const routes = [
     name: "home",
     path: "/home",
     components: {
-      "app-main": PhotoComponent,
+      "app-main": PhotoGrid_Component,
     },
   },
   {
     name: "portfolio",
     path: "/portfolio",
     components: {
-      "app-main": PortfolioComponent,
+      "app-main": Portfolio_Component,
     },
   },
   {
     name: "login",
     path: "/login",
     components: {
-      "app-main": LoginComponent,
+      "app-main": Login_Component,
     },
   },
 ];

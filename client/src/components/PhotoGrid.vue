@@ -352,7 +352,7 @@
                   ></b-img>
 
                   <!-- Photo Details View -->
-                  <PhotoViewComponent
+                  <PhotoDetailComponent
                     v-if="verticalActive"
                     :photos="mutablePhotos"
                     :photo="photo"
@@ -360,7 +360,7 @@
                   />
                   <!-- Photo Grid Admin Edit View -->
                   <b-container v-if="verticalActive">
-                    <PhotoAdmEditComponent
+                    <PhotoAdmUpdateComponent
                       v-if="isLoggedIn"
                       :photos="mutablePhotos"
                       :photo="photo"
@@ -368,7 +368,7 @@
                     />
                   </b-container>
                   <div v-else>
-                    <PhotoAdmEditComponent
+                    <PhotoAdmUpdateComponent
                       v-if="isLoggedIn"
                       :photos="mutablePhotos"
                       :photo="photo"
@@ -430,9 +430,9 @@ import InfiniteLoading from "vue-infinite-loading";
 import isotope from "vueisotope";
 require("isotope-packery");
 import imagesLoaded from "vue-images-loaded";
-import PhotoAdmCRUDComponent from "./PhotoAdmCRUDComponent.vue";
-import PhotoAdmEditComponent from "./PhotoAdmEditComponent.vue";
-import PhotoViewComponent from "./PhotoViewComponent.vue";
+import PhotoAdmCRUDComponent from "./PhotoAdmCRUD.vue";
+import PhotoAdmUpdateComponent from "./PhotoAdmUpdate.vue";
+import PhotoDetailComponent from "./PhotoDetail.vue";
 
 export default {
   name: "PhotoComponent",
@@ -440,8 +440,8 @@ export default {
     InfiniteLoading,
     isotope,
     PhotoAdmCRUDComponent,
-    PhotoAdmEditComponent,
-    PhotoViewComponent,
+    PhotoAdmUpdateComponent,
+    PhotoDetailComponent,
   },
   directives: {
     imagesLoaded,
