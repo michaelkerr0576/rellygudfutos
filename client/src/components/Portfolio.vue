@@ -9,7 +9,7 @@
           v-scroll-to="{
             element: '#profile',
             offset: 0,
-            duration: 400
+            duration: 400,
           }"
           >Profile</b-nav-item
         >
@@ -18,7 +18,7 @@
           v-scroll-to="{
             element: '#about-card',
             offset: -25,
-            duration: 800
+            duration: 800,
           }"
           >About</b-nav-item
         >
@@ -27,7 +27,7 @@
           v-scroll-to="{
             element: '#skills-card',
             offset: -25,
-            duration: 800
+            duration: 800,
           }"
           >Skills</b-nav-item
         >
@@ -36,7 +36,7 @@
           v-scroll-to="{
             element: '#projects',
             offset: 10,
-            duration: 1200
+            duration: 1200,
           }"
           >Projects</b-nav-item
         >
@@ -72,15 +72,14 @@
                 height="3.5"
               ></b-img>
               <h6 class="text-light pt-3">
-                <i class="far fa-envelope"></i
-                >&nbsp;&nbsp;michaelkerr0576@hotmail.com
+                <i class="far fa-envelope mr-2"></i>michaelkerr0576@hotmail.com
               </h6>
               <h6 id="profile_details_mobile" class="text-light pt-1">
-                <i class="fas fa-mobile-alt"></i
-                >&nbsp;&nbsp;+353&thinsp;83&thinsp;805&thinsp;7946
+                <i class="fas fa-mobile-alt mr-2"></i
+                >+353&thinsp;83&thinsp;805&thinsp;7946
               </h6>
               <h6 class="text-light pt-1">
-                <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;Dublin, Ireland
+                <i class="fas fa-map-marker-alt mr-2"></i>Dublin, Ireland
               </h6>
             </div>
           </b-col>
@@ -93,9 +92,9 @@
                 style="cursor: pointer;"
                 onclick="window.location='https://www.linkedin.com/in/michaelkerr0576/';"
               >
-                <h6 class="text-light">
-                  <i class="fab fa-linkedin"></i
-                  >&nbsp;&nbsp;linkedin.com/in/michaelkerr0576
+                <h6 class="text-light c-textUnderline">
+                  <i class="fab fa-linkedin mr-2"></i
+                  >linkedin.com/in/michaelkerr0576
                 </h6>
               </div>
 
@@ -104,9 +103,9 @@
                 style="cursor: pointer;"
                 onclick="window.location='https://github.com/michaelkerr0576';"
               >
-                <h6 class="text-light">
-                  <i class="fab fa-github-alt"></i
-                  >&nbsp;&nbsp;github.com/michaelkerr0576
+                <h6 class="text-light c-textUnderline">
+                  <i class="fab fa-github-alt mr-2"></i
+                  >github.com/michaelkerr0576
                 </h6>
               </div>
 
@@ -115,17 +114,16 @@
                 style="cursor: pointer;"
                 onclick="window.location='https://www.instagram.com/michaelkerr_futos/';"
               >
-                <h6 class="text-light profile_details_links">
-                  <i class="fab fa-instagram"></i
-                  >&nbsp;&nbsp;instagram.com/michaelkerr_futos
+                <h6 class="text-light profile_details_links c-textUnderline">
+                  <i class="fab fa-instagram mr-2"></i
+                  >instagram.com/michaelkerr_futos
                 </h6>
               </div>
 
               <!-- Profile Details RIGHT - Website -->
               <div style="cursor: pointer;" onclick="window.location='/home';">
-                <h6 class="text-light profile_details_links">
-                  <i class="fas fa-globe"></i
-                  >&nbsp;&nbsp;rellygudfutos.com/portfolio
+                <h6 class="text-light profile_details_links c-textUnderline">
+                  <i class="fas fa-globe mr-2"></i>rellygudfutos.com/portfolio
                 </h6>
               </div>
             </div>
@@ -172,8 +170,9 @@
                       I am a full stack developer specialised in frontend and
                       backend development for web applications. Experienced
                       using <em>Node.js</em> and <em>MongoDB</em> as well as
-                      frontend frameworks like <em>Vue.js</em> to deliver
-                      responsive and intuitive experiences.
+                      frontend frameworks like <em>Vue.js</em> and
+                      <em>React.js</em> to deliver responsive and intuitive
+                      experiences.
                     </b-card-text>
                     <b-card-text class="pt-2 border-top">
                       I graduated with a bachelor's degree in Multimedia Systems
@@ -191,7 +190,9 @@
                     </b-card-text>
                     <b-card-text class="pt-2 border-top">
                       Want to know how I create my apps? Check out my projects
-                      and review the code on GitHub.
+                      and review the code on GitHub. Want to contact me? Check
+                      out my contact details in my profile. CV is available upon
+                      request.
                     </b-card-text>
                   </b-media>
                 </b-media-body>
@@ -280,6 +281,15 @@
                           height="auto"
                         ></b-img>
                         <p class="text-center font-weight-light">Vue</p>
+                      </b-col>
+                      <b-col cols="auto">
+                        <b-img
+                          center
+                          :src="assets.react_image"
+                          width="72"
+                          height="auto"
+                        ></b-img>
+                        <p class="text-center font-weight-light">React</p>
                       </b-col>
                     </b-row>
                   </b-media>
@@ -539,31 +549,8 @@
                     on the photography.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
-                    <strong>Requirments: </strong>
-                    A user shall be able to login as admin. A logged in user can
-                    create, update and delete photos and tags. A logged out user
-                    will only have read access. In the photo upload form, the
-                    admin shall be able to upload a photo file with fields
-                    "title", "caption", "location", "tags" & "store" attached.
-                    Photo fields "camera", "lens", "aperature", "focal length",
-                    "shutter speed", "iso" and "capture datetime" shall be
-                    automatically updated from the photo metadata. The photo
-                    grid shall be sortable by "capture datetime", "title" and
-                    "shuffle" The photo grid shall be filterable by the tags the
-                    admin has created. The photo grid shall be searchable by key
-                    words. The grid shall be available in a packery and list
-                    view. On image click, the grid shall switch to list view
-                    with photo details below the image. The UI shall be dynamic
-                    to support a wide range of devices (phone, tablet, desktop).
-                    Links to social media and storefront shall be available.
-                  </b-card-text>
-                  <b-card-text class="pt-2 border-top">
                     <strong>MEVN Stack: </strong>
                     MongoDB, Express, Vue & Node.
-                  </b-card-text>
-                  <b-card-text class="py-2 border-top">
-                    Click "View More" for more details on the development
-                    process...
                   </b-card-text>
                   <template v-slot:footer>
                     <!-- Card Buttons -->
@@ -599,7 +586,7 @@
                   </template>
                 </b-card>
 
-                <!-- ----------- reactproject ----------- -->
+                <!-- ----------- fakenews ----------- -->
                 <b-card
                   class="img-hover-zoom"
                   :img-src="assets.reactproject_image"
@@ -608,52 +595,29 @@
                   style="cursor: pointer;"
                   v-b-modal.modal-reactproject
                 >
-                  <!-- reactproject - text -->
+                  <!-- fakenews - text -->
                   <b-card-text class="pt-1">
-                    <strong>Objective: </strong>To build a newspaper application
-                    focused on typography.
+                    <strong>Objective: </strong>To build a full stack newspaper
+                    application focused on typography.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
                     <strong>Overview: </strong>
-                    95% of the web content is typography. A good web designer
-                    should first focus this discipline before moving on to other
-                    web design components. No colour or images were used to show
-                    the significance of typography in front end development.
-                  </b-card-text>
-                  <b-card-text class="pt-2 border-top">
-                    <strong>Requirments: </strong> A user shall be able to login
-                    as admin. A logged in user can post, update and delete
-                    articles. A logged out user will only have read access. In
-                    the article post form, the admin shall be able to post an
-                    article with fields "title", "subtitle", "body", "author"
-                    and "section. Article field "datetime" shall be
-                    automatically inserted from time of upload. Article field
-                    "section" shall be selected from a set list "News", "Sport",
-                    "Business", "Opinion", "Life & Style" and "Culture". A user
-                    shall be able to filter the section through buttons in the
-                    navbar. An Admin shall be able to create a custom order of
-                    the articles in the articles grid. A "Most Read" column
-                    shall display the top 5 most read articles. A "Latest News"
-                    column shall display the 5 latest articles. Each article
-                    shall be clickable to view in more detail. The article grid
-                    shall be searchable by key words. The UI shall be dynamic to
-                    support a wide range of devices (phone, tablet, desktop).
-                    Links to fake social media shall be available.
+                    WORK IN PROGRESS - 95% of the web content is typography. A
+                    good web designer should first focus this discipline before
+                    moving on to other web design components. No colour or
+                    images were used to show the significance of typography in
+                    front end development.
                   </b-card-text>
                   <b-card-text class="pt-2 border-top">
                     <strong>MERN Stack: </strong>
                     MongoDB, Express, React & Node.
-                  </b-card-text>
-                  <b-card-text class="py-2 border-top">
-                    Click "View More" for more details on the development
-                    process...
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="btn-group special btn-group-md" role="group">
                       <!-- GitHub Button -->
                       <b-button
                         squared
-                        href=""
+                        href="https://github.com/michaelkerr0576/fakenews"
                         variant="dark"
                         v-b-tooltip.hover
                         title="View Source Code"
@@ -662,7 +626,7 @@
                       <!-- Demo Button -->
                       <b-button
                         squared
-                        href=""
+                        href="https://fakenews01.herokuapp.com/"
                         variant="secondary"
                         v-b-tooltip.hover
                         title="Live Demo"
@@ -731,6 +695,26 @@
               to build the website, it stands for MongoDB, Express, Vue and Node
               (exciting). Normally people refer to a MEAN stack but I swapped
               out Angular for Vue as my frontend framework.
+            </p>
+            <hr />
+            <!-- Requirements -->
+            <p class="font-weight-normal pb-2">
+              <strong>Requirements: </strong>A user shall be able to login as
+              admin. A logged in user can create, update and delete photos and
+              tags. A logged out user will only have read access. In the photo
+              upload form, the admin shall be able to upload a photo file with
+              fields "title", "caption", "location", "tags" & "store" attached.
+              Photo fields "camera", "lens", "aperature", "focal length",
+              "shutter speed", "iso" and "capture datetime" shall be
+              automatically updated from the photo metadata. The photo grid
+              shall be sortable by "capture datetime", "title" and "shuffle" The
+              photo grid shall be filterable by the tags the admin has created.
+              The photo grid shall be searchable by key words. The grid shall be
+              available in a packery and list view. On image click, the grid
+              shall switch to list view with photo details below the image. The
+              UI shall be dynamic to support a wide range of devices (phone,
+              tablet, desktop). Links to social media and storefront shall be
+              available.
             </p>
             <hr />
             <!-- Database -->
@@ -1169,7 +1153,32 @@
           <b-col cols="12" md="auto">
             <!-- Summary -->
             <p class="font-weight-normal pb-2">
-              <strong>Summary: </strong>TODO.
+              <strong>Summary: </strong>WORK IN PROGRESS: Application is not
+              running CRUD operations from MongoDB yet. All updates only exist
+              in the DOM and are overwritten with the initial state when the
+              page is refreshed. Check out the LatestNews component to see how
+              adding, updating and deleting articles currently works. The
+              overall feel of the site is there. The components just need to be
+              made smart.
+            </p>
+            <hr />
+            <p class="font-weight-normal pb-2">
+              <strong>Requirements: </strong>A user shall be able to login as
+              admin. A logged in user can post, update and delete articles. A
+              logged out user will only have read access. In the article post
+              form, the admin shall be able to post an article with fields
+              "title", "subtitle", "body", "author" and "section. Article field
+              "datetime" shall be automatically inserted from time of upload.
+              Article field "section" shall be selected from a set list "News",
+              "Sport", "Business", "Opinion", "Life & Style" and "Culture". A
+              user shall be able to filter the section through buttons in the
+              navbar. An Admin shall be able to create a custom order of the
+              articles in the articles grid. A "Most Read" column shall display
+              the top 5 most read articles. A "Latest News" column shall display
+              the 5 latest articles. Each article shall be clickable to view in
+              more detail. The article grid shall be searchable by key words.
+              The UI shall be dynamic to support a wide range of devices (phone,
+              tablet, desktop). Links to fake social media shall be available.
             </p>
             <hr />
             <!-- Database -->
@@ -1281,7 +1290,7 @@
             <!-- GitHub Button -->
             <b-button
               squared
-              href=""
+              href="https://github.com/michaelkerr0576/fakenews"
               variant="dark"
               v-b-tooltip.hover
               title="View Source Code"
@@ -1290,7 +1299,7 @@
             <!-- Demo Button -->
             <b-button
               squared
-              href=""
+              href="https://fakenews01.herokuapp.com/"
               variant="secondary"
               v-b-tooltip.hover
               title="Live Demo"
@@ -1327,6 +1336,7 @@ import css3_image from "../assets/css3.png";
 import javascript_image from "../assets/javascript.png";
 import bootstrap_image from "../assets/bootstrap.png";
 import vue_image from "../assets/vue.png";
+import react_image from "../assets/react.png";
 import node_image from "../assets/node.png";
 import express_image from "../assets/express.png";
 import npm_image from "../assets/npm.svg";
@@ -1375,6 +1385,7 @@ export default {
         javascript_image: javascript_image,
         bootstrap_image: bootstrap_image,
         vue_image: vue_image,
+        react_image: react_image,
         node_image: node_image,
         express_image: express_image,
         npm_image: npm_image,
@@ -1408,10 +1419,10 @@ export default {
         AWS_bucket_image: AWS_bucket_image,
         github_respository_image: github_respository_image,
         heroku_pricing_image: heroku_pricing_image,
-        heroku_deployment_image: heroku_deployment_image
-      }
+        heroku_deployment_image: heroku_deployment_image,
+      },
     };
-  }
+  },
 };
 </script>
 
@@ -1447,6 +1458,10 @@ export default {
 }
 #profile_details_mobile {
   padding-left: 2px;
+}
+.c-textUnderline:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 /* [1] The container */
 .img-hover-zoom {
