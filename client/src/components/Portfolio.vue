@@ -191,7 +191,7 @@
                     <b-card-text class="pt-2 border-top">
                       Want to know how I create my apps? Check out my projects
                       and review the code on GitHub. Want to contact me? Check
-                      out my contact details in my profile. CV is available upon
+                      out my contact details in my profile. CV available upon
                       request.
                     </b-card-text>
                   </b-media>
