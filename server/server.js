@@ -2,7 +2,7 @@ const express = require('express');
 const http = require("http");
 const app = require("./app");
 
-// Handle production build, comment out to run dev build
+// Handle production build
 if (process.env.NODE_ENV === "production") {
   // Static folder
   app.use(express.static(__dirname + "/public"));
