@@ -9,30 +9,30 @@
   },
   "proxy": "http://localhost:5000",
   "dependencies": {
-    "axios": "^0.19.0",
-    "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.27",
-    "core-js": "^2.6.5",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "core-js": "^2.6.11",
     "isotope-packery": "^2.0.1",
-    "vue": "^2.6.10",
-    "vue-axios": "^2.1.4",
+    "vue": "^2.6.11",
+    "vue-axios": "^2.1.5",
     "vue-images-loaded": "^1.1.2",
-    "vue-infinite-loading": "^2.4.4",
+    "vue-infinite-loading": "^2.4.5",
     "vue-moment": "^4.0.0",
-    "vue-router": "^3.0.7",
-    "vue-scrollto": "^2.17.1",
+    "vue-router": "^3.3.4",
+    "vue-scrollto": "^2.18.1",
     "vueisotope": "^3.1.2",
-    "vuex": "^3.1.1"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
+    "@fortawesome/fontawesome-free": "^5.13.1",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
