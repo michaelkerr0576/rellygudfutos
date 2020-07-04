@@ -1,7 +1,7 @@
 <template>
   <div id="portfolio">
     <!-- ----------- NAVBAR----------- -->
-    <div id="navbar" class="pt-3">
+    <div id="navbar" class="pt-3 pb-2 px-2 ">
       <b-nav card-header tabs>
         <!-- Profile Button -->
         <b-nav-item
@@ -71,9 +71,15 @@
                 width="220"
                 height="3.5"
               ></b-img>
-              <h6 class="text-light pt-3">
-                <i class="far fa-envelope mr-2"></i>michaelkerr0576@hotmail.com
-              </h6>
+              <div
+                style="cursor: pointer;"
+                onclick="window.location='mailto:michaelkerr0576@hotmail.com?subject=&body=';"
+              >
+                <h6 class="text-light font-weight-light pt-3 c-textUnderline">
+                  <i class="far fa-envelope mr-2"></i
+                  >michaelkerr0576@hotmail.com
+                </h6>
+              </div>
               <h6 id="profile_details_mobile" class="text-light pt-1">
                 <i class="fas fa-mobile-alt mr-2"></i
                 >+353&thinsp;83&thinsp;805&thinsp;7946
@@ -277,7 +283,7 @@
                         <b-img
                           center
                           :src="assets.vue_image"
-                          width="63"
+                          width="64"
                           height="auto"
                         ></b-img>
                         <p class="text-center font-weight-light">Vue</p>
@@ -286,10 +292,19 @@
                         <b-img
                           center
                           :src="assets.react_image"
-                          width="72"
+                          width="73"
                           height="auto"
                         ></b-img>
                         <p class="text-center font-weight-light">React</p>
+                      </b-col>
+                      <b-col cols="auto">
+                        <b-img
+                          center
+                          :src="assets.redux_image"
+                          width="68"
+                          height="auto"
+                        ></b-img>
+                        <p class="text-center font-weight-light">Redux</p>
                       </b-col>
                     </b-row>
                   </b-media>
@@ -525,7 +540,7 @@
         <!-- Project Grid -->
         <div id="projects_grid" class="pt-2 pb-5 px-2">
           <b-row>
-            <b-col cols="12" offset-xl="1" xl="10">
+            <b-col cols="12" offset-xl="2" xl="8">
               <b-card-group deck>
                 <!-- ----------- rellygudfutos ----------- -->
                 <b-card
@@ -589,11 +604,11 @@
                 <!-- ----------- fakenews ----------- -->
                 <b-card
                   class="img-hover-zoom"
-                  :img-src="assets.reactproject_image"
-                  img-alt="reactproject"
+                  :img-src="assets.fakenews_image"
+                  img-alt="fakenews"
                   img-top
                   style="cursor: pointer;"
-                  v-b-modal.modal-reactproject
+                  v-b-modal.modal-fakenews
                 >
                   <!-- fakenews - text -->
                   <b-card-text class="pt-1">
@@ -635,7 +650,7 @@
                       <!-- View More Button -->
                       <b-button
                         squared
-                        v-b-modal.modal-reactproject
+                        v-b-modal.modal-fakenews
                         variant="dark"
                         v-b-tooltip.hover
                         title="View More"
@@ -1126,14 +1141,14 @@
         </template>
       </b-modal>
 
-      <!-- reactproject - modal -->
+      <!-- fakenews - modal -->
       <b-modal
-        id="modal-reactproject"
+        id="modal-fakenews"
         size="lg"
         centered
         scrollable
         header-bg-variant="light"
-        title="reactproject"
+        title="fakenews"
         footerClass="p-0 border-top-0"
       >
         <!-- Top Image -->
@@ -1308,7 +1323,7 @@
             <!-- View More Button -->
             <b-button
               squared
-              @click="$bvModal.hide('modal-reactproject')"
+              @click="$bvModal.hide('modal-fakenews')"
               variant="dark"
               v-b-tooltip.hover
               title="Close Me"
@@ -1337,6 +1352,7 @@ import javascript_image from "../assets/javascript.png";
 import bootstrap_image from "../assets/bootstrap.png";
 import vue_image from "../assets/vue.png";
 import react_image from "../assets/react.png";
+import redux_image from "../assets/redux.png";
 import node_image from "../assets/node.png";
 import express_image from "../assets/express.png";
 import npm_image from "../assets/npm.svg";
@@ -1352,7 +1368,7 @@ import lightroom_image from "../assets/lightroom.svg";
 import premiere_image from "../assets/premiere.svg";
 //projects
 import rellygudfutos_image from "../assets/rellygudfutos.jpg";
-import reactproject_image from "../assets/reactproject.jpg";
+import fakenews_image from "../assets/fakenews.jpg";
 //rellygudfutos development images
 import rellygudfutos_grid_image from "../assets/rellygudfutos_grid.jpg";
 import mongoDB_atlas_image from "../assets/mongoDB_atlas.jpg";
@@ -1386,6 +1402,7 @@ export default {
         bootstrap_image: bootstrap_image,
         vue_image: vue_image,
         react_image: react_image,
+        redux_image: redux_image,
         node_image: node_image,
         express_image: express_image,
         npm_image: npm_image,
@@ -1400,7 +1417,7 @@ export default {
         lightroom_image: lightroom_image,
         premiere_image: premiere_image,
         rellygudfutos_image: rellygudfutos_image,
-        reactproject_image: reactproject_image,
+        fakenews_image: fakenews_image,
         rellygudfutos_grid_image: rellygudfutos_grid_image,
         mongoDB_atlas_image: mongoDB_atlas_image,
         mongoose_model_photo_image: mongoose_model_photo_image,
@@ -1460,7 +1477,7 @@ export default {
   padding-left: 2px;
 }
 .c-textUnderline:hover {
-  color: #fff;
+  /* color: #fff; */
   text-decoration: underline;
 }
 /* [1] The container */
