@@ -1,8 +1,8 @@
 <template>
   <div id="portfolio">
     <!-- ----------- NAVBAR----------- -->
-    <div id="navbar" class="pt-3 pb-2 px-2 ">
-      <b-nav card-header tabs>
+    <div id="navbar" class="pt-3">
+      <b-nav tabs>
         <!-- Profile Button -->
         <b-nav-item
           active
@@ -148,80 +148,73 @@
         <b-row>
           <!-- ----------- ABOUT ME ----------- -->
           <b-col class="pt-4" cols="12" sm="12" md="5" lg="4">
-            <b-row align-v="start">
-              <b-col>
-                <b-card
-                  id="about-card"
-                  bg-variant="default"
-                  border-variant="light"
-                  class="mt-2"
-                >
-                  <b-media no-body>
-                    <b-media-aside vertical-align="top">
-                      <b-img
-                        blank
-                        blank-color="#ccc"
-                        width="3.5"
-                        height="85"
-                      ></b-img>
-                    </b-media-aside>
+            <b-card
+              id="about-card"
+              bg-variant="default"
+              border-variant="light"
+              class="mt-2"
+            >
+              <b-media no-body>
+                <b-media-aside vertical-align="top">
+                  <b-img
+                    blank
+                    blank-color="#ccc"
+                    width="3.5"
+                    height="85"
+                  ></b-img>
+                </b-media-aside>
 
-                    <b-media-body class="ml-3">
-                      <b-row>
-                        <b-col cols="12">
-                          <h4>ABOUT ME</h4>
-                        </b-col>
-                      </b-row>
+                <b-media-body class="ml-3">
+                  <b-row>
+                    <b-col cols="12">
+                      <h4>ABOUT ME</h4>
+                    </b-col>
+                  </b-row>
 
-                      <b-media class="mt-1">
-                        <b-card-text>
-                          I am a full stack developer specialised in frontend
-                          and backend development for web applications.
-                          Experienced using <em>Node.js</em> and
-                          <em>MongoDB</em> as well as frontend frameworks like
-                          <em>Vue.js</em> and <em>React.js</em> to deliver
-                          responsive and intuitive experiences.
-                        </b-card-text>
-                        <b-card-text class="pt-2 border-top">
-                          I graduated with a bachelor's degree in Multimedia
-                          Systems and Web Design from Dun Laoghaire Institute of
-                          Art, Design and Technology with a
-                          <em>Second Class Honours, Grade 1</em>. Studies
-                          included a wide set of disciplines in computing:
-                          <em
-                            >Advanced Javascript, Advanced Web Design,
-                            Multimedia Systems, Software Production, Statistics,
-                            Usability/UX, ASP.NET, Object-Oriented Programming,
-                            Computer Networks and Distributed Systems & Digital
-                            Media Entrepreneurship.</em
-                          >
-                        </b-card-text>
-                        <b-card-text class="pt-2 border-top">
-                          Want to know how I create my apps? Check out my
-                          projects and review the code on GitHub. Want to
-                          contact me? Click the button below and send me an
-                          email. CV available upon request.
-                        </b-card-text>
-                      </b-media>
-                    </b-media-body>
+                  <b-media class="mt-1">
+                    <b-card-text>
+                      I am a full stack developer specialised in frontend and
+                      backend development for web applications. Experienced
+                      using <em>Node.js</em> and <em>MongoDB</em> as well as
+                      frontend frameworks like <em>Vue.js</em> and
+                      <em>React.js</em> to deliver responsive and intuitive
+                      experiences.
+                    </b-card-text>
+                    <b-card-text class="pt-2 border-top">
+                      I graduated with a bachelor's degree in Multimedia Systems
+                      and Web Design from Dun Laoghaire Institute of Art, Design
+                      and Technology with a
+                      <em>Second Class Honours, Grade 1</em>. Studies included a
+                      wide set of disciplines in computing:
+                      <em
+                        >Advanced Javascript, Advanced Web Design, Multimedia
+                        Systems, Software Production, Statistics, Usability/UX,
+                        ASP.NET, Object-Oriented Programming, Computer Networks
+                        and Distributed Systems & Digital Media
+                        Entrepreneurship.</em
+                      >
+                    </b-card-text>
+                    <b-card-text class="pt-2 border-top">
+                      Want to know how I create my apps? Check out my projects
+                      and review the code on GitHub. Want to contact me? Click
+                      the button below and send me an email. CV available upon
+                      request.
+                    </b-card-text>
                   </b-media>
-                </b-card>
-              </b-col>
-            </b-row>
-            <b-row align-v="end">
-              <b-col>
-                <b-button
-                  squared
-                  block
-                  size="lg"
-                  variant="outline-dark"
-                  class="mt-2"
-                  onclick="window.location='mailto:michaelkerr0576@hotmail.com?subject=&body=';"
-                >
-                  <i class="far fa-envelope mr-2"></i>CONTACT ME</b-button
-                >
-              </b-col>
-            </b-row>
+                </b-media-body>
+              </b-media>
+            </b-card>
+            <div class="mt-2">
+              <b-button
+                squared
+                block
+                size="lg"
+                variant="outline-dark"
+                onclick="window.location='mailto:michaelkerr0576@hotmail.com?subject=&body=';"
+              >
+                <i class="far fa-envelope mr-2"></i>CONTACT ME</b-button
+              >
+            </div>
           </b-col>
 
           <!-- ----------- SKILLS & TOOLS ----------- -->
