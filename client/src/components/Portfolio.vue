@@ -706,7 +706,6 @@ export default {
           techStack: [
             "Vue",
             "Node",
-            "NPM",
             "Express",
             "Mongoose",
             "MongoDB",
@@ -727,7 +726,6 @@ export default {
             "React",
             "Redux",
             "Node",
-            "NPM",
             "Express",
             "Mongoose",
             "MongoDB",
