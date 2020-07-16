@@ -45,7 +45,7 @@
 
     <!-- ----------- PROFILE----------- -->
     <div id="profile">
-      <b-container fluid>
+      <b-container fluid class="c-diagonal-split-background">
         <b-row>
           <!-- Profile Picture -->
           <b-col cols="12" sm="12" md="4" lg="4" xl="3">
@@ -60,8 +60,9 @@
           </b-col>
 
           <!-- Profile Details LEFT -->
+
           <b-col cols="auto" class="mr-auto">
-            <div id="profile_details_left" class="pl-1 pt-4 pb-3">
+            <div id="profile_details_left" class="pt-4 pb-3">
               <h1 class="text-light">MICHAEL <strong>KERR</strong></h1>
               <h3 class="text-light">Full Stack Web Developer</h3>
               <b-img
@@ -75,7 +76,7 @@
                 style="cursor: pointer;"
                 onclick="window.location='mailto:michaelkerr0576@hotmail.com?subject=&body=';"
               >
-                <h6 class="text-light font-weight-light pt-3 c-textUnderline">
+                <h6 class="c-textUnderline text-light font-weight-light pt-3">
                   <i class="far fa-envelope mr-2"></i
                   >michaelkerr0576@hotmail.com
                 </h6>
@@ -92,7 +93,7 @@
 
           <!-- Profile Details RIGHT -->
           <b-col align-self="end" cols="12" sm="auto">
-            <div id="profile_details_right" class="pl-1 pt-1 pb-3">
+            <div id="profile_details_right" class="pt-1 pb-3">
               <!-- Profile Details RIGHT - Linkedln -->
               <div
                 style="cursor: pointer;"
@@ -760,7 +761,7 @@ export default {
   background-color: #f2f2f2;
 }
 #profile {
-  background-color: #484848;
+  /* background-color: #484848; */
 }
 #bordersteptogray1 {
   height: 15px;
@@ -787,6 +788,11 @@ export default {
 .c-textUnderline:hover {
   /* color: #fff; */
   text-decoration: underline;
+}
+.c-diagonal-split-background {
+  background-color: #484848;
+  width: 100%;
+  background-image: linear-gradient(120deg, #484848 50%, #696969 50.2%);
 }
 /* [1] The container */
 .img-hover-zoom {
@@ -835,21 +841,29 @@ export default {
   }
 }
 @media (max-width: 1012px) {
+  #profile_details_left {
+    margin-left: 0px;
+  }
+  #profile_details_right {
+    margin-left: 0px;
+    margin-bottom: 0px;
+  }
   #profile_details_left > h1 {
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
-    font-size: 2em;
+    font-size: 1.8em;
   }
   #profile_details_left > h3 {
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
   #profile_details_left > h6,
+  #profile_details_left > div > h6,
   #profile_details_right > div > h6 {
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
-    font-size: 0.88em;
+    font-size: 0.8em;
   }
   #profile_image {
     margin-right: -10px;
