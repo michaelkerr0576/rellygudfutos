@@ -63,7 +63,7 @@
           <b-col cols="auto" class="mr-auto">
             <div id="profile_details_left" class="pl-1 pt-4 pb-3">
               <h1 class="text-light">MICHAEL <strong>KERR</strong></h1>
-              <h3 class="text-light">Full Stack Developer</h3>
+              <h3 class="text-light">Full Stack Web Developer</h3>
               <b-img
                 left
                 blank
@@ -110,8 +110,7 @@
                 onclick="window.location='https://github.com/michaelkerr0576';"
               >
                 <h6 class="text-light c-textUnderline">
-                  <i class="fab fa-github-alt mr-2"></i
-                  >github.com/michaelkerr0576
+                  <i class="fab fa-github mr-2"></i>github.com/michaelkerr0576
                 </h6>
               </div>
 
@@ -173,8 +172,8 @@
 
                   <b-media class="mt-1">
                     <b-card-text>
-                      I am a full stack developer specialised in frontend and
-                      backend development for web applications. Experienced
+                      I am a Full Stack Web Developer specialised in frontend
+                      and backend development for web applications. Experienced
                       using <em>Node.js</em> and <em>MongoDB</em> as well as
                       frontend frameworks like <em>Vue.js</em> and
                       <em>React.js</em> to deliver responsive and intuitive
@@ -196,14 +195,26 @@
                     </b-card-text>
                     <b-card-text class="pt-2 border-top">
                       Want to know how I create my apps? Check out my projects
-                      and review the code on GitHub. Want to contact me? Click
-                      the button below and send me an email. CV available upon
-                      request.
+                      and review my code on GitHub. Want to contact me? Send me
+                      an email. My CV is available upon request.
                     </b-card-text>
                   </b-media>
                 </b-media-body>
               </b-media>
             </b-card>
+            <div class="mt-2">
+              <b-button
+                squared
+                block
+                size="lg"
+                variant="outline-dark"
+                href="https://github.com/michaelkerr0576"
+              >
+                <!-- &thinsp; to keep button inline with CONTACT ME button -->
+                <i class="fab fa-github mr-1"></i>
+                MY GITHUB&thinsp;&thinsp;&thinsp;&thinsp;</b-button
+              >
+            </div>
             <div class="mt-2">
               <b-button
                 squared
@@ -553,7 +564,7 @@
           <b-row>
             <b-col cols="12" offset-xl="2" xl="8">
               <b-card-group deck>
-                <!-- style="cursor: pointer;" v-b-modal.modal-rellygudfutos class="mr-2 py-1 px-2" -->
+                <!-- style="cursor: pointer;" v-b-modal.modal-rellygudfutos class="mr-2 py-1 px-2"  v-on:click="goToURL(project.liveDemo)"-->
                 <b-card
                   v-for="project in projects"
                   :key="project.id"
@@ -735,7 +746,7 @@ export default {
     goToURL: function(url) {
       alert("Loading live demo @ " + url);
       if (url) {
-       window.location.href = url
+        window.location.href = url;
       }
     },
   },
