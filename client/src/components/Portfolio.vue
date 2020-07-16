@@ -963,6 +963,7 @@ export default {
     font-weight: 600;
   }
   #profile_details_left > h6,
+  #profile_details_left > div > h6,
   #profile_details_right > div > h6 {
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
