@@ -115,7 +115,7 @@
               </div>
 
               <!-- Profile Details RIGHT - Instagram -->
-              <div
+              <!-- <div
                 style="cursor: pointer;"
                 onclick="window.location='https://www.instagram.com/michaelkerr_futos/';"
               >
@@ -123,7 +123,7 @@
                   <i class="fab fa-instagram mr-2"></i
                   >instagram.com/michaelkerr_futos
                 </h6>
-              </div>
+              </div> -->
 
               <!-- Profile Details RIGHT - Website -->
               <div style="cursor: pointer;" onclick="window.location='/home';">
