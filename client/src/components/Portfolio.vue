@@ -48,7 +48,10 @@
       <b-container fluid class="c-diagonal-split-background">
         <b-row>
           <!-- Profile Picture -->
-          <b-col cols="12" sm="12" md="4" lg="4" xl="3">
+          <!-- vue bootstrap cant handle custom sass xxxl breakpoints, using standard bootstrap syntax -->
+          <div
+            class="col-12 col-sm-12 col-md-4 col-lg-4 col-xxxl-3 col-xxxxl-2"
+          >
             <div id="profile_image">
               <b-img
                 fluid
@@ -57,10 +60,9 @@
                 height="auto"
               ></b-img>
             </div>
-          </b-col>
+          </div>
 
           <!-- Profile Details LEFT -->
-
           <b-col cols="auto" class="mr-auto">
             <div id="profile_details_left" class="pt-4 pb-3">
               <h1 class="text-light">MICHAEL <strong>KERR</strong></h1>
@@ -147,7 +149,10 @@
       <b-container fluid class="pb-1">
         <b-row>
           <!-- ----------- ABOUT ME ----------- -->
-          <b-col class="pt-4" cols="12" sm="12" md="5" lg="4">
+          <!-- vue bootstrap cant handle custom sass xxxl breakpoints, using standard bootstrap syntax -->
+          <div
+            class="pt-4 col-12 col-sm-12 col-md-5 col-lg-4 col-xxxl-3 offset-xxxl-1 col-xxxxl-2 offset-xxxxl-2"
+          >
             <b-card
               id="about-card"
               bg-variant="default"
@@ -227,10 +232,12 @@
                 <i class="far fa-envelope mr-2"></i>CONTACT ME</b-button
               >
             </div>
-          </b-col>
+          </div>
 
           <!-- ----------- SKILLS & TOOLS ----------- -->
-          <b-col class="pt-4" cols="12" sm="12" md="7" lg="8">
+          <div
+            class="pt-4 col-12 col-sm-12 col-md-7 col-lg-8 col-xxxl-7 col-xxxxl-6"
+          >
             <b-card
               id="skills-card"
               bg-variant="default"
@@ -534,7 +541,7 @@
                 </b-media-body>
               </b-media>
             </b-card>
-          </b-col>
+          </div>
         </b-row>
       </b-container>
     </div>
@@ -563,9 +570,11 @@
         <!-- Project Grid -->
         <div id="projects_grid" class="pt-2 pb-5 px-2">
           <b-row>
-            <b-col cols="12" offset-xl="2" xl="8">
+            <!-- vue bootstrap cant handle custom sass xxxl breakpoints, using standard bootstrap syntax -->
+            <div
+              class="my-5 col-12 col-xl-8 offset-xl-2 col-xxxl-6 offset-xxxl-3 col-xxxxl-4 offset-xxxxl-4"
+            >
               <b-card-group deck>
-                <!-- style="cursor: pointer;" v-b-modal.modal-rellygudfutos class="mr-2 py-1 px-2"  v-on:click="goToURL(project.liveDemo)"-->
                 <b-card
                   v-for="project in projects"
                   :key="project.id"
@@ -630,7 +639,7 @@
                   </template>
                 </b-card>
               </b-card-group>
-            </b-col>
+            </div>
           </b-row>
         </div>
       </b-container>
