@@ -572,7 +572,7 @@
           <b-row>
             <!-- vue bootstrap cant handle custom sass xxxl breakpoints, using standard bootstrap syntax -->
             <div
-              class="my-5 col-12 col-xl-8 offset-xl-2 col-xxxl-6 offset-xxxl-3 col-xxxxl-4 offset-xxxxl-4"
+              class="col-12 col-xl-8 offset-xl-2 col-xxxl-6 offset-xxxl-3 col-xxxxl-4 offset-xxxxl-4"
             >
               <b-card-group deck>
                 <b-card
