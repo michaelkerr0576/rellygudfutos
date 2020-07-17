@@ -551,7 +551,7 @@
     <div id="bordersteptogray4"></div>
 
     <!-- ----------- PROJECTS - GRID ----------- -->
-    <div id="projects" class="pt-5">
+    <div id="projects" class="my-5 pt-2">
       <b-container fluid>
         <!-- Project Title -->
         <b-row class="justify-content-center">

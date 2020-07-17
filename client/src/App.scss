@@ -1,25 +1,26 @@
 // File: theme.scss
 // Override default BT variables:
 $grid-breakpoints: (
-//   xs: 0,
-//   sm: 575.98px,
-//   md: 767.98px,
-//   lg: 991.98px,
-//   xl: 1199.98px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
   xxl: 1440px,
   xxxl: 2160px,
   xxxxl: 2880px,
 );
 
 $container-max-widths: (
-//   sm: 575.98px,
-//   md: 767.98px,
-//   lg: 991.98px,
-//   xl: 1199.98px,
-  xxl: 1440px,
-  xxxl: 2160px,
-  xxxxl: 2880px,
+  sm: 575.98px,
+  md: 767.98px,
+  lg: 991.98px,
+  xl: 1199.98px,
+  xxl: 1439.98px,
+  xxxl: 2159.98px,
+  xxxxl: 2878.98px,
 );
+
 
 // Import BT sources
 @import "../node_modules/bootstrap/scss/bootstrap";
