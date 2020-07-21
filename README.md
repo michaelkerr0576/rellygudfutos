@@ -6,7 +6,7 @@
 
 ## Overview
 
-A Photography website focused on my pictures. A user will be presented with a frontpage where they can view photos. The main component is the Photo Grid. Like Instagram, the photos can be clicked to view in list format. This will display more information on the photo such as "camera", "lens", "title", "store link" etc. Unlike Instagram, the grid will display the photos in [https://packery.metafizzy.co/](Packery Format) allowing landscape photos to take up more room. A regular user can filter, sort and search for photos in the grid while an admin user can login and run CRUD operations to POST, PATCH AND DELETE photos and tags. Links to social media and storefront are included in the header and footer. 
+A Photography website focused on my pictures. A user will be presented with a frontpage where they can view photos. The main component is the Photo Grid. Like Instagram, the photos can be clicked to view in list format. This will display more information on the photo such as "camera", "lens", "title", "store link" etc. Unlike Instagram, the grid will display the photos in [Packery Format](https://packery.metafizzy.co/) allowing landscape photos to take up more room. A regular user can filter, sort and search for photos in the grid while an admin user can login and run CRUD operations to POST, PATCH AND DELETE photos and tags. Links to social media and storefront are included in the header and footer. 
 
 ## Motivation
 
