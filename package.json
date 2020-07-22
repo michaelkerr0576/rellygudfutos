@@ -12,7 +12,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Michael Kerr",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.714.2",
     "bcrypt": "^3.0.8",
