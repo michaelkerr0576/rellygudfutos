@@ -613,6 +613,12 @@
                       <strong>Overview: </strong>
                       {{ project.overview }}
                     </b-card-text>
+                    <!-- learn more - text -->
+                    <b-card-text class="py-2 border-top">
+                      <strong>Learn More: </strong>
+                      Visit GitHub to view project source code, motivations and demo
+                      screenshots. Or go straight to live demo...
+                    </b-card-text>
                   </b-card-body>
                   <template v-slot:footer>
                     <!-- Card Buttons -->
@@ -724,7 +730,7 @@ export default {
           objective:
             "To build a full stack website where I could showcase my photography.",
           overview:
-            "The photography needed to be the main focus. The UI was built to be clear, consise and intuitive. Each feature takes up as little room as possible to allow the attention to be on the photography. Rellygudfutos was built using a MEVN Stack (MongoDB, Express, Vue, Node).",
+            "A user will be presented with a homepage where they can view the photo grid. Like Instagram, the photos can be clicked to view in list format. This will display more information on the photo such as 'camera', 'lens', 'title', 'store link' etc. Unlike Instagram, the grid will display the photos in Packery Format allowing landscape photos to take up more room. A regular user can filter, sort and search for photos in the grid while an admin user can login and run CRUD operations to POST, PATCH AND DELETE photos and tags.",
           sourceCode: "https://github.com/michaelkerr0576/rellygudfutos",
           liveDemo: "/home",
         },
@@ -743,7 +749,7 @@ export default {
           objective:
             "To build a full stack newspaper application focused on typography.",
           overview:
-            "WORK IN PROGRESS - 95% of the web content is typography. A good web designer should first focus this discipline before moving on to other web design components. No colour or images were used to show the significance of typography in front end development. Fakenews was built using a MERN Stack (MongoDB, Express, React, Node).",
+            "WORK IN PROGRESS - A user will be presented with a frontpage where they can read articles that are text only. A major goal was establishing a strong visual hierarchy without the use of colour or graphics. Instead the site relies on the typography and element spacing to hold the user's attention. The main components are the Headlines, Most Read and Latest News sections. A regular user can filter, sort and search for articles to read while an admin user can login and run CRUD operations to POST, PATCH AND DELETE articles.",
           sourceCode: "https://github.com/michaelkerr0576/fakenews",
           liveDemo: "https://fakenews01.herokuapp.com/",
         },
