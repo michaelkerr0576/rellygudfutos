@@ -40,7 +40,7 @@ TODO - Features / Code Examples / Include logo/demo screenshot etc.
 
 ##### 1.1 Frontend
 
-Some basic form validation before sending it off to the backend
+Some basic form validation before executing the login action in the store.
 
 ```javascript
 methods: {
@@ -58,30 +58,101 @@ methods: {
             this.$router.push("/");
           })
           .catch(err => {
-            if (err.response) {
-              // The request was made and the server responded with a status code
-              console.log(err.response.data);
-              console.log(err.response.status);
-              console.log(err.response.headers);
-              this.errors.push(err.response.status);
-              this.errors.push(err.response.data);
-            } else if (err.request) {
-              // The request was made but no response was received
-              console.log(err.request);
-              this.errors.push(err.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log("Error", err.message);
-              this.errors.push("Error", err.message);
-            }
-            console.log(err.config);
-          });
+            // catch code here - see source code
       }
     }
   }
 ```
 
+[Vuex](https://vuex.vuejs.org/) was used to handle the user state management. I wish I used it to also handle the photos and tags state too but alas I only used to handle user authentication. The user auth token is stored in LocalStorage and is retrieved everytime we want to check if the user is logged in.
+
+```javascript
+  state: {
+    status: "",
+    token: localStorage.getItem("token") || "",
+    user: {}
+  },
+  getters: {
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.status
+  }
+```
+
+If the user is logged out the token will be removed
+
+```javascript
+ logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit("logout");
+        localStorage.removeItem("token");
+        delete axios.defaults.headers.common["Authorization"];
+        resolve();
+      });
+    }
+```
+
 ##### 1.2 Backend
+
+User schema:
+
+```javascript
+const UserSchema = mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+  },
+  password: { type: String, required: true },
+});
+```
+
+If the user exists is a match for the MongoDB users collection it will return a token. That token will expire in 1 hour. If it expires the user will have to login in again. I used bcrypt to hash and salt the password before inserting into the database so it becomees very difficult to break.
+
+```javascript
+exports.users_login_user = async (req, res, next) => {
+  await User.find({ email: req.body.email })
+    .exec()
+    .then((user) => {
+      if (user.length < 1) {
+        return res.status(401).json({
+          message: "Auth failed",
+        });
+      }
+      bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: "Auth failed",
+          });
+        }
+        if (result) {
+          const token = jwt.sign(
+            {
+              email: user[0].email,
+              userId: user[0]._id,
+            },
+            process.env.JWT_KEY,
+            {
+              expiresIn: "1h",
+            }
+          );
+          return res.status(200).json({
+            message: "Auth successful",
+            token: token,
+          });
+        }
+        res.status(401).json({
+          message: "Auth failed",
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+};
+```
 
 ## License
 
