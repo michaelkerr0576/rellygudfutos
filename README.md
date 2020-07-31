@@ -31,17 +31,11 @@ Rellygudfutos is created with:
 - MongoDB
 - AWS S3
 
-## Screenshots
-
-TODO - Include logo/demo screenshot etc.
-
 ## Features
 
-TODO - Features
+TODO - Features / Code Examples / Include logo/demo screenshot etc.
 
-## Code Example
-
-TODO - Code Examples
+![Login Screen](https://user-images.githubusercontent.com/53580213/89068681-a74ba200-d369-11ea-9bc6-937e03a567e8.JPG)
 
 ## License
 
