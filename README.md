@@ -35,18 +35,53 @@ Rellygudfutos is created with:
 
 TODO - Features / Code Examples / Include logo/demo screenshot etc.
 
-#### Login 
+#### 1. Login 
 ![Login Screen](https://user-images.githubusercontent.com/53580213/89068681-a74ba200-d369-11ea-9bc6-937e03a567e8.JPG)
 
-##### Frontend
+##### 1.1 Frontend
 
-I think you should use an
-`<addr>` element here instead.
+Some basic form validation before sending it off to the backend
 
-As Kanye West said:
+```javascript
+methods: {
+    login(event) {
+      event.preventDefault();
+      if (
+        this.loginForm.email.length > 2 &&
+        this.loginForm.password.length > 2
+      ) {
+        const email = this.loginForm.email;
+        const password = this.loginForm.password;
+        this.$store
+          .dispatch("login", { email, password })
+          .then(success => {
+            this.$router.push("/");
+          })
+          .catch(err => {
+            if (err.response) {
+              // The request was made and the server responded with a status code
+              console.log(err.response.data);
+              console.log(err.response.status);
+              console.log(err.response.headers);
+              this.errors.push(err.response.status);
+              this.errors.push(err.response.data);
+            } else if (err.request) {
+              // The request was made but no response was received
+              console.log(err.request);
+              this.errors.push(err.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Error", err.message);
+              this.errors.push("Error", err.message);
+            }
+            console.log(err.config);
+          });
+      }
+    }
+  }
+```
 
-> We're living the future so
-> the present is our past.
+##### 1.2 Backend
 
 ## License
 
