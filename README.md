@@ -32,19 +32,48 @@ Rellygudfutos is created with:
 - AWS S3
 
 ## Demo Screenshots
-![rellygudfutos](https://user-images.githubusercontent.com/53580213/89103029-a7e64600-d406-11ea-905a-4436b665052e.JPG)
+> **DEMO:** [https://www.rellygudfutos.com](https://www.rellygudfutos.com)
 
-#### 1. Home Screen
-##### 1.1 Photo Grid Component (as regular user)
+#### 1. Login Component
+![Login Component](https://user-images.githubusercontent.com/53580213/89102646-483a6b80-d403-11ea-8578-c908cc12a5ea.JPG)
 
+#### 2. Upload Photo Form Component (as admin user)
+![Upload Photo Form Component_1](https://user-images.githubusercontent.com/53580213/89103591-c0585f80-d40a-11ea-9771-dfa3759d2379.JPG)
+![Upload Photo Form Component_2](https://user-images.githubusercontent.com/53580213/89103592-c0585f80-d40a-11ea-85f1-eb5d4ab9221c.JPG)
 
-#### 2. Login Screen
-![Login Screen](https://user-images.githubusercontent.com/53580213/89102646-483a6b80-d403-11ea-8578-c908cc12a5ea.JPG)
+#### 3. Add Tag Component (as admin user)
+![Add Tag Component_1](https://user-images.githubusercontent.com/53580213/89103557-9b63ec80-d40a-11ea-8bf9-51aefff8aa95.JPG)
+![Add Tag Component_2](https://user-images.githubusercontent.com/53580213/89103558-9bfc8300-d40a-11ea-898f-0a610ede0510.JPG)
 
-#### 3. Header Component
+#### 4. Delete Tag Component (as admin user)
+![Delete Tag Component_2](https://user-images.githubusercontent.com/53580213/89103563-a6b71800-d40a-11ea-81cf-b40171aebb71.JPG)
+![Delete Tag Component_1](https://user-images.githubusercontent.com/53580213/89103564-a74fae80-d40a-11ea-85e0-d45d76473186.JPG)
+
+#### 5. Update Tag Component (as admin user)
+![Update Tag Component_1](https://user-images.githubusercontent.com/53580213/89103588-bfbfc900-d40a-11ea-86ab-9ac39dc30bb1.JPG)
+![Update Tag Component_2](https://user-images.githubusercontent.com/53580213/89103589-c0585f80-d40a-11ea-8a75-ee1e1fc76d49.JPG)
+
+#### 6. Photo Grid Component (as regular user)
+![Photo Grid Component_user](https://user-images.githubusercontent.com/53580213/89103582-bf273280-d40a-11ea-9285-85a53ef720b7.JPG)
+![Photo Grid Component List View](https://user-images.githubusercontent.com/53580213/89103578-bdf60580-d40a-11ea-8e91-73eda15e429b.JPG)
+
+#### 7. Photo Grid Component (as admin user)
+![Photo Grid Component_admin](https://user-images.githubusercontent.com/53580213/89103580-be8e9c00-d40a-11ea-805a-773067adece1.JPG)
+
+#### 8. Search Photo Component
+![Search Component](https://user-images.githubusercontent.com/53580213/89103583-bf273280-d40a-11ea-85ef-dff52fb52617.JPG)
+![Search Component_in action](https://user-images.githubusercontent.com/53580213/89103585-bf273280-d40a-11ea-850b-c49a8b764544.JPG)
+
+#### 9. Filter Component
+![Filter Component](https://user-images.githubusercontent.com/53580213/89103575-b7678e00-d40a-11ea-84ad-b7b8b8f60c97.JPG)
+
+#### 10. Sorting Component
+![Sorting Component](https://user-images.githubusercontent.com/53580213/89103586-bfbfc900-d40a-11ea-8804-b3f8bac5fac0.JPG)
+
+#### 11. Header Component
 ![Header Component](https://user-images.githubusercontent.com/53580213/89102971-11b22000-d406-11ea-9b78-41f1fb8414f4.JPG)
 
-#### 4. Footer Component
+#### 12. Footer Component
 ![Footer Component](https://user-images.githubusercontent.com/53580213/89102975-1676d400-d406-11ea-9d29-9645680f9a83.JPG)
 
 ## License
