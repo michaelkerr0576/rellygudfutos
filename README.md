@@ -31,128 +31,21 @@ Rellygudfutos is created with:
 - MongoDB
 - AWS S3
 
-## Features
+## Demo Screenshots
+![rellygudfutos](https://user-images.githubusercontent.com/53580213/89103029-a7e64600-d406-11ea-905a-4436b665052e.JPG)
 
-TODO - Features / Code Examples / Include logo/demo screenshot etc.
+#### 1. Home Screen
+##### 1.1 Photo Grid Component (as regular user)
 
-#### 1. Login 
-![Login Screen](https://user-images.githubusercontent.com/53580213/89068681-a74ba200-d369-11ea-9bc6-937e03a567e8.JPG)
 
-##### 1.1 Frontend
+#### 2. Login Screen
+![Login Screen](https://user-images.githubusercontent.com/53580213/89102646-483a6b80-d403-11ea-8578-c908cc12a5ea.JPG)
 
-Some basic form validation before executing the login action in the store.
+#### 3. Header Component
+![Header Component](https://user-images.githubusercontent.com/53580213/89102971-11b22000-d406-11ea-9b78-41f1fb8414f4.JPG)
 
-```javascript
-methods: {
-    login(event) {
-      event.preventDefault();
-      if (
-        this.loginForm.email.length > 2 &&
-        this.loginForm.password.length > 2
-      ) {
-        const email = this.loginForm.email;
-        const password = this.loginForm.password;
-        this.$store
-          .dispatch("login", { email, password })
-          .then(success => {
-            this.$router.push("/");
-          })
-          .catch(err => {
-            // catch code here - see source code
-      }
-    }
-  }
-```
-
-[Vuex](https://vuex.vuejs.org/) was used to handle the user state management. I wish I used it to also handle the photos and tags state too but alas I only used to handle user authentication. The user auth token is stored in LocalStorage and is retrieved everytime we want to check if the user is logged in.
-
-```javascript
-  state: {
-    status: "",
-    token: localStorage.getItem("token") || "",
-    user: {}
-  },
-  getters: {
-    isLoggedIn: state => !!state.token,
-    authStatus: state => state.status
-  }
-```
-
-If the user is logged out the token will be removed
-
-```javascript
- logout({ commit }) {
-      return new Promise((resolve, reject) => {
-        commit("logout");
-        localStorage.removeItem("token");
-        delete axios.defaults.headers.common["Authorization"];
-        resolve();
-      });
-    }
-```
-
-##### 1.2 Backend
-
-User schema:
-
-```javascript
-const UserSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-  },
-  password: { type: String, required: true },
-});
-```
-
-If the user exists is a match for the MongoDB users collection it will return a token. That token will expire in 1 hour. If it expires the user will have to login in again. I used bcrypt to hash and salt the password before inserting into the database so it becomees very difficult to break.
-
-```javascript
-exports.users_login_user = async (req, res, next) => {
-  await User.find({ email: req.body.email })
-    .exec()
-    .then((user) => {
-      if (user.length < 1) {
-        return res.status(401).json({
-          message: "Auth failed",
-        });
-      }
-      bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-        if (err) {
-          return res.status(401).json({
-            message: "Auth failed",
-          });
-        }
-        if (result) {
-          const token = jwt.sign(
-            {
-              email: user[0].email,
-              userId: user[0]._id,
-            },
-            process.env.JWT_KEY,
-            {
-              expiresIn: "1h",
-            }
-          );
-          return res.status(200).json({
-            message: "Auth successful",
-            token: token,
-          });
-        }
-        res.status(401).json({
-          message: "Auth failed",
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: err });
-    });
-};
-```
+#### 4. Footer Component
+![Footer Component](https://user-images.githubusercontent.com/53580213/89102975-1676d400-d406-11ea-9d29-9645680f9a83.JPG)
 
 ## License
 
