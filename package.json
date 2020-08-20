@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.714.2",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
     "dotenv": "^8.2.0",
