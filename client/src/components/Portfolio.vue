@@ -83,10 +83,10 @@
                   >michaelkerr0576@hotmail.com
                 </h6>
               </div>
-              <h6 id="profile_details_mobile" class="text-light pt-1">
+              <!-- <h6 id="profile_details_mobile" class="text-light pt-1">
                 <i class="fas fa-mobile-alt mr-2"></i
-                >+353&thinsp;83&thinsp;805&thinsp;7946
-              </h6>
+                >+353&thinsp;83&thinsp;111&thinsp;1111
+              </h6> -->
               <h6 class="text-light pt-1">
                 <i class="fas fa-map-marker-alt mr-2"></i>Dublin, Ireland
               </h6>
